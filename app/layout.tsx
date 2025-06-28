@@ -31,7 +31,11 @@ const vazirFont = localFont({
       weight: "300",
       style: "normal",
     },
-    { path: "../public/fonts/vazir/Vazir.ttf", weight: "400", style: "normal" },
+    {
+      path: "../public/fonts/vazir/Vazir.ttf",
+      weight: "400",
+      style: "normal",
+    },
     {
       path: "../public/fonts/vazir/Vazir-Medium.ttf",
       weight: "500",
@@ -53,10 +57,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.className} ${vazirFont.variable} font-sans antialiased`}
-      >
+    <html lang="fa" dir="rtl" suppressHydrationWarning>
+      <body className={`${vazirFont.variable} font-vazir antialiased`}>
         {children}
       </body>
     </html>
