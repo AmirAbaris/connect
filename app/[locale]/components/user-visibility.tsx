@@ -54,12 +54,9 @@ export default function UserVisibility() {
                         </span>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        ۲ دقیقه پیش آنلاین شد
+                        در کافه مرکزی • ۲ دقیقه پیش آنلاین شد
                       </p>
                     </div>
-                    <button className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
-                      سلام 👋
-                    </button>
                   </div>
 
                   {/* User 2 - Yellow signal */}
@@ -78,12 +75,9 @@ export default function UserVisibility() {
                         </span>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        در حال مطالعه
+                        در کافه دانشگاه • در حال مطالعه
                       </p>
                     </div>
-                    <button className="px-4 py-2 bg-secondary text-secondary-foreground rounded-lg text-sm font-medium hover:bg-secondary/90 transition-colors">
-                      پیام 💬
-                    </button>
                   </div>
 
                   {/* User 3 - Red signal */}
@@ -102,15 +96,9 @@ export default function UserVisibility() {
                         </span>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        در حال کار
+                        در کافه کتابخانه • در حال کار
                       </p>
                     </div>
-                    <button
-                      className="px-4 py-2 bg-muted text-muted-foreground rounded-lg text-sm font-medium cursor-not-allowed"
-                      disabled
-                    >
-                      غیرفعال
-                    </button>
                   </div>
                 </div>
               </div>
