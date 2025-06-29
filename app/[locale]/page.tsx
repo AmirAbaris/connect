@@ -4,7 +4,7 @@ import CTASection from "./components/cta-section";
 
 export default function HomePage() {
   return (
-    <div className="bg-background">
+    <div className="bg-background pt-16">
       <Hero />
       <UserVisibility />
       <CTASection />
