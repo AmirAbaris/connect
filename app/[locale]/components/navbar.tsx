@@ -67,9 +67,9 @@ export default function Navbar() {
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetContent side="left">
                 <SheetHeader>
-                  <SheetTitle className="text-right">
+                  <SheetTitle className="text-left">
                     <h1 className="text-2xl font-black">
                       <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
                         کانکت
@@ -77,7 +77,7 @@ export default function Navbar() {
                     </h1>
                   </SheetTitle>
                 </SheetHeader>
-                <div className="flex flex-col gap-6 mt-8">
+                <div className="flex flex-col gap-6 mt-8 p-4">
                   {navItems.map((item) => (
                     <Link
                       key={item.href}

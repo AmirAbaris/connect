@@ -89,7 +89,7 @@ export default function CTASection() {
                     "کانکت واقعاً زندگی اجتماعی من رو تغییر داد! حالا می‌تونم
                     بدون نگرانی ببینم چه کسی آماده چت هست."
                   </p>
-                  <div className="flex items-center gap-3 pt-2 justify-start">
+                  <div className="flex flex-row-reverse justify-end items-center gap-3 pt-2">
                     <div>
                       <div className="font-semibold text-foreground">سارا</div>
                       <div className="text-sm text-muted-foreground">تهران</div>
@@ -112,7 +112,7 @@ export default function CTASection() {
                     "بهترین چیز اینه که می‌تونم وضعیت خودم رو کنترل کنم. دیگه
                     نگران مزاحمت نیستم!"
                   </p>
-                  <div className="flex  items-center gap-3 pt-2 justify-start">
+                  <div className="flex flex-row-reverse justify-end items-center gap-3 pt-2">
                     <div>
                       <div className="font-semibold text-foreground">علی</div>
                       <div className="text-sm text-muted-foreground">
