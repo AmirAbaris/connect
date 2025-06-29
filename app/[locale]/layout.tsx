@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 import Navbar from "./components/navbar";
+import Footer from "./components/footer";
 
 export default async function LocaleLayout({
   children,
@@ -22,7 +23,8 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider>
           <Navbar />
-          {children}
+          <main className="min-h-screen">{children}</main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>
