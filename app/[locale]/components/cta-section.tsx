@@ -112,7 +112,7 @@ export default function CTASection() {
                     "بهترین چیز اینه که می‌تونم وضعیت خودم رو کنترل کنم. دیگه
                     نگران مزاحمت نیستم!"
                   </p>
-                  <div className="flex items-center gap-3 pt-2 justify-start">
+                  <div className="flex  items-center gap-3 pt-2 justify-start">
                     <div>
                       <div className="font-semibold text-foreground">علی</div>
                       <div className="text-sm text-muted-foreground">
