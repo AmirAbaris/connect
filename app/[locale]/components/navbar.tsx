@@ -11,9 +11,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useLocale } from "next-intl";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const locale = useLocale();
 
   const navItems = [
     { href: "/", label: "خانه" },
@@ -21,6 +25,8 @@ export default function Navbar() {
     { href: "/about", label: "درباره ما" },
     { href: "/contact", label: "تماس" },
   ];
+
+  if (pathname.startsWith(`/${locale}/web-app`)) return null;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">

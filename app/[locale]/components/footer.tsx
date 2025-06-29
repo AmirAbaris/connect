@@ -1,8 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
+import { useLocale } from "next-intl";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+  const locale = useLocale();
+
+  if (pathname.startsWith(`/${locale}/web-app`)) return null;
 
   const footerLinks = {
     product: [
