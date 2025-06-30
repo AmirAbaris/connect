@@ -12,18 +12,19 @@ import {
 } from "@/components/ui/sheet";
 import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const locale = useLocale();
+  const t = useTranslations("Navbar");
 
   const navItems = [
-    { href: "/", label: "خانه" },
-    { href: "/features", label: "ویژگی‌ها" },
-    { href: "/about", label: "درباره ما" },
-    { href: "/contact", label: "تماس" },
+    { href: "/", label: t("home") },
+    { href: "/features", label: t("features") },
+    { href: "/about", label: t("about") },
+    { href: "/contact", label: t("contact") },
   ];
 
   if (pathname.startsWith(`/${locale}/web-app`)) return null;
@@ -36,7 +37,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-2">
             <h1 className="text-2xl font-black">
               <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                کانکت
+                {t("logo")}
               </span>
             </h1>
           </Link>
@@ -57,10 +58,10 @@ export default function Navbar() {
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center gap-4">
             <Button variant="ghost" asChild>
-              <Link href="/login">ورود</Link>
+              <Link href="/login">{t("login")}</Link>
             </Button>
             <Button asChild>
-              <Link href="/signup">شروع کنید</Link>
+              <Link href="/signup">{t("signup")}</Link>
             </Button>
           </div>
 
@@ -78,7 +79,7 @@ export default function Navbar() {
                   <SheetTitle className="text-left">
                     <h1 className="text-2xl font-black">
                       <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                        کانکت
+                        {t("logo")}
                       </span>
                     </h1>
                   </SheetTitle>
@@ -97,12 +98,12 @@ export default function Navbar() {
                   <div className="flex flex-col gap-4 pt-6 border-t border-border">
                     <Button variant="ghost" asChild className="justify-start">
                       <Link href="/login" onClick={() => setIsOpen(false)}>
-                        ورود
+                        {t("login")}
                       </Link>
                     </Button>
                     <Button asChild className="justify-start">
                       <Link href="/signup" onClick={() => setIsOpen(false)}>
-                        شروع کنید
+                        {t("signup")}
                       </Link>
                     </Button>
                   </div>

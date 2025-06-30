@@ -3,39 +3,40 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const pathname = usePathname();
   const locale = useLocale();
+  const t = useTranslations("Footer");
 
   if (pathname.startsWith(`/${locale}/web-app`)) return null;
 
   const footerLinks = {
     product: [
-      { href: "/features", label: "ویژگی‌ها" },
-      { href: "/pricing", label: "قیمت‌گذاری" },
-      { href: "/download", label: "دانلود" },
-      { href: "/api", label: "API" },
+      { href: "/features", label: t("features") },
+      { href: "/pricing", label: t("pricing") },
+      { href: "/download", label: t("download") },
+      { href: "/api", label: t("api") },
     ],
     company: [
-      { href: "/about", label: "درباره ما" },
-      { href: "/careers", label: "فرصت‌های شغلی" },
-      { href: "/press", label: "رسانه‌ها" },
-      { href: "/contact", label: "تماس" },
+      { href: "/about", label: t("about") },
+      { href: "/careers", label: t("careers") },
+      { href: "/press", label: t("press") },
+      { href: "/contact", label: t("contact") },
     ],
     support: [
-      { href: "/help", label: "راهنما" },
-      { href: "/faq", label: "سوالات متداول" },
-      { href: "/community", label: "انجمن" },
-      { href: "/status", label: "وضعیت سرویس" },
+      { href: "/help", label: t("help") },
+      { href: "/faq", label: t("faq") },
+      { href: "/community", label: t("community") },
+      { href: "/status", label: t("status") },
     ],
     legal: [
-      { href: "/privacy", label: "حریم خصوصی" },
-      { href: "/terms", label: "شرایط استفاده" },
-      { href: "/cookies", label: "کوکی‌ها" },
-      { href: "/security", label: "امنیت" },
+      { href: "/privacy", label: t("privacy") },
+      { href: "/terms", label: t("terms") },
+      { href: "/cookies", label: t("cookies") },
+      { href: "/security", label: t("security") },
     ],
   };
 
@@ -55,13 +56,11 @@ export default function Footer() {
             <div>
               <h3 className="text-2xl font-black mb-4">
                 <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                  کانکت
+                  {t("logo")}
                 </span>
               </h3>
               <p className="text-muted-foreground leading-relaxed max-w-md">
-                کانکت به شما کمک می‌کند تا در کافه‌ها و فضاهای اجتماعی، افرادی
-                که آماده ملاقات هستند را پیدا کنید و تجربه‌های اجتماعی بهتری
-                داشته باشید.
+                {t("description")}
               </p>
             </div>
 
@@ -83,22 +82,24 @@ export default function Footer() {
             <div className="space-y-4">
               <h4 className="font-semibold text-foreground">خبرنامه</h4>
               <p className="text-sm text-muted-foreground">
-                آخرین اخبار و به‌روزرسانی‌ها را دریافت کنید
+                {t("newsletterDesc")}
               </p>
               <div className="flex gap-2">
                 <input
                   type="email"
-                  placeholder="ایمیل شما"
+                  placeholder={t("emailPlaceholder")}
                   className="flex-1 px-3 py-2 bg-background border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
                 />
-                <Button size="sm">عضویت</Button>
+                <Button size="sm">{t("subscribe")}</Button>
               </div>
             </div>
           </div>
 
           {/* Product Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">محصول</h4>
+            <h4 className="font-semibold text-foreground mb-4">
+              {t("product")}
+            </h4>
             <ul className="space-y-3">
               {footerLinks.product.map((link) => (
                 <li key={link.href}>
@@ -115,7 +116,9 @@ export default function Footer() {
 
           {/* Company Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">شرکت</h4>
+            <h4 className="font-semibold text-foreground mb-4">
+              {t("company")}
+            </h4>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
@@ -132,7 +135,9 @@ export default function Footer() {
 
           {/* Support Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">پشتیبانی</h4>
+            <h4 className="font-semibold text-foreground mb-4">
+              {t("support")}
+            </h4>
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
                 <li key={link.href}>
@@ -152,7 +157,9 @@ export default function Footer() {
         <div className="border-t border-border/50 mt-12 pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
-              <span>© {currentYear} کانکت. تمامی حقوق محفوظ است.</span>
+              <span>
+                © {currentYear} {t("logo")}. {t("copyright")}
+              </span>
               <div className="flex items-center gap-4">
                 {footerLinks.legal.map((link) => (
                   <Link
@@ -167,7 +174,7 @@ export default function Footer() {
             </div>
 
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span>ساخته شده با ❤️ در ایران</span>
+              <span>{t("madeInIran")}</span>
             </div>
           </div>
         </div>

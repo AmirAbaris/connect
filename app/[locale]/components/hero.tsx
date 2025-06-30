@@ -5,7 +5,7 @@ export default function Hero() {
   const t = useTranslations("Hero");
 
   return (
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with gradient and subtle pattern */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/30" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]" />
@@ -54,7 +54,7 @@ export default function Hero() {
                         {t("greenSignal")}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        حال خوب، آماده چت 😊
+                        {t("greenSignalDesc")}
                       </p>
                     </div>
                   </div>
@@ -66,7 +66,7 @@ export default function Hero() {
                         {t("yellowSignal")}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        مشغولم ولی خوشحال میشم ببینمت 🤔
+                        {t("yellowSignalDesc")}
                       </p>
                     </div>
                   </div>
@@ -78,7 +78,7 @@ export default function Hero() {
                         {t("redSignal")}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        لطفاً مزاحم نشید، مشغولم 😤
+                        {t("redSignalDesc")}
                       </p>
                     </div>
                   </div>
@@ -93,7 +93,9 @@ export default function Hero() {
                   <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center">
                     <span className="text-primary text-lg">🎯</span>
                   </div>
-                  <h3 className="text-xl font-bold text-foreground">هدف ما</h3>
+                  <h3 className="text-xl font-bold text-foreground">
+                    {t("ourGoalTitle")}
+                  </h3>
                 </div>
                 <p className="text-lg text-foreground/90 leading-relaxed">
                   {t("goal")}
@@ -111,11 +113,11 @@ export default function Hero() {
                 <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full" />
-                    <span>۱۰ هزار کاربر اعتماد کردند ✨</span>
+                    <span>{t("usersTrusted")}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-blue-500 rounded-full" />
-                    <span>۹۹.۹٪ آپتایم ⚡</span>
+                    <span>{t("uptime")}</span>
                   </div>
                 </div>
               </div>
