@@ -58,10 +58,10 @@ export default function Navbar() {
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center gap-4">
             <Button variant="ghost" asChild>
-              <Link href="/login">{t("login")}</Link>
+              <Link href="/auth/login">{t("login")}</Link>
             </Button>
             <Button asChild>
-              <Link href="/signup">{t("signup")}</Link>
+              <Link href="/auth/signup">{t("signup")}</Link>
             </Button>
           </div>
 
@@ -97,12 +97,15 @@ export default function Navbar() {
                   ))}
                   <div className="flex flex-col gap-4 pt-6 border-t border-border">
                     <Button variant="ghost" asChild className="justify-start">
-                      <Link href="/login" onClick={() => setIsOpen(false)}>
+                      <Link href="/auth/login" onClick={() => setIsOpen(false)}>
                         {t("login")}
                       </Link>
                     </Button>
                     <Button asChild className="justify-start">
-                      <Link href="/signup" onClick={() => setIsOpen(false)}>
+                      <Link
+                        href="/auth/signup"
+                        onClick={() => setIsOpen(false)}
+                      >
                         {t("signup")}
                       </Link>
                     </Button>

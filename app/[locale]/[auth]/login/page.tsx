@@ -81,7 +81,7 @@ export default function LoginPage() {
                   رمز عبور
                 </label>
                 <Link
-                  href="/forgot-password"
+                  href="/auth/forgot-password"
                   className="text-xs text-primary hover:underline"
                 >
                   فراموش کردید؟
@@ -182,7 +182,7 @@ export default function LoginPage() {
           <p className="text-muted-foreground">
             حساب کاربری ندارید؟{" "}
             <Link
-              href="/signup"
+              href="/auth/signup"
               className="text-primary hover:underline font-medium"
             >
               ثبت‌نام کنید
