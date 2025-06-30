@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Mail, Lock, ArrowLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,6 +12,8 @@ export default function SignupPage() {
     email: "",
     password: "",
   });
+
+  const t = useTranslations("Signup");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,16 +35,14 @@ export default function SignupPage() {
           <Link href="/" className="inline-block mb-6">
             <h1 className="text-3xl font-black">
               <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                کانکت
+                {t("logo")}
               </span>
             </h1>
           </Link>
           <h2 className="text-2xl font-bold text-foreground mb-2">
-            حساب کاربری بسازید
+            {t("header")}
           </h2>
-          <p className="text-muted-foreground">
-            برای شروع تجربه اجتماعی بهتر، ثبت‌نام کنید
-          </p>
+          <p className="text-muted-foreground">{t("subheader")}</p>
         </div>
 
         {/* Signup Form */}
@@ -53,7 +54,7 @@ export default function SignupPage() {
                 htmlFor="email"
                 className="text-sm font-medium text-foreground"
               >
-                ایمیل
+                {t("emailLabel")}
               </label>
               <div className="relative">
                 <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -66,7 +67,7 @@ export default function SignupPage() {
                     setFormData({ ...formData, email: e.target.value })
                   }
                   className="w-full pr-10 pl-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                  placeholder="example@email.com"
+                  placeholder={t("emailPlaceholder")}
                 />
               </div>
             </div>
@@ -77,7 +78,7 @@ export default function SignupPage() {
                 htmlFor="password"
                 className="text-sm font-medium text-foreground"
               >
-                رمز عبور
+                {t("passwordLabel")}
               </label>
               <div className="relative">
                 <Lock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -90,7 +91,7 @@ export default function SignupPage() {
                     setFormData({ ...formData, password: e.target.value })
                   }
                   className="w-full pr-10 pl-12 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                  placeholder="حداقل ۸ کاراکتر"
+                  placeholder={t("passwordPlaceholder")}
                 />
                 <button
                   type="button"
@@ -105,7 +106,7 @@ export default function SignupPage() {
                 </button>
               </div>
               <p className="text-xs text-muted-foreground">
-                رمز عبور باید حداقل ۸ کاراکتر باشد
+                {t("passwordHint")}
               </p>
             </div>
 
@@ -121,15 +122,15 @@ export default function SignupPage() {
                 htmlFor="terms"
                 className="text-sm text-muted-foreground leading-relaxed"
               >
-                با{" "}
+                {t("termsPrefix")}{" "}
                 <Link href="/terms" className="text-primary hover:underline">
-                  شرایط استفاده
+                  {t("terms")}
                 </Link>{" "}
-                و{" "}
+                {t("and")}{" "}
                 <Link href="/privacy" className="text-primary hover:underline">
-                  حریم خصوصی
+                  {t("privacy")}
                 </Link>{" "}
-                موافقت می‌کنم
+                {t("termsSuffix")}
               </label>
             </div>
 
@@ -138,7 +139,7 @@ export default function SignupPage() {
               type="submit"
               className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg py-3 text-base font-medium"
             >
-              ثبت‌نام
+              {t("signup")}
               <ArrowLeft className="w-4 h-4 mr-2" />
             </Button>
           </form>
@@ -149,7 +150,7 @@ export default function SignupPage() {
               <div className="w-full border-t border-border/50" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-card px-2 text-muted-foreground">یا</span>
+              {t("or")}
             </div>
           </div>
 
@@ -174,7 +175,7 @@ export default function SignupPage() {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                 />
               </svg>
-              ادامه با گوگل
+              {t("continueWithGoogle")}
             </Button>
           </div>
         </div>
@@ -182,12 +183,12 @@ export default function SignupPage() {
         {/* Login Link */}
         <div className="text-center mt-6">
           <p className="text-muted-foreground">
-            قبلاً حساب کاربری دارید؟{" "}
+            {t("alreadyHaveAccount")}{" "}
             <Link
               href="/login"
               className="text-primary hover:underline font-medium"
             >
-              وارد شوید
+              {t("login")}
             </Link>
           </p>
         </div>
@@ -197,15 +198,15 @@ export default function SignupPage() {
           <div className="flex items-center justify-center gap-6 text-xs text-muted-foreground">
             <div className="flex items-center gap-1">
               <span>🔒</span>
-              <span>امن</span>
+              <span>{t("secure")}</span>
             </div>
             <div className="flex items-center gap-1">
               <span>⚡</span>
-              <span>سریع</span>
+              <span>{t("fast")}</span>
             </div>
             <div className="flex items-center gap-1">
               <span>🛡️</span>
-              <span>خصوصی</span>
+              <span>{t("private")}</span>
             </div>
           </div>
         </div>
