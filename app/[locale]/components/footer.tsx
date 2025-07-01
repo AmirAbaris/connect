@@ -11,7 +11,9 @@ export default function Footer() {
   const locale = useLocale();
   const t = useTranslations("Footer");
 
-  if (pathname.startsWith(`/${locale}/web-app`)) return null;
+  const isInLandingPage =
+    pathname === `/${locale}` || pathname === `/${locale}/`;
+  if (!isInLandingPage) return null;
 
   const footerLinks = {
     product: [

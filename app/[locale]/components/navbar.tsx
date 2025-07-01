@@ -27,7 +27,10 @@ export default function Navbar() {
     { href: "/contact", label: t("contact") },
   ];
 
-  if (pathname.startsWith(`/${locale}/web-app`)) return null;
+  const isInLandingPage =
+    pathname === `/${locale}` || pathname === `/${locale}/`;
+
+  if (!isInLandingPage) return null;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
