@@ -21,9 +21,13 @@ const INTERESTS = [
   "بازی",
   "غذا",
   "طبیعت",
-  "مد",
-  "حیوانات",
-  "عکاسی",
+  "انیمه",
+  "میم",
+  "استریم",
+  "پادکست",
+  "یوتیوب",
+  "سوشال مدیا",
+  "کریپتو",
   "برنامه‌نویسی",
 ];
 
@@ -69,11 +73,6 @@ export function InterestsModal({
               key={interest}
               type="button"
               variant={localSelected.includes(interest) ? "default" : "outline"}
-              className={`rounded-full px-4 py-2 text-sm font-medium ${
-                localSelected.includes(interest)
-                  ? "bg-primary text-primary-foreground"
-                  : ""
-              }`}
               onClick={() => toggleInterest(interest)}
             >
               {interest}
@@ -81,12 +80,7 @@ export function InterestsModal({
           ))}
         </div>
         <DialogFooter>
-          <Button
-            className="w-full rounded-full text-lg py-3 font-bold"
-            onClick={handleDone}
-          >
-            انجام شد
-          </Button>
+          <Button onClick={handleDone}>انجام شد</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

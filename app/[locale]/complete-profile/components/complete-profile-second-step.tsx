@@ -19,7 +19,7 @@ export default function CompleteProfileSecondStep() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-background px-4">
-      <Card className="w-full max-w-md mx-auto border bg-background text-foreground">
+      <Card className="w-full max-w-md mx-auto border border-border bg-background text-foreground">
         <CardHeader className="flex flex-col items-center gap-1 pb-2">
           <h1 className="text-3xl font-extrabold text-primary tracking-tight text-center">
             تکمیل پروفایل
