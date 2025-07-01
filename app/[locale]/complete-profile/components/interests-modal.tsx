@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 
 const INTERESTS = [
   "ورزش",
@@ -67,6 +69,9 @@ export function InterestsModal({
             علاقه‌مندی‌ها
           </DialogTitle>
         </DialogHeader>
+        <Label className="block text-base font-bold text-primary mb-2 text-center">
+          موضوعات مورد علاقه‌ات رو انتخاب کن
+        </Label>
         <div className="flex flex-wrap gap-2 justify-center my-4">
           {INTERESTS.map((interest) => (
             <Button
@@ -79,6 +84,15 @@ export function InterestsModal({
             </Button>
           ))}
         </div>
+        {localSelected.length > 0 && (
+          <div className="flex flex-wrap gap-2 justify-center mb-2">
+            {localSelected.map((interest) => (
+              <Badge key={interest} variant="default">
+                {interest}
+              </Badge>
+            ))}
+          </div>
+        )}
         <DialogFooter>
           <Button onClick={handleDone}>انجام شد</Button>
         </DialogFooter>

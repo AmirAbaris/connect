@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Mail, Lock, ArrowLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -50,15 +52,15 @@ export default function SignupPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Field */}
             <div className="space-y-2">
-              <label
+              <Label
                 htmlFor="email"
                 className="text-sm font-medium text-foreground"
               >
                 {t("emailLabel")}
-              </label>
+              </Label>
               <div className="relative">
                 <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                <input
+                <Input
                   id="email"
                   type="email"
                   required
@@ -74,15 +76,15 @@ export default function SignupPage() {
 
             {/* Password Field */}
             <div className="space-y-2">
-              <label
+              <Label
                 htmlFor="password"
                 className="text-sm font-medium text-foreground"
               >
                 {t("passwordLabel")}
-              </label>
+              </Label>
               <div className="relative">
                 <Lock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                <input
+                <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
                   required
@@ -112,13 +114,13 @@ export default function SignupPage() {
 
             {/* Terms and Conditions */}
             <div className="flex items-start gap-3">
-              <input
+              <Input
                 type="checkbox"
                 id="terms"
                 required
                 className="mt-1 w-4 h-4 text-primary bg-background border-border rounded focus:ring-primary/20 focus:ring-2"
               />
-              <label
+              <Label
                 htmlFor="terms"
                 className="text-sm text-muted-foreground leading-relaxed"
               >
@@ -131,7 +133,7 @@ export default function SignupPage() {
                   {t("privacy")}
                 </Link>{" "}
                 {t("termsSuffix")}
-              </label>
+              </Label>
             </div>
 
             {/* Submit Button */}

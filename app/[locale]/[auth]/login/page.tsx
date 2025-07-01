@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Mail, Lock, ArrowLeft } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -49,15 +51,15 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Field */}
             <div className="space-y-2">
-              <label
+              <Label
                 htmlFor="email"
                 className="text-sm font-medium text-foreground"
               >
                 ایمیل
-              </label>
+              </Label>
               <div className="relative">
                 <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                <input
+                <Input
                   id="email"
                   type="email"
                   required
@@ -74,12 +76,12 @@ export default function LoginPage() {
             {/* Password Field */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label
+                <Label
                   htmlFor="password"
                   className="text-sm font-medium text-foreground"
                 >
                   رمز عبور
-                </label>
+                </Label>
                 <Link
                   href="/auth/forgot-password"
                   className="text-xs text-primary hover:underline"
@@ -89,7 +91,7 @@ export default function LoginPage() {
               </div>
               <div className="relative">
                 <Lock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                <input
+                <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
                   required
@@ -117,17 +119,17 @@ export default function LoginPage() {
             {/* Remember Me */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <input
+                <Input
                   type="checkbox"
                   id="remember"
                   className="w-4 h-4 text-primary bg-background border-border rounded focus:ring-primary/20 focus:ring-2"
                 />
-                <label
+                <Label
                   htmlFor="remember"
                   className="text-sm text-muted-foreground"
                 >
                   مرا به خاطر بسپار
-                </label>
+                </Label>
               </div>
             </div>
 
