@@ -10,14 +10,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, X } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
+import { Menu } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
-  const locale = useLocale();
   const t = useTranslations("Navbar");
 
   const navItems = [
@@ -26,11 +23,6 @@ export default function Navbar() {
     { href: "/about", label: t("about") },
     { href: "/contact", label: t("contact") },
   ];
-
-  const isInLandingPage =
-    pathname === `/${locale}` || pathname === `/${locale}/`;
-
-  if (!isInLandingPage) return null;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">

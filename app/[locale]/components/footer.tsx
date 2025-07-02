@@ -2,18 +2,11 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { usePathname } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const pathname = usePathname();
-  const locale = useLocale();
   const t = useTranslations("Footer");
-
-  const isInLandingPage =
-    pathname === `/${locale}` || pathname === `/${locale}/`;
-  if (!isInLandingPage) return null;
 
   const footerLinks = {
     product: [

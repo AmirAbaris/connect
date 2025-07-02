@@ -1,7 +1,9 @@
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import "./../globals.css";
+import "../../globals.css";
+import Footer from "../components/footer";
+import Navbar from "../components/navbar";
 
 export default async function LocaleLayout({
   children,
@@ -20,7 +22,9 @@ export default async function LocaleLayout({
     <html lang={locale} suppressHydrationWarning>
       <body>
         <NextIntlClientProvider>
+          <Navbar />
           <main className="min-h-screen">{children}</main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

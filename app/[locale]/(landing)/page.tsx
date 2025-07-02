@@ -1,6 +1,7 @@
-import Hero from "./components/hero";
-import UserVisibility from "./components/user-visibility";
-import CTASection from "./components/cta-section";
+import CTASection from "../components/cta-section";
+import Hero from "../components/hero";
+import UserVisibility from "../components/user-visibility";
+
 
 export default function HomePage() {
   return (
