@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { User, Compass, Signal } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
   {
@@ -23,16 +23,16 @@ const NAV_ITEMS = [
 ];
 
 export default function WebAppNav() {
-  const [active, setActive] = useState("explore");
+  const pathname = usePathname();
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-40 flex justify-center md:static md:mb-8 md:mt-8 md:justify-center"
+      className="fixed bottom-0 left-0 right-0 z-40 flex justify-center md:static md:mb-8 md:mt-8"
       style={{ pointerEvents: "none" }}
     >
       <div className="pointer-events-auto w-full max-w-md md:max-w-lg md:rounded-2xl md:shadow-xl md:bg-background/90 md:mx-auto flex items-center justify-between px-2 md:px-4 py-2 md:py-3 bg-background/95 border-t border-border/60 md:border md:border-border/80 md:backdrop-blur-lg">
         {NAV_ITEMS.map(({ key, label, icon: Icon }) => {
-          const isActive = active === key;
+          const isActive = pathname.includes(key);
           return (
             <Button
               key={key}
@@ -46,7 +46,6 @@ export default function WebAppNav() {
                 }
                 ${isActive ? "" : "md:opacity-80"}
                 `}
-              onClick={() => setActive(key)}
               aria-current={isActive ? "page" : undefined}
               style={{ zIndex: isActive ? 1 : 0 }}
             >
