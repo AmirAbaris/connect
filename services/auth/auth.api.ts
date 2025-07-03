@@ -20,7 +20,8 @@ export const signOut = async (): Promise<void> => {
 
 export const signIn = async (
   email: string,
-  password: string
+  password: string,
+  rememberMe: boolean = false
 ): Promise<void> => {
   const { error } = await supabaseBrowserClient.auth.signInWithPassword({
     email,

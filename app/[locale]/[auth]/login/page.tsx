@@ -3,21 +3,24 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Mail, Lock, ArrowLeft } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, ArrowLeft, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useForm } from "react-hook-form";
+import { AuthUserType } from "@/types/user";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { userSchema } from "@/schemas/user-schema";
+import useAuth from "@/hooks/use-auth";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+  const { register, handleSubmit } = useForm<AuthUserType>({
+    resolver: zodResolver(userSchema),
   });
+  const { signInWithPassword, isPendingSignInWithPassword } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle login logic here
-    console.log("Login:", formData);
+  const onSubmit = (data: AuthUserType) => {
+    signInWithPassword(data);
   };
 
   return (
@@ -48,7 +51,7 @@ export default function LoginPage() {
 
         {/* Login Form */}
         <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 shadow-xl">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Email Field */}
             <div className="space-y-2">
               <Label
@@ -63,10 +66,7 @@ export default function LoginPage() {
                   id="email"
                   type="email"
                   required
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
+                  {...register("email")}
                   className="w-full pr-10 pl-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                   placeholder="example@email.com"
                 />
@@ -95,10 +95,7 @@ export default function LoginPage() {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   required
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
+                  {...register("password")}
                   className="w-full pr-10 pl-12 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                   placeholder="رمز عبور خود را وارد کنید"
                 />
@@ -116,30 +113,18 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Remember Me */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Input
-                  type="checkbox"
-                  id="remember"
-                  className="w-4 h-4 text-primary bg-background border-border rounded focus:ring-primary/20 focus:ring-2"
-                />
-                <Label
-                  htmlFor="remember"
-                  className="text-sm text-muted-foreground"
-                >
-                  مرا به خاطر بسپار
-                </Label>
-              </div>
-            </div>
-
             {/* Submit Button */}
             <Button
+              disabled={isPendingSignInWithPassword}
               type="submit"
               className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg py-3 text-base font-medium"
             >
               ورود
-              <ArrowLeft className="w-4 h-4 mr-2" />
+              {isPendingSignInWithPassword ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <ArrowLeft className="w-4 h-4 mr-2" />
+              )}
             </Button>
           </form>
 
