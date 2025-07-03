@@ -1,87 +1,29 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Mail, ArrowLeft, CheckCircle } from "lucide-react";
+import { Mail, ArrowLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import useAuth from "@/hooks/use-auth";
+import { AuthForgotPasswordType } from "@/types/user";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { forgetPasswordUserSchema } from "@/schemas/user-schema";
+import { useForm } from "react-hook-form";
 
 export default function ForgotPasswordPage() {
-  const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm<AuthForgotPasswordType>({
+    resolver: zodResolver(forgetPasswordUserSchema),
+  });
+  const { forgetPassword, isPendingForgetPassword } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    setIsSubmitted(true);
-    setIsLoading(false);
+  const onSubmit = (data: AuthForgotPasswordType) => {
+    forgetPassword(data);
   };
-
-  if (isSubmitted) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 flex items-center justify-center p-6 pt-22">
-        {/* Background decorative elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/10 rounded-full blur-3xl" />
-        </div>
-
-        <div className="relative w-full max-w-md">
-          {/* Success State */}
-          <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 shadow-xl text-center">
-            <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
-              <CheckCircle className="w-8 h-8 text-green-500" />
-            </div>
-
-            <h2 className="text-2xl font-bold text-foreground mb-4">
-              ایمیل ارسال شد!
-            </h2>
-
-            <p className="text-muted-foreground mb-6 leading-relaxed">
-              لینک بازنشانی رمز عبور به آدرس{" "}
-              <span className="font-medium text-foreground">{email}</span> ارسال
-              شد. لطفاً ایمیل خود را بررسی کنید.
-            </p>
-
-            <div className="space-y-4">
-              <Button
-                onClick={() => setIsSubmitted(false)}
-                variant="outline"
-                className="w-full"
-              >
-                ارسال مجدد
-              </Button>
-
-              <Link href="/login">
-                <Button variant="ghost" className="w-full">
-                  بازگشت به صفحه ورود
-                </Button>
-              </Link>
-            </div>
-          </div>
-
-          {/* Help Text */}
-          <div className="mt-6 text-center">
-            <p className="text-sm text-muted-foreground">
-              ایمیل دریافت نکردید؟{" "}
-              <button
-                onClick={() => setIsSubmitted(false)}
-                className="text-primary hover:underline font-medium"
-              >
-                بررسی کنید
-              </button>
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 flex items-center justify-center p-6 pt-22">
@@ -112,7 +54,7 @@ export default function ForgotPasswordPage() {
 
         {/* Forgot Password Form */}
         <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 shadow-xl">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Email Field */}
             <div className="space-y-2">
               <Label
@@ -127,8 +69,7 @@ export default function ForgotPasswordPage() {
                   id="email"
                   type="email"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  {...register("email")}
                   className="w-full pr-10 pl-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                   placeholder="example@email.com"
                 />
@@ -138,10 +79,10 @@ export default function ForgotPasswordPage() {
             {/* Submit Button */}
             <Button
               type="submit"
-              disabled={isLoading}
+              disabled={isPendingForgetPassword || !isValid}
               className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg py-3 text-base font-medium"
             >
-              {isLoading ? (
+              {isPendingForgetPassword ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
                   در حال ارسال...

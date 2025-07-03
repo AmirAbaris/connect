@@ -16,7 +16,11 @@ import useAuth from "@/hooks/use-auth";
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const { register, handleSubmit } = useForm<AuthUserType>({
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm<AuthUserType>({
     resolver: zodResolver(userSchema),
   });
   const { signUpWithPassword, isPendingSignUpWithPassword } = useAuth();
@@ -140,7 +144,7 @@ export default function SignupPage() {
             <Button
               type="submit"
               className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg py-3 text-base font-medium"
-              disabled={!acceptedTerms}
+              disabled={!acceptedTerms || !isValid}
             >
               {isPendingSignUpWithPassword ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
