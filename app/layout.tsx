@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "leaflet/dist/leaflet.css";
 import localFont from "next/font/local";
+import ReactQueryProvider from "@/providers/react-query-provider";
+import { Toaster } from "sonner";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -53,7 +55,8 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl" suppressHydrationWarning>
       <body className={`${vazirFont.variable} font-vazir antialiased`}>
-        {children}
+        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <Toaster richColors />
       </body>
     </html>
   );
