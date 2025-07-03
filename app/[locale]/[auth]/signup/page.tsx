@@ -3,25 +3,29 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Mail, Lock, ArrowLeft } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, ArrowLeft, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useForm } from "react-hook-form";
+import { AuthUserType } from "@/types/user";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { userSchema } from "@/schemas/user-schema";
+import useAuth from "@/hooks/use-auth";
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const { register, handleSubmit } = useForm<AuthUserType>({
+    resolver: zodResolver(userSchema),
   });
+  const { signUpWithPassword, isPendingSignUpWithPassword } = useAuth();
+
+  const onSubmit = (data: AuthUserType) => {
+    signUpWithPassword(data);
+  };
 
   const t = useTranslations("Signup");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle signup logic here
-    console.log("Signup:", formData);
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 flex items-center justify-center p-6 pt-22">
@@ -49,7 +53,7 @@ export default function SignupPage() {
 
         {/* Signup Form */}
         <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 shadow-xl">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Email Field */}
             <div className="space-y-2">
               <Label
@@ -64,10 +68,7 @@ export default function SignupPage() {
                   id="email"
                   type="email"
                   required
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
+                  {...register("email")}
                   className="w-full pr-10 pl-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                   placeholder={t("emailPlaceholder")}
                 />
@@ -88,10 +89,7 @@ export default function SignupPage() {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   required
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
+                  {...register("password")}
                   className="w-full pr-10 pl-12 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                   placeholder={t("passwordPlaceholder")}
                 />
@@ -119,6 +117,8 @@ export default function SignupPage() {
                 id="terms"
                 required
                 className="mt-1 w-4 h-4 text-primary bg-background border-border rounded focus:ring-primary/20 focus:ring-2"
+                checked={acceptedTerms}
+                onChange={(e) => setAcceptedTerms(e.target.checked)}
               />
               <Label
                 htmlFor="terms"
@@ -140,9 +140,13 @@ export default function SignupPage() {
             <Button
               type="submit"
               className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg py-3 text-base font-medium"
+              disabled={!acceptedTerms}
             >
-              {t("signup")}
-              <ArrowLeft className="w-4 h-4 mr-2" />
+              {isPendingSignUpWithPassword ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                t("signup")
+              )}
             </Button>
           </form>
 

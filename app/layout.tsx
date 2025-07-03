@@ -56,7 +56,7 @@ export default function RootLayout({
     <html lang="fa" dir="rtl" suppressHydrationWarning>
       <body className={`${vazirFont.variable} font-vazir antialiased`}>
         <ReactQueryProvider>{children}</ReactQueryProvider>
-        <Toaster richColors />
+        <Toaster className="!font-vazir" richColors />
       </body>
     </html>
   );
