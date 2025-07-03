@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "leaflet/dist/leaflet.css";
 import localFont from "next/font/local";
 
 const defaultUrl = process.env.VERCEL_URL

@@ -28,10 +28,10 @@ export default function WebAppNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-40 flex justify-center md:static md:mb-8 md:mt-8"
+      className="fixed bottom-0 left-0 right-0 z-50 flex justify-center sm:bottom-6"
       style={{ pointerEvents: "none" }}
     >
-      <div className="pointer-events-auto w-full max-w-lg md:max-w-lg md:rounded-2xl md:shadow-xl md:bg-background/90 md:mx-auto flex items-center justify-between px-2 md:px-4 py-2 md:py-3 bg-background/95 border-t border-border/60 md:border md:border-border/80 md:backdrop-blur-lg">
+      <div className="pointer-events-auto w-full max-w-2xl sm:max-w-lg sm:rounded-3xl sm:shadow-xl sm:bg-background/90 sm:mx-auto flex items-center justify-between px-2 sm:px-4 py-2 sm:py-3 bg-background/95 border-t border-border/60 sm:border sm:border-border/80 sm:backdrop-blur-lg">
         {NAV_ITEMS.map(({ key, label, icon: Icon }) => {
           const isActive = pathname.includes(key);
           return (
