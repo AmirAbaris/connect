@@ -1,10 +1,10 @@
 import { supabaseBrowserClient } from "@/lib/supabase/browser";
 
-export const signIn = async (
+export const signUp = async (
   email: string,
   password: string
 ): Promise<void> => {
-  const { error } = await supabaseBrowserClient.auth.signInWithPassword({
+  const { error } = await supabaseBrowserClient.auth.signUp({
     email,
     password,
   });
@@ -14,6 +14,18 @@ export const signIn = async (
 
 export const signOut = async (): Promise<void> => {
   const { error } = await supabaseBrowserClient.auth.signOut();
+
+  if (error) throw error;
+};
+
+export const signIn = async (
+  email: string,
+  password: string
+): Promise<void> => {
+  const { error } = await supabaseBrowserClient.auth.signInWithPassword({
+    email,
+    password,
+  });
 
   if (error) throw error;
 };
