@@ -15,6 +15,7 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
+import { PinDetailsDrawer } from "./pin-details-drawer";
 
 interface LeafletMapProps {
   center: LatLngExpression;
@@ -51,24 +52,11 @@ export default function LeafletMap({ center, zoom = 13 }: LeafletMapProps) {
             click: () => setDrawerOpen(true),
           }}
         >
-          <Popup>Your Marker Location</Popup>
+          <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+            <PinDetailsDrawer />
+          </Drawer>
         </Marker>
       </MapContainer>
-
-      <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
-        <DrawerContent>
-          <DrawerHeader>
-            <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-            <DrawerDescription>This action cannot be undone.</DrawerDescription>
-          </DrawerHeader>
-          <DrawerFooter>
-            <Button>Submit</Button>
-            <DrawerClose>
-              <Button variant="outline">Cancel</Button>
-            </DrawerClose>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
     </>
   );
 }
