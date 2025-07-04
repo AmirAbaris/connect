@@ -19,14 +19,12 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body>
+      <div dir="rtl">
         <NextIntlClientProvider>
           <Navbar />
           <main className="min-h-screen">{children}</main>
           <Footer />
         </NextIntlClientProvider>
-      </body>
-    </html>
+      </div>
   );
 }
