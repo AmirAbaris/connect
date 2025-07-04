@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import CompleteProfileFirstStep from "../components/complete-profile-first-step";
 import CompleteProfileSecondStep from "../components/complete-profile-second-step";
-import { FirstStepData } from "@/types/member";
+import { FirstStepData, SecondStepData } from "@/types/member";
 
 export default function CompleteProfileStep() {
   const params = useParams();
@@ -22,12 +22,18 @@ export default function CompleteProfileStep() {
     console.log(data);
   };
 
+  const handleSecondStepData = (data: SecondStepData) => {
+    console.log(data);
+  };
+
   return (
     <div>
       {step === 1 && (
         <CompleteProfileFirstStep handleData={handleFirstStepData} />
       )}
-      {step === 2 && <CompleteProfileSecondStep />}
+      {step === 2 && (
+        <CompleteProfileSecondStep handleData={handleSecondStepData} />
+      )}
     </div>
   );
 }

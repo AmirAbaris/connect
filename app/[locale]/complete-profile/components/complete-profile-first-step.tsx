@@ -124,8 +124,8 @@ export default function CompleteProfileFirstStep(props: Props) {
                     <SelectTrigger className="bg-background border border-input rounded-md px-4 py-2 text-base w-full">
                       <SelectValue placeholder="سن" />
                     </SelectTrigger>
-                    <SelectContent className="border border-input rounded-md">
-                      {Array.from({ length: 84 }, (_, i) => 16 + i).map((n) => (
+                    <SelectContent className="border border-input rounded-md max-h-48">
+                      {Array.from({ length: 84 }, (_, i) => 18 + i).map((n) => (
                         <SelectItem key={n} value={String(n)}>
                           {n}
                         </SelectItem>

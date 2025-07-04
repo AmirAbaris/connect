@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { InterestsModal } from "./interests-modal";
 import {
@@ -11,11 +10,37 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { secondFormPageSchema } from "@/schemas/member-schema";
+import { SecondStepData } from "@/types/member";
+import { useRouter } from "next/navigation";
 
-export default function CompleteProfileSecondStep() {
-  const [bio, setBio] = useState("");
-  const [interests, setInterests] = useState<string[]>([]);
+type Props = {
+  handleData: (data: SecondStepData) => void;
+};
+
+export default function CompleteProfileSecondStep(props: Props) {
+  const { handleData } = props;
   const [modalOpen, setModalOpen] = useState(false);
+  const [interests, setInterests] = useState<string[]>([]);
+  const router = useRouter();
+
+  const { register, setValue, handleSubmit } = useForm<SecondStepData>({
+    resolver: zodResolver(secondFormPageSchema),
+  });
+
+  // Sync interests state with form
+  const handleInterestsChange = (newInterests: string[]) => {
+    setInterests(newInterests);
+    setValue("interests", newInterests);
+  };
+
+  const onSubmit = (data: SecondStepData) => {
+    console.log("Form data:", data);
+    handleData(data);
+    router.push("/webapp/status");
+  };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-background px-4">
@@ -26,7 +51,11 @@ export default function CompleteProfileSecondStep() {
           </h1>
         </CardHeader>
         <CardContent className="flex flex-col items-center gap-6 pt-0">
-          <form className="w-full flex flex-col gap-5">
+          <form
+            id="profile-form"
+            onSubmit={handleSubmit(onSubmit)}
+            className="w-full flex flex-col gap-5"
+          >
             {/* Bio */}
             <div className="w-full flex flex-col gap-2">
               <Label
@@ -37,10 +66,7 @@ export default function CompleteProfileSecondStep() {
               </Label>
               <textarea
                 id="bio"
-                value={bio}
-                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                  setBio(e.target.value)
-                }
+                {...register("bio")}
                 placeholder="یه جمله درباره خودت..."
                 className="text-base min-h-[80px] resize-none bg-background border border-input rounded-md px-3 py-2 w-full"
               />
@@ -57,7 +83,7 @@ export default function CompleteProfileSecondStep() {
                     هیچ علاقه‌ای انتخاب نشده
                   </span>
                 ) : (
-                  interests.map((interest) => (
+                  interests.map((interest: string) => (
                     <span
                       key={interest}
                       className="inline-block bg-primary text-primary-foreground rounded-full px-3 py-1 text-sm font-medium"
@@ -87,7 +113,7 @@ export default function CompleteProfileSecondStep() {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         selected={interests}
-        onChange={setInterests}
+        onChange={handleInterestsChange}
       />
     </div>
   );
