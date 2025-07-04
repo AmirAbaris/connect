@@ -23,6 +23,7 @@ import { Controller, useForm } from "react-hook-form";
 import { firstFormPageSchema } from "@/schemas/member-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FirstStepData } from "@/types/member";
+import { useRouter } from "next/navigation";
 
 type Props = {
   handleData: (data: FirstStepData) => void;
@@ -30,6 +31,7 @@ type Props = {
 
 export default function CompleteProfileFirstStep(props: Props) {
   const { handleData } = props;
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -38,6 +40,11 @@ export default function CompleteProfileFirstStep(props: Props) {
   } = useForm<FirstStepData>({
     resolver: zodResolver(firstFormPageSchema),
   });
+
+  const onSubmit = (data: FirstStepData) => {
+    handleData(data);
+    router.push("/complete-profile/2");
+  };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-background px-4">
@@ -75,7 +82,7 @@ export default function CompleteProfileFirstStep(props: Props) {
 
           <form
             id="profile-form"
-            onSubmit={handleSubmit(handleData)}
+            onSubmit={handleSubmit(onSubmit)}
             className="w-full flex flex-col gap-5 mt-2"
           >
             {/* Name */}
@@ -127,6 +134,9 @@ export default function CompleteProfileFirstStep(props: Props) {
                   </Select>
                 )}
               />
+              <p className="text-sm text-muted-foreground mb-1">
+                حداقل سن: ۱۸ سال
+              </p>
             </div>
           </form>
         </CardContent>

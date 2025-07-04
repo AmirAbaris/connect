@@ -4,7 +4,7 @@ export const memberSchema = z.object({
   id: z.string(),
   uid: z.string(),
   name: z.string().min(1, "نام الزامی است"),
-  age: z.number().min(1, "سن الزامی است"),
+  age: z.number().min(18, "سن باید حداقل ۱۸ سال باشد"),
   bio: z.string().nullable().optional(),
   image: z.string().nullable().optional(),
   interests: z.array(z.string()).optional(),
