@@ -1,4 +1,5 @@
 import { supabaseBrowserClient } from "@/lib/supabase/browser";
+import { Session } from "@supabase/supabase-js";
 
 export const signUp = async (
   email: string,
@@ -48,4 +49,14 @@ export const resetPassword = async (newPassword: string): Promise<void> => {
   });
 
   if (error) throw error;
+};
+
+export const getSession = async (): Promise<Session> => {
+  const { data, error } = await supabaseBrowserClient.auth.getSession();
+
+  if (error) throw error;
+
+  if (!data.session) throw new Error("No session found");
+
+  return data.session;
 };

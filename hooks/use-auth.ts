@@ -1,5 +1,6 @@
 import {
   forgotPassword,
+  getSession,
   resetPassword,
   signIn,
   signOut,
@@ -72,7 +73,13 @@ export default function useAuth() {
     onSuccess: async () => {
       toast.success("رمز عبور با موفقیت تغییر کرد.");
       await queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
+      redirect("/auth/login");
     },
+  });
+
+  const getUserSession = useMutation({
+    mutationKey: ["auth", "getSession"],
+    mutationFn: getSession,
   });
 
   return {
@@ -90,5 +97,8 @@ export default function useAuth() {
 
     resetPassword: resetUserPassword.mutateAsync,
     isPendingResetPassword: resetUserPassword.isPending,
+
+    getUserSession: getUserSession.mutateAsync,
+    isPendingGetUserSession: getUserSession.isPending,
   };
 }
