@@ -28,7 +28,7 @@ export default function useAuth() {
       toast.success(
         "ثبت‌نام انجام شد. لطفاً ایمیل خود را برای تأیید بررسی کنید."
       );
-      redirect("/webapp/status");
+      redirect("/complete-profile/1");
     },
   });
 

@@ -9,7 +9,7 @@ const LeafletMap = dynamic(() => import("../components/leafletmap"), {
 export default function ExplorePage() {
   return (
     <div style={{ height: "100vh" }}>
-      <LeafletMap center={[51.505, -0.09]} zoom={13} />
+      <LeafletMap center={[35.8327, 50.9916]} zoom={13} />
     </div>
   );
 }
