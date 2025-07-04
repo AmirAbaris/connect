@@ -19,12 +19,12 @@ export default async function LocaleLayout({
   }
 
   return (
-      <div dir="rtl">
-        <NextIntlClientProvider>
-          <Navbar />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-        </NextIntlClientProvider>
-      </div>
+    <div dir="rtl">
+      <NextIntlClientProvider>
+        <Navbar />
+        <main className="min-h-screen">{children}</main>
+        <Footer />
+      </NextIntlClientProvider>
+    </div>
   );
 }

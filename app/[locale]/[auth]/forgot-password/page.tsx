@@ -21,8 +21,8 @@ export default function ForgotPasswordPage() {
   });
   const { forgetPassword, isPendingForgetPassword } = useAuth();
 
-  const onSubmit = (data: AuthForgotPasswordType) => {
-    forgetPassword(data);
+  const onSubmit = async (data: AuthForgotPasswordType) => {
+    await forgetPassword(data);
   };
 
   return (

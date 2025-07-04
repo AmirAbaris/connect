@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Mail, Lock, ArrowLeft, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -25,8 +25,8 @@ export default function SignupPage() {
   });
   const { signUpWithPassword, isPendingSignUpWithPassword } = useAuth();
 
-  const onSubmit = (data: AuthUserType) => {
-    signUpWithPassword(data);
+  const onSubmit = async (data: AuthUserType) => {
+    await signUpWithPassword(data);
   };
 
   const t = useTranslations("Signup");

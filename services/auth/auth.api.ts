@@ -42,22 +42,10 @@ export const forgotPassword = async (email: string): Promise<void> => {
   if (error) throw error;
 };
 
-export const resetPassword = async (
-  newPassword: string,
-  token: string | undefined
-): Promise<void> => {
-  if (!token) throw new Error("No token provided");
-
-  const { error: sessionError } = await supabaseBrowserClient.auth.setSession({
-    access_token: token,
-    refresh_token: "",
+export const resetPassword = async (newPassword: string): Promise<void> => {
+  const { error } = await supabaseBrowserClient.auth.updateUser({
+    password: newPassword,
   });
-  if (sessionError) throw sessionError;
 
-  const { error: updateUserError } =
-    await supabaseBrowserClient.auth.updateUser({
-      password: newPassword,
-    });
-
-  if (updateUserError) throw updateUserError;
+  if (error) throw error;
 };

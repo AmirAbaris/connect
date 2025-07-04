@@ -18,15 +18,13 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body>
-        <NextIntlClientProvider>
-          <main>
-            {children}
-            <WebAppNav />
-          </main>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <div dir="rtl">
+      <NextIntlClientProvider>
+        <main>
+          {children}
+          <WebAppNav />
+        </main>
+      </NextIntlClientProvider>
+    </div>
   );
 }

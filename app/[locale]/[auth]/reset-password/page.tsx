@@ -1,6 +1,5 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,26 +18,9 @@ export default function ResetPasswordPage() {
   });
   const { resetPassword, isPendingResetPassword } = useAuth();
 
-  const onSubmit = (data: AuthResetPasswordType) => {
-    if (!accessToken) return;
-    resetPassword({ ...data, accessToken });
+  const onSubmit = async (data: AuthResetPasswordType) => {
+    await resetPassword(data);
   };
-
-  const searchParams = useSearchParams();
-  const accessToken = searchParams.get("access_token");
-
-  if (!accessToken) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/30 p-6">
-        <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 shadow-xl w-full max-w-md text-center">
-          <h2 className="text-2xl font-bold mb-4">توکن دسترسی یافت نشد</h2>
-          <p className="text-muted-foreground">
-            لینک تغییر رمز عبور معتبر نیست یا منقضی شده است.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/30 p-6">

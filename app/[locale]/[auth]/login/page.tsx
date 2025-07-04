@@ -23,8 +23,8 @@ export default function LoginPage() {
   });
   const { signInWithPassword, isPendingSignInWithPassword } = useAuth();
 
-  const onSubmit = (data: AuthUserType) => {
-    signInWithPassword(data);
+  const onSubmit = async (data: AuthUserType) => {
+    await signInWithPassword(data);
   };
 
   return (

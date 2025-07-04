@@ -7,12 +7,12 @@ import {
 } from "@/services/auth/auth.api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 type SignInInput = { email: string; password: string };
 type ForgetPasswordInput = { email: string };
 type ResetPasswordInput = {
   newPassword: string;
-  accessToken: string | undefined;
 };
 
 export default function useAuth() {
@@ -23,20 +23,23 @@ export default function useAuth() {
     mutationFn: ({ email, password }: SignInInput) => signUp(email, password),
     onError: () =>
       toast.error("ثبت‌نام ناموفق بود. لطفاً ایمیل و رمز عبور را بررسی کنید."),
-    onSuccess: () =>
+    onSuccess: () => {
       toast.success(
         "ثبت‌نام انجام شد. لطفاً ایمیل خود را برای تأیید بررسی کنید."
-      ),
+      );
+      redirect("/webapp/status");
+    },
   });
 
   const signInWithPassword = useMutation({
     mutationKey: ["auth", "signIn"],
     mutationFn: ({ email, password }: SignInInput) => signIn(email, password),
-    onError: () =>
-      toast.error("ورود ناموفق بود. لطفاً ایمیل و رمز عبور را بررسی کنید."),
+    onError: () => {
+      toast.error("ورود ناموفق بود. لطفاً ایمیل و رمز عبور را بررسی کنید.");
+    },
     onSuccess: () => {
       toast.success("ورود موفقیت‌آمیز بود.");
-      queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
+      redirect("/webapp/status");
     },
   });
 
@@ -44,9 +47,10 @@ export default function useAuth() {
     mutationKey: ["auth", "signOut"],
     mutationFn: signOut,
     onError: () => toast.error("خروج ناموفق بود. لطفاً دوباره تلاش کنید."),
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("خروج موفقیت‌آمیز بود.");
-      queryClient.invalidateQueries();
+      await queryClient.invalidateQueries();
+      redirect("/");
     },
   });
 
@@ -61,13 +65,13 @@ export default function useAuth() {
 
   const resetUserPassword = useMutation({
     mutationKey: ["auth", "resetPassword"],
-    mutationFn: ({ newPassword, accessToken }: ResetPasswordInput) =>
-      resetPassword(newPassword, accessToken),
+    mutationFn: ({ newPassword }: ResetPasswordInput) =>
+      resetPassword(newPassword),
     onError: () =>
       toast.error("تغییر رمز عبور ناموفق بود. لطفاً دوباره تلاش کنید."),
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("رمز عبور با موفقیت تغییر کرد.");
-      queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
+      await queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
     },
   });
 
