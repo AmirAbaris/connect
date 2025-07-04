@@ -19,7 +19,7 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { firstFormPageSchema } from "@/schemas/member-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FirstStepData } from "@/types/member";
@@ -33,8 +33,8 @@ export default function CompleteProfileFirstStep(props: Props) {
   const {
     register,
     handleSubmit,
+    control,
     formState: { isValid, isSubmitting },
-    getValues,
   } = useForm<FirstStepData>({
     resolver: zodResolver(firstFormPageSchema),
   });
@@ -52,6 +52,7 @@ export default function CompleteProfileFirstStep(props: Props) {
         </CardHeader>
         <CardContent className="flex flex-col items-center gap-6 pt-0">
           {/* Profile Pic */}
+          {/* TODO: show from parent data */}
           {/* <div className="flex flex-col items-center gap-2">
             <Avatar className="w-32 h-32 border-4 border-border shadow bg-background">
               {getValues("image") ? (
@@ -105,18 +106,27 @@ export default function CompleteProfileFirstStep(props: Props) {
                 سن
                 <Badge variant="default">اجباری</Badge>
               </Label>
-              <Select {...register("age")}>
-                <SelectTrigger className="bg-background border border-input rounded-md px-4 py-2 text-base w-full focus:ring-2 focus:ring-primary focus:border-primary transition shadow-sm text-foreground">
-                  <SelectValue placeholder="سن" />
-                </SelectTrigger>
-                <SelectContent className="border border-input rounded-md">
-                  {Array.from({ length: 84 }, (_, i) => 16 + i).map((n) => (
-                    <SelectItem key={n} value={String(n)}>
-                      {n}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Controller
+                control={control}
+                name="age"
+                render={({ field }) => (
+                  <Select
+                    value={String(field.value) || ""}
+                    onValueChange={(v) => field.onChange(Number(v))}
+                  >
+                    <SelectTrigger className="bg-background border border-input rounded-md px-4 py-2 text-base w-full">
+                      <SelectValue placeholder="سن" />
+                    </SelectTrigger>
+                    <SelectContent className="border border-input rounded-md">
+                      {Array.from({ length: 84 }, (_, i) => 16 + i).map((n) => (
+                        <SelectItem key={n} value={String(n)}>
+                          {n}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
             </div>
           </form>
         </CardContent>
