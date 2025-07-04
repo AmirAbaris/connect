@@ -12,7 +12,6 @@ export const memberSchema = z.object({
 });
 
 export const firstFormPageSchema = memberSchema.pick({
-  image: true,
   name: true,
   age: true,
 });

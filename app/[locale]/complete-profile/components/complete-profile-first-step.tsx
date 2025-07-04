@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -20,21 +19,25 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+import { useForm } from "react-hook-form";
+import { firstFormPageSchema } from "@/schemas/member-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FirstStepData } from "@/types/member";
 
-export default function CompleteProfileFirstStep() {
-  const [profilePic] = useState<string | null>(null);
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(21);
+type Props = {
+  handleData: (data: FirstStepData) => void;
+};
 
-  const getInitials = (name: string) => {
-    const trimmed = name.trim();
-    if (!trimmed) return "";
-    return trimmed
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase();
-  };
+export default function CompleteProfileFirstStep(props: Props) {
+  const { handleData } = props;
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid, isSubmitting },
+    getValues,
+  } = useForm<FirstStepData>({
+    resolver: zodResolver(firstFormPageSchema),
+  });
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-background px-4">
@@ -49,13 +52,16 @@ export default function CompleteProfileFirstStep() {
         </CardHeader>
         <CardContent className="flex flex-col items-center gap-6 pt-0">
           {/* Profile Pic */}
-          <div className="flex flex-col items-center gap-2">
+          {/* <div className="flex flex-col items-center gap-2">
             <Avatar className="w-32 h-32 border-4 border-border shadow bg-background">
-              {profilePic ? (
-                <AvatarImage src={profilePic} alt={name || "profile"} />
-              ) : getInitials(name) ? (
+              {getValues("image") ? (
+                <AvatarImage
+                  src={getValues("image") as string}
+                  alt={getValues("name") || "profile"}
+                />
+              ) : getValues("name") ? (
                 <AvatarFallback className="text-4xl text-primary bg-background">
-                  {getInitials(name)}
+                  {getValues("name").slice(0, 2)}
                 </AvatarFallback>
               ) : (
                 <AvatarFallback className="flex items-center justify-center bg-background">
@@ -64,9 +70,13 @@ export default function CompleteProfileFirstStep() {
               )}
             </Avatar>
             <Button variant="outline">انتخاب عکس پروفایل</Button>
-          </div>
+          </div> */}
 
-          <form className="w-full flex flex-col gap-5 mt-2">
+          <form
+            id="profile-form"
+            onSubmit={handleSubmit(handleData)}
+            className="w-full flex flex-col gap-5 mt-2"
+          >
             {/* Name */}
             <div className="w-full flex flex-col gap-1">
               <Label
@@ -78,10 +88,7 @@ export default function CompleteProfileFirstStep() {
               </Label>
               <Input
                 id="name"
-                value={name}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setName(e.target.value)
-                }
+                {...register("name")}
                 placeholder="مثلاً آرش"
                 required
                 className="text-base"
@@ -98,10 +105,7 @@ export default function CompleteProfileFirstStep() {
                 سن
                 <Badge variant="default">اجباری</Badge>
               </Label>
-              <Select
-                value={String(age)}
-                onValueChange={(v) => setAge(Number(v))}
-              >
+              <Select {...register("age")}>
                 <SelectTrigger className="bg-background border border-input rounded-md px-4 py-2 text-base w-full focus:ring-2 focus:ring-primary focus:border-primary transition shadow-sm text-foreground">
                   <SelectValue placeholder="سن" />
                 </SelectTrigger>
@@ -117,7 +121,12 @@ export default function CompleteProfileFirstStep() {
           </form>
         </CardContent>
         <CardFooter className="flex flex-col gap-2 pt-0">
-          <Button type="submit" form="profile-form">
+          <Button
+            type="submit"
+            form="profile-form"
+            disabled={isSubmitting || !isValid}
+            className="w-full"
+          >
             ادامه
           </Button>
         </CardFooter>

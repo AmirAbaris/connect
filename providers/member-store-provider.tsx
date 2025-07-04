@@ -1,3 +1,5 @@
+"use client";
+
 import { createMemberStore, MemberStoreType } from "@/store";
 import { createContext, ReactNode, useContext, useRef } from "react";
 import { useStore } from "zustand";
