@@ -37,7 +37,6 @@ export default function CompleteProfileSecondStep(props: Props) {
   };
 
   const onSubmit = (data: SecondStepData) => {
-    console.log("Form data:", data);
     handleData(data);
     router.push("/webapp/status");
   };

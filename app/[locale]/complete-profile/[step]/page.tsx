@@ -4,10 +4,18 @@ import { useParams, useRouter } from "next/navigation";
 import CompleteProfileFirstStep from "../components/complete-profile-first-step";
 import CompleteProfileSecondStep from "../components/complete-profile-second-step";
 import { FirstStepData, SecondStepData } from "@/types/member";
+import { useMemberStore } from "@/providers/member-store-provider";
+import { useEffect } from "react";
 
 export default function CompleteProfileStep() {
   const params = useParams();
   const router = useRouter();
+  const member = useMemberStore((state) => state.member);
+  const addMember = useMemberStore((state) => state.addMember);
+
+  useEffect(() => {
+    console.log("Updated zus data", member);
+  }, [member]);
 
   const step = Number(params.step);
   const totalSteps = 2;
@@ -19,11 +27,11 @@ export default function CompleteProfileStep() {
   }
 
   const handleFirstStepData = (data: FirstStepData) => {
-    console.log(data);
+    addMember(data);
   };
 
   const handleSecondStepData = (data: SecondStepData) => {
-    console.log(data);
+    addMember(data);
   };
 
   return (

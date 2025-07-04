@@ -2,17 +2,17 @@ import { createStore } from "zustand/vanilla";
 import { Member } from "./types/member";
 
 export type MemberState = {
-  member: Member;
+  member: Partial<Member>;
 };
 
 export type MemberActions = {
-  addMember: (member: Member) => void;
+  addMember: (member: Partial<Member>) => void;
   clearMember: () => void;
 };
 
 export type MemberStoreType = MemberState & MemberActions;
 
-const defaultMember: Member = {
+const defaultMember: Partial<Member> = {
   id: "",
   uid: "",
   name: "",
@@ -27,7 +27,13 @@ export const createMemberStore = (initState?: Partial<MemberState>) => {
   return createStore<MemberStoreType>()((set) => ({
     member: initState?.member ?? defaultMember,
 
-    addMember: (member) => set(() => ({ member })),
+    addMember: (newData) =>
+      set((state) => ({
+        member: {
+          ...state.member,
+          ...newData,
+        },
+      })),
 
     clearMember: () => set(() => ({ member: defaultMember })),
   }));
