@@ -6,7 +6,7 @@ import {
   signOut,
   signUp,
 } from "@/services/auth/auth.api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 
@@ -77,9 +77,9 @@ export default function useAuth() {
     },
   });
 
-  const getUserSession = useMutation({
-    mutationKey: ["auth", "getSession"],
-    mutationFn: getSession,
+  const session = useQuery({
+    queryKey: ["auth", "getSession"],
+    queryFn: getSession,
   });
 
   return {
@@ -98,7 +98,7 @@ export default function useAuth() {
     resetPassword: resetUserPassword.mutateAsync,
     isPendingResetPassword: resetUserPassword.isPending,
 
-    getUserSession: getUserSession.mutateAsync,
-    isPendingGetUserSession: getUserSession.isPending,
+    session: session.data,
+    isLoadingUserSession: session.isLoading,
   };
 }

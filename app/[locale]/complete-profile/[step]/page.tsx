@@ -6,6 +6,7 @@ import CompleteProfileSecondStep from "../components/complete-profile-second-ste
 import { FirstStepData, Member, SecondStepData } from "@/types/member";
 import { useMemberStore } from "@/providers/member-store-provider";
 import useMember from "@/hooks/use-member";
+import useAuth from "@/hooks/use-auth";
 
 export default function CompleteProfileStep() {
   const params = useParams();
@@ -13,6 +14,7 @@ export default function CompleteProfileStep() {
   const memberState = useMemberStore((state) => state.member);
   const addMember = useMemberStore((state) => state.addMember);
   const { addToMember, isAdding } = useMember();
+  const { session, isLoadingUserSession } = useAuth();
 
   const step = Number(params.step);
   const totalSteps = 2;
@@ -30,9 +32,15 @@ export default function CompleteProfileStep() {
   const handleSecondStepData = async (data: SecondStepData) => {
     addMember(data);
 
+    if (isLoadingUserSession) return;
+    const uid = session?.user.id;
+    console.log("uid", uid);
+
     // db inset
-    console.log(memberState);
-    await addToMember(memberState as Omit<Member, "id">);
+    await addToMember({
+      newMember: memberState as Omit<Member, "id" | "uid">,
+      uid,
+    });
   };
 
   return (
@@ -43,7 +51,7 @@ export default function CompleteProfileStep() {
       {step === 2 && (
         <CompleteProfileSecondStep
           handleData={handleSecondStepData}
-          isLoading={isAdding}
+          isLoading={isAdding || isLoadingUserSession}
         />
       )}
     </div>

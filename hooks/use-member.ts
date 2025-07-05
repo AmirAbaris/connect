@@ -14,7 +14,13 @@ export default function useMember() {
 
   const addMember = useMutation({
     mutationKey: ["member"],
-    mutationFn: (newMember: Omit<Member, "id">) => createMember(newMember),
+    mutationFn: ({
+      newMember,
+      uid,
+    }: {
+      newMember: Omit<Member, "id" | "uid">;
+      uid: string | undefined;
+    }) => createMember(newMember, uid),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["member"] });
       toast.success("عضو با موفقیت اضافه شد");

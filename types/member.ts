@@ -6,6 +6,7 @@ import z from "zod";
 
 export type Member = {
   id: string;
+  uid: string | undefined;
   name: string;
   age: number;
   bio: string | null;
