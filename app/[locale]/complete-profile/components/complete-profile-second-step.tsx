@@ -14,17 +14,17 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { secondFormPageSchema } from "@/schemas/member-schema";
 import { SecondStepData } from "@/types/member";
-import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 type Props = {
   handleData: (data: SecondStepData) => void;
+  isLoading: boolean;
 };
 
 export default function CompleteProfileSecondStep(props: Props) {
-  const { handleData } = props;
+  const { handleData, isLoading } = props;
   const [modalOpen, setModalOpen] = useState(false);
   const [interests, setInterests] = useState<string[]>([]);
-  const router = useRouter();
 
   const { register, setValue, handleSubmit } = useForm<SecondStepData>({
     resolver: zodResolver(secondFormPageSchema),
@@ -38,7 +38,6 @@ export default function CompleteProfileSecondStep(props: Props) {
 
   const onSubmit = (data: SecondStepData) => {
     handleData(data);
-    router.push("/webapp/status");
   };
 
   return (
@@ -104,7 +103,11 @@ export default function CompleteProfileSecondStep(props: Props) {
         </CardContent>
         <CardFooter className="flex flex-col gap-2 pt-0">
           <Button type="submit" form="profile-form">
-            انجام شد
+            {isLoading ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              "انجام شد"
+            )}
           </Button>
         </CardFooter>
       </Card>

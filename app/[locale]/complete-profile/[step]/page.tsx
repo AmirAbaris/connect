@@ -3,19 +3,16 @@
 import { useParams, useRouter } from "next/navigation";
 import CompleteProfileFirstStep from "../components/complete-profile-first-step";
 import CompleteProfileSecondStep from "../components/complete-profile-second-step";
-import { FirstStepData, SecondStepData } from "@/types/member";
+import { FirstStepData, Member, SecondStepData } from "@/types/member";
 import { useMemberStore } from "@/providers/member-store-provider";
-import { useEffect } from "react";
+import useMember from "@/hooks/use-member";
 
 export default function CompleteProfileStep() {
   const params = useParams();
   const router = useRouter();
-  const member = useMemberStore((state) => state.member);
+  const memberState = useMemberStore((state) => state.member);
   const addMember = useMemberStore((state) => state.addMember);
-
-  useEffect(() => {
-    console.log("Updated zus data", member);
-  }, [member]);
+  const { addToMember, isAdding } = useMember();
 
   const step = Number(params.step);
   const totalSteps = 2;
@@ -30,8 +27,12 @@ export default function CompleteProfileStep() {
     addMember(data);
   };
 
-  const handleSecondStepData = (data: SecondStepData) => {
+  const handleSecondStepData = async (data: SecondStepData) => {
     addMember(data);
+
+    // db inset
+    console.log(memberState);
+    await addToMember(memberState as Omit<Member, "id">);
   };
 
   return (
@@ -40,7 +41,10 @@ export default function CompleteProfileStep() {
         <CompleteProfileFirstStep handleData={handleFirstStepData} />
       )}
       {step === 2 && (
-        <CompleteProfileSecondStep handleData={handleSecondStepData} />
+        <CompleteProfileSecondStep
+          handleData={handleSecondStepData}
+          isLoading={isAdding}
+        />
       )}
     </div>
   );

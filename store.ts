@@ -13,8 +13,6 @@ export type MemberActions = {
 export type MemberStoreType = MemberState & MemberActions;
 
 const defaultMember: Partial<Member> = {
-  id: "",
-  uid: "",
   name: "",
   age: 0,
   bio: null,
