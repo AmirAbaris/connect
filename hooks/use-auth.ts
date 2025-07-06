@@ -49,8 +49,8 @@ export default function useAuth() {
     mutationFn: signOut,
     onError: () => toast.error("خروج ناموفق بود. لطفاً دوباره تلاش کنید."),
     onSuccess: async () => {
-      toast.success("خروج موفقیت‌آمیز بود.");
       await queryClient.invalidateQueries();
+      toast.success("خروج موفقیت‌آمیز بود.");
       redirect("/");
     },
   });
