@@ -25,8 +25,8 @@ export default function SignupPage() {
   });
   const { signUpWithPassword, isPendingSignUpWithPassword } = useAuth();
 
-  const onSubmit = async (data: AuthUserType) => {
-    await signUpWithPassword(data);
+  const onSubmit = (data: AuthUserType) => {
+    signUpWithPassword(data);
   };
 
   const t = useTranslations("Signup");

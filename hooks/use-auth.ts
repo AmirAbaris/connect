@@ -83,19 +83,19 @@ export default function useAuth() {
   });
 
   return {
-    signUpWithPassword: signUpWithPassword.mutateAsync,
+    signUpWithPassword: signUpWithPassword.mutate,
     isPendingSignUpWithPassword: signUpWithPassword.isPending,
 
-    signInWithPassword: signInWithPassword.mutateAsync,
+    signInWithPassword: signInWithPassword.mutate,
     isPendingSignInWithPassword: signInWithPassword.isPending,
 
-    signOut: signOutUser.mutateAsync,
+    signOut: signOutUser.mutate,
     isPendingSignOut: signOutUser.isPending,
 
-    forgetPassword: forgetPassword.mutateAsync,
+    forgetPassword: forgetPassword.mutate,
     isPendingForgetPassword: forgetPassword.isPending,
 
-    resetPassword: resetUserPassword.mutateAsync,
+    resetPassword: resetUserPassword.mutate,
     isPendingResetPassword: resetUserPassword.isPending,
 
     session: session.data,

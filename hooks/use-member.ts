@@ -34,7 +34,7 @@ export default function useMember() {
   return {
     members: members.data,
     isLoadingMembers: members.isLoading,
-    addToMember: addMember.mutateAsync,
+    addToMember: addMember.mutate,
     isAdding: addMember.isPending,
   };
 }

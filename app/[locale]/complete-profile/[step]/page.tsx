@@ -29,7 +29,7 @@ export default function CompleteProfileStep() {
     addMember(data);
   };
 
-  const handleSecondStepData = async (data: SecondStepData) => {
+  const handleSecondStepData = (data: SecondStepData) => {
     addMember(data);
 
     if (isLoadingUserSession) return;
@@ -37,7 +37,7 @@ export default function CompleteProfileStep() {
     console.log("uid", uid);
 
     // db inset
-    await addToMember({
+    addToMember({
       newMember: memberState as Omit<Member, "id" | "uid">,
       uid,
     });

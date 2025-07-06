@@ -18,8 +18,8 @@ export default function ResetPasswordPage() {
   });
   const { resetPassword, isPendingResetPassword } = useAuth();
 
-  const onSubmit = async (data: AuthResetPasswordType) => {
-    await resetPassword(data);
+  const onSubmit = (data: AuthResetPasswordType) => {
+    resetPassword(data);
   };
 
   return (
