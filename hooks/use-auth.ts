@@ -8,7 +8,7 @@ import {
 } from "@/services/auth/auth.api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type SignInInput = { email: string; password: string };
 type ForgetPasswordInput = { email: string };
@@ -18,7 +18,7 @@ type ResetPasswordInput = {
 
 export default function useAuth() {
   const queryClient = useQueryClient();
-
+  const router = useRouter();
   const signUpWithPassword = useMutation({
     mutationKey: ["auth", "signUp"],
     mutationFn: ({ email, password }: SignInInput) => signUp(email, password),
@@ -28,7 +28,7 @@ export default function useAuth() {
       toast.success(
         "ثبت‌نام انجام شد. لطفاً ایمیل خود را برای تأیید بررسی کنید."
       );
-      redirect("/complete-profile/1");
+      router.push("/complete-profile/1");
     },
   });
 
@@ -40,7 +40,7 @@ export default function useAuth() {
     },
     onSuccess: () => {
       toast.success("ورود موفقیت‌آمیز بود.");
-      redirect("/webapp/status");
+      router.push("/webapp/status");
     },
   });
 
@@ -51,7 +51,7 @@ export default function useAuth() {
     onSuccess: async () => {
       await queryClient.invalidateQueries();
       toast.success("خروج موفقیت‌آمیز بود.");
-      redirect("/");
+      router.push("/");
     },
   });
 
@@ -73,7 +73,7 @@ export default function useAuth() {
     onSuccess: async () => {
       toast.success("رمز عبور با موفقیت تغییر کرد.");
       await queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
-      redirect("/auth/login");
+      router.push("/auth/login");
     },
   });
 
