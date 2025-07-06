@@ -23,6 +23,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { InterestsModal } from "../../complete-profile/components/interests-modal";
+import useAuth from "@/hooks/use-auth";
 
 const MOCK_PROFILE = {
   name: "سارا محمدی",
@@ -33,6 +34,7 @@ const MOCK_PROFILE = {
 };
 
 export default function AccountPage() {
+  const { signOut, isPendingSignOut } = useAuth();
   const [profilePic] = useState<string | null>(MOCK_PROFILE.avatar);
   const [name, setName] = useState(MOCK_PROFILE.name);
   const [age, setAge] = useState(MOCK_PROFILE.age);
@@ -173,6 +175,15 @@ export default function AccountPage() {
         <CardFooter className="flex flex-row-reverse gap-4 justify-end mt-4">
           <Button type="submit" className="px-8 py-3 text-lg font-bold">
             ذخیره تغییرات
+          </Button>
+          <Button
+            type="button"
+            variant="destructive"
+            onClick={() => signOut()}
+            disabled={isPendingSignOut}
+            className="px-8 py-3 text-lg font-bold"
+          >
+            {isPendingSignOut ? "در حال خروج..." : "خروج"}
           </Button>
         </CardFooter>
       </Card>
