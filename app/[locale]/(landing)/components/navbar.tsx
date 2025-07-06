@@ -72,11 +72,11 @@ export default function Navbar() {
               <SheetContent side="left">
                 <SheetHeader>
                   <SheetTitle className="text-left">
-                    <h1 className="text-2xl font-black">
+                    <span className="text-2xl font-black">
                       <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
                         {t("logo")}
                       </span>
-                    </h1>
+                    </span>
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-6 mt-8 p-4">
