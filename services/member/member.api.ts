@@ -18,8 +18,8 @@ export async function fetchCurrentMember(uid: string) {
     .eq("uid", uid)
     .maybeSingle();
   if (error) throw error;
-  
-  return data
+
+  return data;
 }
 
 export async function createMember(

@@ -8,18 +8,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import useAuth from "./use-auth";
-import { useEffect, useState } from "react";
 
 export default function useMember() {
-  const [uid, setUid] = useState<string | undefined>(undefined);
   const queryClient = useQueryClient();
   const router = useRouter();
   const { session } = useAuth();
-
-  useEffect(() => {
-    const userId = session?.user?.id;
-    setUid(userId);
-  }, [session]);
+  const uid = session?.user?.id;
 
   const members = useQuery({
     queryKey: ["member"],
@@ -60,5 +54,6 @@ export default function useMember() {
 
     currentMember: currentMember.data,
     isLoadingCurrentMember: currentMember.isLoading,
+    isErrorCurrentMember: currentMember.isError,
   };
 }
