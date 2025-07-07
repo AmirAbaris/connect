@@ -78,6 +78,7 @@ export default function useMember() {
     currentMember: currentMember.data,
     isLoadingCurrentMember: currentMember.isLoading,
     isErrorCurrentMember: currentMember.isError,
+    refetchCurrentMember: currentMember.refetch,
     isReady,
 
     update: update.mutate,

@@ -35,6 +35,7 @@ export default function AccountPage() {
     isLoadingCurrentMember,
     isErrorCurrentMember,
     isReady,
+    refetchCurrentMember,
   } = useMember();
 
   if (isLoadingCurrentMember || !isReady) {
@@ -103,7 +104,7 @@ export default function AccountPage() {
             <Button
               variant="default"
               size="lg"
-              onClick={() => window.location.reload()}
+              onClick={() => refetchCurrentMember()}
             >
               تلاش مجدد
             </Button>
