@@ -121,11 +121,11 @@ export default function AccountPage() {
                 </div>
                 <Skeleton className="h-10 w-40" />
               </div>
+              <Skeleton className="h-12 w-full rounded-md" />
             </form>
           </CardContent>
           <CardFooter className="flex flex-row gap-4 justify-end mt-4">
-            <Skeleton className="h-12 w-32 rounded-md" />
-            <Skeleton className="h-12 w-32 rounded-md" />
+            <Skeleton className="h-12 w-24 rounded-md" />
           </CardFooter>
         </Card>
       </div>
