@@ -11,6 +11,17 @@ export async function fetchMembers(): Promise<Member[] | null> {
   return data as Member[] | null;
 }
 
+export async function fetchCurrentMember(uid: string) {
+  const { data, error } = await supabaseBrowserClient
+    .from("member")
+    .select("*")
+    .eq("uid", uid)
+    .maybeSingle();
+  if (error) throw error;
+  
+  return data
+}
+
 export async function createMember(
   newMember: Omit<Member, "id" | "uid">,
   uid: string | undefined
@@ -41,5 +52,5 @@ export async function createMember(
 
   if (error) throw error;
 
-  return data as Member | null;
+  return data;
 }

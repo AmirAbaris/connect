@@ -1,15 +1,35 @@
-import { createMember, fetchMembers } from "@/services/member/member.api";
+import {
+  createMember,
+  fetchCurrentMember,
+  fetchMembers,
+} from "@/services/member/member.api";
 import { Member } from "@/types/member";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import useAuth from "./use-auth";
+import { useEffect, useState } from "react";
 
 export default function useMember() {
+  const [uid, setUid] = useState<string | undefined>(undefined);
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { session } = useAuth();
+
+  useEffect(() => {
+    const userId = session?.user?.id;
+    setUid(userId);
+  }, [session]);
+
   const members = useQuery({
     queryKey: ["member"],
     queryFn: fetchMembers,
+  });
+
+  const currentMember = useQuery({
+    queryKey: ["member", uid],
+    queryFn: () => fetchCurrentMember(uid as string),
+    enabled: !!uid,
   });
 
   const addMember = useMutation({
@@ -34,7 +54,11 @@ export default function useMember() {
   return {
     members: members.data,
     isLoadingMembers: members.isLoading,
+
     addToMember: addMember.mutate,
     isAdding: addMember.isPending,
+
+    currentMember: currentMember.data,
+    isLoadingCurrentMember: currentMember.isLoading,
   };
 }

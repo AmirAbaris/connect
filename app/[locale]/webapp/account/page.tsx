@@ -24,33 +24,89 @@ import {
 } from "@/components/ui/select";
 import { InterestsModal } from "../../complete-profile/components/interests-modal";
 import useAuth from "@/hooks/use-auth";
-
-const MOCK_PROFILE = {
-  name: "سارا محمدی",
-  age: 26,
-  avatar: null,
-  bio: "دانشجوی معماری، عاشق کتاب و قهوه. دوست دارم با آدمای جدید آشنا بشم!",
-  interests: ["کتاب", "موسیقی", "کافه گردی"],
-};
+import useMember from "@/hooks/use-member";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function AccountPage() {
   const { signOut, isPendingSignOut } = useAuth();
-  const [profilePic] = useState<string | null>(MOCK_PROFILE.avatar);
-  const [name, setName] = useState(MOCK_PROFILE.name);
-  const [age, setAge] = useState(MOCK_PROFILE.age);
-  const [bio, setBio] = useState(MOCK_PROFILE.bio);
-  const [interests, setInterests] = useState<string[]>(MOCK_PROFILE.interests);
   const [modalOpen, setModalOpen] = useState(false);
+  const { currentMember, isLoadingCurrentMember } = useMember();
 
-  const getInitials = (name: string) => {
-    const trimmed = name.trim();
-    if (!trimmed) return "";
-    return trimmed
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase();
-  };
+  if (isLoadingCurrentMember) {
+    return (
+      <div className="min-h-dvh pb-40 pt-12 flex flex-col items-center justify-center bg-background rtl px-2 sm:px-4">
+        <Card className="w-full max-w-2xl mx-auto border border-border bg-background text-foreground shadow-lg p-4 sm:p-8 flex flex-col gap-8 animate-pulse">
+          <CardHeader className="flex flex-col items-center gap-2 pb-2">
+            <Skeleton className="w-28 h-28 rounded-full mb-4" />
+            <Skeleton className="h-8 w-40 mb-2" />
+            <Skeleton className="h-5 w-64" />
+          </CardHeader>
+          <CardContent className="flex flex-col gap-8 pt-0">
+            <div className="flex flex-col items-center gap-2">
+              <Skeleton className="w-24 h-6 mb-2" />
+              <Skeleton className="w-32 h-10 mb-2" />
+            </div>
+            <Separator />
+            <form className="w-full flex flex-col gap-6">
+              <div className="flex flex-col sm:flex-row gap-6 w-full">
+                <div className="flex-1 flex flex-col gap-2">
+                  <Skeleton className="h-5 w-20 mb-1" />
+                  <Skeleton className="h-10 w-full" />
+                </div>
+                <div className="flex-1 flex flex-col gap-2">
+                  <Skeleton className="h-5 w-20 mb-1" />
+                  <Skeleton className="h-10 w-full" />
+                </div>
+              </div>
+              <div className="w-full flex flex-col gap-2">
+                <Skeleton className="h-5 w-20 mb-1" />
+                <Skeleton className="h-20 w-full" />
+              </div>
+              <div className="w-full flex flex-col gap-2">
+                <Skeleton className="h-5 w-32 mb-1" />
+                <div className="flex flex-wrap gap-2 mb-2">
+                  <Skeleton className="h-8 w-16 rounded-full" />
+                  <Skeleton className="h-8 w-16 rounded-full" />
+                  <Skeleton className="h-8 w-16 rounded-full" />
+                </div>
+                <Skeleton className="h-10 w-40" />
+              </div>
+            </form>
+          </CardContent>
+          <CardFooter className="flex flex-row gap-4 justify-end mt-4">
+            <Skeleton className="h-12 w-32 rounded-md" />
+            <Skeleton className="h-12 w-32 rounded-md" />
+          </CardFooter>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!currentMember) {
+    return (
+      <div className="min-h-dvh pb-40 pt-12 flex flex-col items-center justify-center bg-background px-2 sm:px-4">
+        <Card className="w-full max-w-md mx-auto border border-border bg-background text-foreground shadow-lg p-8 flex flex-col items-center gap-6">
+          <CardHeader className="flex flex-col items-center gap-2 pb-2 w-full">
+            <CardTitle className="text-2xl font-bold text-primary mt-2">
+              پروفایلی یافت نشد
+            </CardTitle>
+            <CardDescription className="text-base text-muted-foreground">
+              شما هنوز پروفایلی نساخته‌اید.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col items-center gap-4">
+            <Button
+              variant="default"
+              size="lg"
+              onClick={() => window.location.reload()}
+            >
+              تلاش مجدد
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-dvh pb-40 pt-12 flex flex-col items-center justify-center bg-background rtl px-2 sm:px-4">
@@ -67,15 +123,20 @@ export default function AccountPage() {
           {/* Profile Pic */}
           <div className="flex flex-col items-center gap-2">
             <Avatar className="w-28 h-28 border-4 border-border shadow bg-background">
-              {profilePic ? (
-                <AvatarImage src={profilePic} alt={name || "profile"} />
-              ) : getInitials(name) ? (
-                <AvatarFallback className="text-4xl text-primary bg-background">
-                  {getInitials(name)}
-                </AvatarFallback>
+              {currentMember ? (
+                currentMember.image ? (
+                  <AvatarImage
+                    src={currentMember.image}
+                    alt={currentMember.name || "profile"}
+                  />
+                ) : (
+                  <AvatarFallback className="text-4xl text-primary bg-background">
+                    {currentMember.name[0].toUpperCase()}
+                  </AvatarFallback>
+                )
               ) : (
-                <AvatarFallback className="flex items-center justify-center bg-background">
-                  <span className="text-3xl text-muted-foreground">👤</span>
+                <AvatarFallback className="text-4xl text-primary bg-background">
+                  ?
                 </AvatarFallback>
               )}
             </Avatar>
@@ -96,8 +157,8 @@ export default function AccountPage() {
                 </Label>
                 <Input
                   id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={currentMember?.name || ""}
+                  readOnly
                   placeholder="مثلاً آرش"
                   required
                   className="text-base"
@@ -111,10 +172,7 @@ export default function AccountPage() {
                 >
                   سن
                 </Label>
-                <Select
-                  value={String(age)}
-                  onValueChange={(v) => setAge(Number(v))}
-                >
+                <Select value={String(currentMember?.age || "")} disabled>
                   <SelectTrigger className="bg-background border border-input rounded-md px-4 py-2 text-base w-full">
                     <SelectValue placeholder="سن" />
                   </SelectTrigger>
@@ -138,8 +196,8 @@ export default function AccountPage() {
               </Label>
               <textarea
                 id="bio"
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
+                value={currentMember?.bio || ""}
+                readOnly
                 placeholder="یه جمله درباره خودت..."
                 className="text-base min-h-[80px] resize-none bg-background border border-input rounded-md px-3 py-2 w-full"
               />
@@ -150,12 +208,13 @@ export default function AccountPage() {
                 علاقه‌مندی‌ها
               </Label>
               <div className="flex flex-wrap gap-2 mb-2">
-                {interests.length === 0 ? (
+                {currentMember?.interests?.length === 0 ||
+                !currentMember?.interests ? (
                   <span className="text-muted-foreground text-base">
                     هیچ علاقه‌ای انتخاب نشده
                   </span>
                 ) : (
-                  interests.map((interest) => (
+                  currentMember.interests.map((interest: string) => (
                     <Badge key={interest} variant="default">
                       {interest}
                     </Badge>
@@ -172,10 +231,7 @@ export default function AccountPage() {
             </div>
           </form>
         </CardContent>
-        <CardFooter className="flex flex-row-reverse gap-4 justify-end mt-4">
-          <Button type="submit" className="px-8 py-3 text-lg font-bold">
-            ذخیره تغییرات
-          </Button>
+        <CardFooter className="flex flex-row gap-4 justify-end mt-4">
           <Button
             type="button"
             variant="destructive"
@@ -185,13 +241,16 @@ export default function AccountPage() {
           >
             {isPendingSignOut ? "در حال خروج..." : "خروج"}
           </Button>
+          <Button type="submit" className="px-8 py-3 text-lg font-bold">
+            ذخیره تغییرات
+          </Button>
         </CardFooter>
       </Card>
       <InterestsModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        selected={interests}
-        onChange={setInterests}
+        selected={currentMember?.interests || []}
+        onChange={() => {}}
       />
     </div>
   );
