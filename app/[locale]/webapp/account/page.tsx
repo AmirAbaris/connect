@@ -231,7 +231,7 @@ export default function AccountPage() {
                   سن
                 </Label>
                 <Select
-                  value={String(watch("age"))}
+                  value={String(currentMember?.age)}
                   onValueChange={(v) =>
                     setValue("age", Number(v), { shouldDirty: true })
                   }
