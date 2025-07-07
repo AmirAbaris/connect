@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardHeader,
@@ -12,24 +12,26 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
+import useMember from "@/hooks/use-member";
+import { Status } from "@/types/member";
 
 const STATUS_OPTIONS = [
   {
-    key: "ready",
+    key: "open" as Status,
     icon: "☕",
     color: "green",
     label: "آماده برای چت",
     desc: "دوست دارم با افراد جدید آشنا بشم!",
   },
   {
-    key: "ok",
+    key: "neutral" as Status,
     icon: "📖",
     color: "yellow",
     label: "اوکی با گپ کوتاه",
     desc: "مشغولم ولی خوشحال میشم ببینمت.",
   },
   {
-    key: "busy",
+    key: "close" as Status,
     icon: "🚫",
     color: "red",
     label: "مزاحم نشو",
@@ -40,8 +42,51 @@ const STATUS_OPTIONS = [
 const USER_LOCATION = "کافه مرکزی";
 
 export default function StatusPage() {
-  const [selected, setSelected] = useState("ready");
-  const [visible, setVisible] = useState(true);
+  const { currentMember, update, isPendingUpdate } = useMember();
+
+  const [selected, setSelected] = useState<Status>("open");
+  const [visible, setVisible] = useState(false);
+
+  // Initialize from currentMember data
+  useEffect(() => {
+    if (currentMember) {
+      setSelected(currentMember.status || "open");
+      setVisible(currentMember.status !== null);
+    }
+  }, [currentMember]);
+
+  const handleStatusChange = (status: Status) => {
+    setSelected(status);
+    if (visible) {
+      update({
+        fields: { status },
+        uid: currentMember?.uid,
+      });
+    }
+  };
+
+  const handleVisibilityChange = (isVisible: boolean) => {
+    setVisible(isVisible);
+    const newStatus = isVisible ? selected : null;
+    update({
+      fields: { status: newStatus },
+      uid: currentMember?.uid,
+    });
+  };
+
+  if (!currentMember) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-dvh pb-40 pt-12 bg-background rtl px-2 sm:px-4">
+        <Card className="w-full max-w-md mx-auto border border-border bg-background text-foreground shadow-lg p-8 flex flex-col items-center gap-6">
+          <CardHeader className="flex flex-col items-center gap-2 pb-2 w-full">
+            <CardTitle className="text-2xl font-bold text-primary mt-2">
+              در حال بارگذاری...
+            </CardTitle>
+          </CardHeader>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-dvh pb-40 pt-12 bg-background rtl px-2 sm:px-4">
@@ -52,7 +97,7 @@ export default function StatusPage() {
             variant="secondary"
             className="text-base sm:text-lg px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-accent/60 border-accent/40"
           >
-            📍 {USER_LOCATION}
+            📍 {currentMember.location || USER_LOCATION}
           </Badge>
           <CardDescription className="text-xs sm:text-base text-muted-foreground mt-0.5 sm:mt-1">
             موقعیت فعلی شما (بر اساس Google Places API)
@@ -71,7 +116,8 @@ export default function StatusPage() {
                 key={opt.key}
                 variant={selected === opt.key ? "default" : "outline"}
                 className="flex items-center gap-2 sm:gap-3 justify-start w-full text-base sm:text-lg font-bold rounded-xl min-h-14 sm:min-h-[56px]"
-                onClick={() => setSelected(opt.key)}
+                onClick={() => handleStatusChange(opt.key)}
+                disabled={!visible || isPendingUpdate}
               >
                 <span className="text-xl sm:text-3xl">{opt.icon}</span>
                 <span className="flex flex-col items-start">
@@ -90,7 +136,8 @@ export default function StatusPage() {
             </span>
             <Switch
               checked={visible}
-              onCheckedChange={setVisible}
+              onCheckedChange={handleVisibilityChange}
+              disabled={isPendingUpdate}
               aria-label="toggle visibility"
             />
             <span className="text-xs sm:text-base text-muted-foreground text-center sm:text-right">
