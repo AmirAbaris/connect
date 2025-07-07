@@ -122,7 +122,13 @@ export default function StatusPage() {
                 <span className="text-xl sm:text-3xl">{opt.icon}</span>
                 <span className="flex flex-col items-start">
                   <span>{opt.label}</span>
-                  <span className="text-xs sm:text-sm font-normal text-muted-foreground mt-0.5 sm:mt-1">
+                  <span
+                    className={`text-xs sm:text-sm font-normal mt-0.5 sm:mt-1 ${
+                      selected === opt.key
+                        ? "text-primary-foreground/70"
+                        : "text-muted-foreground"
+                    }`}
+                  >
                     {opt.desc}
                   </span>
                 </span>
