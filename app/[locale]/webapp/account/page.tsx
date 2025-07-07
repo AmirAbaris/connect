@@ -26,6 +26,16 @@ import { InterestsModal } from "../../complete-profile/components/interests-moda
 import useAuth from "@/hooks/use-auth";
 import useMember from "@/hooks/use-member";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const profileSchema = z.object({
+  name: z.string().min(2, "نام باید حداقل ۲ حرف باشد"),
+  age: z.number().min(16, "سن باید حداقل ۱۶ باشد").max(99, "سن معتبر نیست"),
+  bio: z.string().max(200, "بیو نباید بیشتر از ۲۰۰ کاراکتر باشد").optional(),
+  interests: z.array(z.string()).optional(),
+});
 
 export default function AccountPage() {
   const { signOut, isPendingSignOut } = useAuth();
@@ -36,7 +46,41 @@ export default function AccountPage() {
     isErrorCurrentMember,
     isReady,
     refetchCurrentMember,
+    update,
+    isPendingUpdate,
   } = useMember();
+  const { session } = useAuth();
+  const uid = session?.user?.id;
+
+  const form = useForm({
+    resolver: zodResolver(profileSchema),
+    defaultValues: {
+      name: currentMember?.name || "",
+      age: currentMember?.age || 18,
+      bio: currentMember?.bio || "",
+      interests: currentMember?.interests || [],
+    },
+    values: currentMember
+      ? {
+          name: currentMember.name || "",
+          age: currentMember.age || 18,
+          bio: currentMember.bio || "",
+          interests: currentMember.interests || [],
+        }
+      : undefined,
+  });
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isDirty },
+    watch,
+  } = form;
+
+  const onSubmit = (data: any) => {
+    update({ fields: data, uid });
+  };
 
   if (isLoadingCurrentMember || !isReady) {
     return (
@@ -137,7 +181,9 @@ export default function AccountPage() {
                   />
                 ) : (
                   <AvatarFallback className="text-4xl text-primary bg-background">
-                    {currentMember.name[0].toUpperCase()}
+                    {currentMember.name
+                      ? currentMember.name[0].toUpperCase()
+                      : "?"}
                   </AvatarFallback>
                 )
               ) : (
@@ -152,7 +198,10 @@ export default function AccountPage() {
           </div>
           <Separator />
           {/* Name & Age */}
-          <form className="w-full flex flex-col gap-6">
+          <form
+            className="w-full flex flex-col gap-6"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div className="flex flex-col sm:flex-row gap-6 w-full">
               <div className="flex-1 flex flex-col gap-2">
                 <Label
@@ -163,13 +212,16 @@ export default function AccountPage() {
                 </Label>
                 <Input
                   id="name"
-                  value={currentMember?.name || ""}
-                  readOnly
+                  {...register("name")}
                   placeholder="مثلاً آرش"
-                  required
                   className="text-base"
                   type="text"
                 />
+                {errors.name && (
+                  <span className="text-destructive text-sm mt-1">
+                    {errors.name.message as string}
+                  </span>
+                )}
               </div>
               <div className="flex-1 flex flex-col gap-2">
                 <Label
@@ -178,7 +230,12 @@ export default function AccountPage() {
                 >
                   سن
                 </Label>
-                <Select value={String(currentMember?.age || "")} disabled>
+                <Select
+                  value={String(watch("age"))}
+                  onValueChange={(v) =>
+                    setValue("age", Number(v), { shouldDirty: true })
+                  }
+                >
                   <SelectTrigger className="bg-background border border-input rounded-md px-4 py-2 text-base w-full">
                     <SelectValue placeholder="سن" />
                   </SelectTrigger>
@@ -190,6 +247,11 @@ export default function AccountPage() {
                     ))}
                   </SelectContent>
                 </Select>
+                {errors.age && (
+                  <span className="text-destructive text-sm mt-1">
+                    {errors.age.message as string}
+                  </span>
+                )}
               </div>
             </div>
             {/* Bio */}
@@ -202,11 +264,15 @@ export default function AccountPage() {
               </Label>
               <textarea
                 id="bio"
-                value={currentMember?.bio || ""}
-                readOnly
+                {...register("bio")}
                 placeholder="یه جمله درباره خودت..."
                 className="text-base min-h-[80px] resize-none bg-background border border-input rounded-md px-3 py-2 w-full"
               />
+              {errors.bio && (
+                <span className="text-destructive text-sm mt-1">
+                  {errors.bio.message as string}
+                </span>
+              )}
             </div>
             {/* Interests */}
             <div className="w-full flex flex-col gap-2">
@@ -214,13 +280,12 @@ export default function AccountPage() {
                 علاقه‌مندی‌ها
               </Label>
               <div className="flex flex-wrap gap-2 mb-2">
-                {currentMember?.interests?.length === 0 ||
-                !currentMember?.interests ? (
+                {(watch("interests") || []).length === 0 ? (
                   <span className="text-muted-foreground text-base">
                     هیچ علاقه‌ای انتخاب نشده
                   </span>
                 ) : (
-                  currentMember.interests.map((interest: string) => (
+                  (watch("interests") || []).map((interest: string) => (
                     <Badge key={interest} variant="default">
                       {interest}
                     </Badge>
@@ -235,29 +300,35 @@ export default function AccountPage() {
                 انتخاب علاقه‌مندی‌ها
               </Button>
             </div>
+            <Button
+              type="submit"
+              className="px-8 py-3 text-lg font-bold"
+              disabled={isPendingUpdate || !isDirty}
+            >
+              {isPendingUpdate ? "در حال ذخیره..." : "ذخیره تغییرات"}
+            </Button>
           </form>
+          <CardFooter className="flex flex-row gap-4 justify-end mt-4">
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => signOut()}
+              disabled={isPendingSignOut}
+              className="px-8 py-3 text-lg font-bold"
+            >
+              {isPendingSignOut ? "در حال خروج..." : "خروج"}
+            </Button>
+          </CardFooter>
+          <InterestsModal
+            open={modalOpen}
+            onClose={() => setModalOpen(false)}
+            selected={watch("interests") || []}
+            onChange={(ints) =>
+              setValue("interests", ints, { shouldDirty: true })
+            }
+          />
         </CardContent>
-        <CardFooter className="flex flex-row gap-4 justify-end mt-4">
-          <Button
-            type="button"
-            variant="destructive"
-            onClick={() => signOut()}
-            disabled={isPendingSignOut}
-            className="px-8 py-3 text-lg font-bold"
-          >
-            {isPendingSignOut ? "در حال خروج..." : "خروج"}
-          </Button>
-          <Button type="submit" className="px-8 py-3 text-lg font-bold">
-            ذخیره تغییرات
-          </Button>
-        </CardFooter>
       </Card>
-      <InterestsModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        selected={currentMember?.interests || []}
-        onChange={() => {}}
-      />
     </div>
   );
 }

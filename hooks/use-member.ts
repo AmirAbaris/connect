@@ -60,7 +60,6 @@ export default function useMember() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["member"] });
       toast.success("عضو با موفقیت بروزرسانی شد");
-      router.push("/webapp/status");
     },
 
     onError: () => {
