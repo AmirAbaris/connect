@@ -54,3 +54,40 @@ export async function createMember(
 
   return data;
 }
+
+export async function updateMember(
+  updates: Partial<Omit<Member, "id" | "uid">>,
+  uid: string | undefined
+): Promise<Member | null> {
+  if (!uid) {
+    throw new Error("User identifier (uid) is missing.");
+  }
+
+  if (Object.keys(updates).length === 0) {
+    throw new Error("No update fields provided.");
+  }
+
+  // Check if user exists
+  const { data: existing, error: fetchError } = await supabaseBrowserClient
+    .from("member")
+    .select("*")
+    .eq("uid", uid)
+    .maybeSingle();
+
+  if (fetchError) throw fetchError;
+  if (!existing) {
+    throw new Error("User does not exist.");
+  }
+
+  // Perform update
+  const { data, error } = await supabaseBrowserClient
+    .from("member")
+    .update(updates)
+    .eq("uid", uid)
+    .select("*")
+    .single();
+
+  if (error) throw error;
+
+  return data;
+}

@@ -2,6 +2,7 @@ import {
   createMember,
   fetchCurrentMember,
   fetchMembers,
+  updateMember,
 } from "@/services/member/member.api";
 import { Member } from "@/types/member";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -45,6 +46,27 @@ export default function useMember() {
     },
   });
 
+  const update = useMutation({
+    mutationKey: ["member"],
+    mutationFn: ({
+      fields,
+      uid,
+    }: {
+      fields: Partial<Omit<Member, "id" | "uid">>;
+      uid: string | undefined;
+    }) => updateMember(fields, uid),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["member"] });
+      toast.success("عضو با موفقیت بروزرسانی شد");
+      router.push("/webapp/status");
+    },
+
+    onError: () => {
+      toast.error("بروزرسانی عضو با خطا مواجه شد");
+    },
+  });
+
   return {
     members: members.data,
     isLoadingMembers: members.isLoading,
@@ -55,5 +77,8 @@ export default function useMember() {
     currentMember: currentMember.data,
     isLoadingCurrentMember: currentMember.isLoading,
     isErrorCurrentMember: currentMember.isError,
+
+    update: update.mutate,
+    isPendingUpdate: update.isPending,
   };
 }
