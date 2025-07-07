@@ -130,7 +130,7 @@ export default function StatusPage() {
             ))}
           </div>
           <Separator className="my-1 sm:my-2" />
-          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 mt-1 sm:mt-2 justify-center bg-muted/60 rounded-xl py-3 sm:py-4 px-3 sm:px-6">
+          <div className="flex flex-col items-center gap-2 sm:gap-4 mt-1 sm:mt-2 justify-center bg-muted/60 rounded-xl py-3 sm:py-4 px-3">
             <span className="text-base sm:text-lg font-bold">
               نمایش به دیگران:
             </span>
