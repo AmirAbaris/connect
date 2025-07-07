@@ -15,6 +15,7 @@ export default function useMember() {
   const router = useRouter();
   const { session } = useAuth();
   const uid = session?.user?.id;
+  const isReady = !!uid;
 
   const members = useQuery({
     queryKey: ["member"],
@@ -24,7 +25,7 @@ export default function useMember() {
   const currentMember = useQuery({
     queryKey: ["member", uid],
     queryFn: () => fetchCurrentMember(uid as string),
-    enabled: !!uid,
+    enabled: isReady,
   });
 
   const addMember = useMutation({
@@ -77,6 +78,7 @@ export default function useMember() {
     currentMember: currentMember.data,
     isLoadingCurrentMember: currentMember.isLoading,
     isErrorCurrentMember: currentMember.isError,
+    isReady,
 
     update: update.mutate,
     isPendingUpdate: update.isPending,

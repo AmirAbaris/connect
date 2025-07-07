@@ -30,10 +30,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function AccountPage() {
   const { signOut, isPendingSignOut } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
-  const { currentMember, isLoadingCurrentMember, isErrorCurrentMember } =
-    useMember();
+  const {
+    currentMember,
+    isLoadingCurrentMember,
+    isErrorCurrentMember,
+    isReady,
+  } = useMember();
 
-  if (isLoadingCurrentMember) {
+  if (isLoadingCurrentMember || !isReady) {
     return (
       <div className="min-h-dvh pb-40 pt-12 flex flex-col items-center justify-center bg-background rtl px-2 sm:px-4">
         <Card className="w-full max-w-2xl mx-auto border border-border bg-background text-foreground shadow-lg p-4 sm:p-8 flex flex-col gap-8 animate-pulse">
