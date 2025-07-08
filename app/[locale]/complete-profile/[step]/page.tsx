@@ -39,10 +39,7 @@ export default function CompleteProfileStep() {
 
     // db inset
     addToMember({
-      newMember: { ...memberState, ...data } as Omit<
-        Member,
-        "id" | "uid" | "image"
-      >,
+      newMember: { ...memberState, ...data } as Member,
       uid,
       image: memberState.image || null,
     });
