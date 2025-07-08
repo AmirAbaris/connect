@@ -24,6 +24,7 @@ import { firstFormPageSchema } from "@/schemas/member-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FirstStepData } from "@/types/member";
 import { useRouter } from "next/navigation";
+import { useRef } from "react";
 
 type Props = {
   handleData: (data: FirstStepData) => void;
@@ -37,12 +38,28 @@ export default function CompleteProfileFirstStep(props: Props) {
     handleSubmit,
     control,
     formState: { isValid, isSubmitting },
+    getValues,
+    setValue,
+    watch,
   } = useForm<FirstStepData>({
     resolver: zodResolver(firstFormPageSchema),
   });
 
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const imageFile = watch("image");
+
+  const handleImageButtonClick = () => {
+    imageInputRef.current?.click();
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) setValue("image", file);
+  };
+
   const onSubmit = (data: FirstStepData) => {
     handleData(data);
+    console.log('data from frist c');
     router.push("/complete-profile/2");
   };
 
@@ -59,12 +76,11 @@ export default function CompleteProfileFirstStep(props: Props) {
         </CardHeader>
         <CardContent className="flex flex-col items-center gap-6 pt-0">
           {/* Profile Pic */}
-          {/* TODO: show from parent data */}
-          {/* <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-2 relative">
             <Avatar className="w-32 h-32 border-4 border-border shadow bg-background">
-              {getValues("image") ? (
+              {imageFile ? (
                 <AvatarImage
-                  src={getValues("image") as string}
+                  src={URL.createObjectURL(imageFile as File)}
                   alt={getValues("name") || "profile"}
                 />
               ) : getValues("name") ? (
@@ -77,8 +93,47 @@ export default function CompleteProfileFirstStep(props: Props) {
                 </AvatarFallback>
               )}
             </Avatar>
-            <Button variant="outline">انتخاب عکس پروفایل</Button>
-          </div> */}
+            {imageFile && (
+              <Button
+                type="button"
+                size="icon"
+                variant="ghost"
+                className="absolute top-2 left-2 z-10 rounded-full bg-background/80 hover:bg-background"
+                onClick={() => setValue("image", null)}
+                tabIndex={-1}
+              >
+                <span className="sr-only">حذف عکس</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M18 6L6 18"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M6 6L18 18"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </Button>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              ref={imageInputRef}
+              className="hidden"
+              onChange={handleImageChange}
+            />
+            <Button
+              variant="outline"
+              type="button"
+              onClick={handleImageButtonClick}
+            >
+              انتخاب عکس پروفایل
+            </Button>
+          </div>
 
           <form
             id="profile-form"

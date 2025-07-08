@@ -35,10 +35,16 @@ export default function CompleteProfileStep() {
     if (isLoadingUserSession) return;
     const uid = session?.user.id;
 
+    console.log("memberState from parent", memberState);
+
     // db inset
     addToMember({
-      newMember: { ...memberState, ...data } as Omit<Member, "id" | "uid">,
+      newMember: { ...memberState, ...data } as Omit<
+        Member,
+        "id" | "uid" | "image"
+      >,
       uid,
+      image: memberState.image || null,
     });
   };
 

@@ -24,7 +24,8 @@ export async function fetchCurrentMember(uid: string) {
 
 export async function createMember(
   newMember: Omit<Member, "id" | "uid">,
-  uid: string | undefined
+  uid: string | undefined,
+  image?: File | null
 ): Promise<Member | null> {
   if (!uid) {
     throw new Error("User identifier (uid) is missing.");
@@ -43,10 +44,17 @@ export async function createMember(
     throw new Error("This user already exists.");
   }
 
+  let imageUrl = null;
+  if (image) {
+    imageUrl = await uploadMemberImage(image, uid);
+  }
+
+  console.log("image api", imageUrl);
+
   // Insert new user
   const { data, error } = await supabaseBrowserClient
     .from("member")
-    .insert({ ...newMember, uid })
+    .insert({ ...newMember, uid, image: imageUrl })
     .select("*")
     .single();
 
@@ -90,4 +98,33 @@ export async function updateMember(
   if (error) throw error;
 
   return data;
+}
+
+export async function uploadMemberImage(
+  file: File,
+  uid: string | undefined
+): Promise<string> {
+  if (!uid) {
+    throw new Error("User identifier (uid) is missing.");
+  }
+
+  const filePath = `members/${uid}/${file.name}`;
+
+  const { error } = await supabaseBrowserClient.storage
+    .from("images")
+    .upload(filePath, file, {
+      upsert: true,
+      contentType: file.type,
+    });
+
+  if (error) throw error;
+
+  // Generate public URL (or use signed URL if needed)
+  const { data } = supabaseBrowserClient.storage
+    .from("images")
+    .getPublicUrl(filePath);
+
+  console.log("image api itself", data.publicUrl);
+
+  return data.publicUrl;
 }

@@ -33,10 +33,12 @@ export default function useMember() {
     mutationFn: ({
       newMember,
       uid,
+      image,
     }: {
       newMember: Omit<Member, "id" | "uid">;
       uid: string | undefined;
-    }) => createMember(newMember, uid),
+      image: File | null;
+    }) => createMember(newMember, uid, image),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["member"] });
       toast.success("عضو با موفقیت اضافه شد");
