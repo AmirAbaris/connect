@@ -1,4 +1,5 @@
 import { supabaseBrowserClient } from "@/lib/supabase/browser";
+import { sanitizeFilename } from "@/lib/utils";
 import { Member } from "@/types/member";
 
 export async function fetchMembers(): Promise<Member[] | null> {
@@ -104,11 +105,10 @@ export async function uploadMemberImage(
   file: File,
   uid: string | undefined
 ): Promise<string> {
-  if (!uid) {
-    throw new Error("User identifier (uid) is missing.");
-  }
+  if (!uid) throw new Error("User identifier (uid) is missing.");
 
-  const filePath = `members/${uid}/${file.name}`;
+  const safeName = sanitizeFilename(file.name);
+  const filePath = `members/${uid}/${safeName}`;
 
   const { error } = await supabaseBrowserClient.storage
     .from("images")
@@ -119,12 +119,9 @@ export async function uploadMemberImage(
 
   if (error) throw error;
 
-  // Generate public URL (or use signed URL if needed)
   const { data } = supabaseBrowserClient.storage
     .from("images")
     .getPublicUrl(filePath);
-
-  console.log("image api itself", data.publicUrl);
 
   return data.publicUrl;
 }

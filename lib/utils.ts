@@ -41,3 +41,10 @@ export function offsetMembers(members: Member[], offset = 0.0001) {
   });
   return result;
 }
+
+export function sanitizeFilename(filename: string): string {
+  return filename
+    .replace(/\s+/g, "_") // Replace spaces with _
+    .replace(/[^\w.-]/g, "") // Remove non-safe characters
+    .toLowerCase();
+}

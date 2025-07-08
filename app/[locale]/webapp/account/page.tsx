@@ -29,12 +29,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRef } from "react";
 
 const profileSchema = z.object({
   name: z.string().min(2, "نام باید حداقل ۲ حرف باشد"),
   age: z.number().min(16, "سن باید حداقل ۱۶ باشد").max(99, "سن معتبر نیست"),
   bio: z.string().max(200, "بیو نباید بیشتر از ۲۰۰ کاراکتر باشد").optional(),
   interests: z.array(z.string()).optional(),
+  image: z.string().url().nullable().optional(),
 });
 
 export default function AccountPage() {
@@ -48,9 +50,12 @@ export default function AccountPage() {
     refetchCurrentMember,
     update,
     isPendingUpdate,
+    uploadImage,
+    isPendingUploadImage,
   } = useMember();
   const { session } = useAuth();
   const uid = session?.user?.id;
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm({
     resolver: zodResolver(profileSchema),
@@ -59,6 +64,7 @@ export default function AccountPage() {
       age: currentMember?.age || 18,
       bio: currentMember?.bio || "",
       interests: currentMember?.interests || [],
+      image: currentMember?.image || null,
     },
     values: currentMember
       ? {
@@ -66,6 +72,7 @@ export default function AccountPage() {
           age: currentMember.age || 18,
           bio: currentMember.bio || "",
           interests: currentMember.interests || [],
+          image: currentMember.image || null,
         }
       : undefined,
   });
@@ -80,6 +87,16 @@ export default function AccountPage() {
 
   const onSubmit = (data: any) => {
     update({ fields: data, uid });
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    uploadImage(file, {
+      onSuccess: (url: string) => {
+        setValue("image", url, { shouldDirty: true }); // set the URL and mark as dirty
+      },
+    });
   };
 
   if (isLoadingCurrentMember || !isReady) {
@@ -158,6 +175,8 @@ export default function AccountPage() {
     );
   }
 
+  const watchedImage = watch("image");
+
   return (
     <div className="min-h-dvh pb-40 pt-12 flex flex-col items-center justify-center bg-background rtl px-2 sm:px-4">
       <Card className="w-full max-w-2xl mx-auto border border-border bg-background text-foreground shadow-lg p-4 sm:p-8 flex flex-col gap-8">
@@ -173,28 +192,34 @@ export default function AccountPage() {
           {/* Profile Pic */}
           <div className="flex flex-col items-center gap-2">
             <Avatar className="w-28 h-28 border-4 border-border shadow bg-background">
-              {currentMember ? (
-                currentMember.image ? (
-                  <AvatarImage
-                    src={currentMember.image}
-                    alt={currentMember.name || "profile"}
-                  />
-                ) : (
-                  <AvatarFallback className="text-4xl text-primary bg-background">
-                    {currentMember.name
-                      ? currentMember.name[0].toUpperCase()
-                      : "?"}
-                  </AvatarFallback>
-                )
+              {watchedImage || currentMember?.image ? (
+                <AvatarImage
+                  src={watchedImage || currentMember?.image}
+                  alt={currentMember?.name || "profile"}
+                />
               ) : (
                 <AvatarFallback className="text-4xl text-primary bg-background">
-                  ?
+                  {currentMember?.name
+                    ? currentMember.name[0].toUpperCase()
+                    : "?"}
                 </AvatarFallback>
               )}
             </Avatar>
-            <Button variant="outline" className="mt-2">
-              تغییر عکس پروفایل
+            <Button
+              variant="outline"
+              className="mt-2"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              {isPendingUploadImage ? "در حال آپلود..." : "تغییر عکس پروفایل"}
             </Button>
+            <input
+              type="file"
+              accept="image/*"
+              {...register("image")}
+              ref={fileInputRef}
+              className="hidden"
+              onChange={handleImageChange}
+            />
           </div>
           <Separator />
           {/* Name & Age */}

@@ -3,6 +3,7 @@ import {
   fetchCurrentMember,
   fetchMembers,
   updateMember,
+  uploadMemberImage,
 } from "@/services/member/member.api";
 import { Member } from "@/types/member";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -69,6 +70,11 @@ export default function useMember() {
     },
   });
 
+  const uploadImage = useMutation({
+    mutationKey: ["member"],
+    mutationFn: (image: File) => uploadMemberImage(image, uid),
+  });
+
   return {
     members: members.data,
     isLoadingMembers: members.isLoading,
@@ -84,5 +90,8 @@ export default function useMember() {
 
     update: update.mutate,
     isPendingUpdate: update.isPending,
+
+    uploadImage: uploadImage.mutate,
+    isPendingUploadImage: uploadImage.isPending,
   };
 }
