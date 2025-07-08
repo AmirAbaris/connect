@@ -62,7 +62,7 @@ export default function StatusPage() {
     setSelected(status);
     if (visible) {
       update({
-        fields: { status },
+        fields: { status, location },
         uid: currentMember?.uid,
       });
     }
