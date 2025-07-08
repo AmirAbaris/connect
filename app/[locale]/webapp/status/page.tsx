@@ -61,7 +61,7 @@ export default function StatusPage() {
 
   const handleStatusChange = (status: Status) => {
     setSelected(status);
-    if (visible) {
+    if (visible && !isLoadingLocation) {
       update({
         fields: { status, location, lat: loc?.lat, lng: loc?.lng },
         uid: currentMember?.uid,

@@ -308,7 +308,7 @@ export default function AccountPage() {
               {isPendingUpdate ? "در حال ذخیره..." : "ذخیره تغییرات"}
             </Button>
           </form>
-          <CardFooter className="flex flex-row gap-4 justify-end mt-4">
+          <CardFooter className="flex flex-row gap-4 justify-end mt-4 px-0">
             <Button
               type="button"
               variant="destructive"
