@@ -16,11 +16,5 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  return (
-    <html lang={locale} suppressHydrationWarning>
-      <body>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
-      </body>
-    </html>
-  );
+  return <NextIntlClientProvider>{children}</NextIntlClientProvider>;
 }
