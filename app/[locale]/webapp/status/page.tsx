@@ -16,6 +16,7 @@ import useMember from "@/hooks/use-member";
 import { Status } from "@/types/member";
 import { Skeleton } from "@/components/ui/skeleton";
 import useMap from "@/hooks/use-map";
+import { Loader2 } from "lucide-react";
 
 const STATUS_OPTIONS = [
   {
@@ -93,7 +94,7 @@ export default function StatusPage() {
     });
   };
 
-  if (isPendingUpdate || geoIsLoading) {
+  if (!currentMember || geoIsLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-dvh pb-40 pt-12 bg-background rtl px-2 sm:px-4">
         <Card className="w-full max-w-3xl mx-auto border border-border bg-background text-foreground shadow-lg p-3 sm:p-6 md:p-10 flex flex-col gap-6 sm:gap-8">
@@ -175,6 +176,9 @@ export default function StatusPage() {
                     {opt.desc}
                   </span>
                 </span>
+                {isPendingUpdate && selected === opt.key && (
+                  <Loader2 className="mr-auto h-4 w-4 animate-spin" />
+                )}
               </Button>
             ))}
           </div>
@@ -188,7 +192,11 @@ export default function StatusPage() {
               onCheckedChange={handleVisibilityChange}
               disabled={isPendingUpdate}
               aria-label="toggle visibility"
-            />
+            >
+              {isPendingUpdate && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
+            </Switch>
             <span className="text-xs sm:text-base text-muted-foreground text-center sm:text-right">
               {visible
                 ? "وضعیت شما برای دیگران قابل مشاهده است"
