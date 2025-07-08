@@ -82,8 +82,8 @@ export default function CTASection() {
                     <span>⭐</span>
                   </div>
                   <p className="text-foreground/90 italic leading-relaxed flex-1">
-                    "کانکت واقعاً زندگی اجتماعی من رو تغییر داد! حالا می‌تونم
-                    بدون نگرانی ببینم چه کسی آماده چت هست."
+                    &ldquo;کانکت واقعاً زندگی اجتماعی من رو تغییر داد! حالا
+                    می‌تونم بدون نگرانی ببینم چه کسی آماده چت هست.&rdquo;
                   </p>
                   <div className="flex flex-row-reverse justify-end items-center gap-3 pt-2">
                     <div>
@@ -105,8 +105,8 @@ export default function CTASection() {
                     <span>⭐</span>
                   </div>
                   <p className="text-foreground/90 italic leading-relaxed flex-1">
-                    "بهترین چیز اینه که می‌تونم وضعیت خودم رو کنترل کنم. دیگه
-                    نگران مزاحمت نیستم!"
+                    &ldquo;بهترین چیز اینه که می‌تونم وضعیت خودم رو کنترل کنم.
+                    دیگه نگران مزاحمت نیستم!&rdquo;
                   </p>
                   <div className="flex flex-row-reverse justify-end items-center gap-3 pt-2">
                     <div>
