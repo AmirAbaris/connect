@@ -22,16 +22,19 @@ const STATUS_OPTIONS = {
     icon: "☕",
     color: "green",
     label: "آماده برای چت",
+    status: "open",
   },
   neutral: {
     icon: "📖",
     color: "yellow",
     label: "اوکی با گپ کوتاه",
+    status: "neutral",
   },
   close: {
     icon: "🚫",
     color: "red",
     label: "مزاحم نشو",
+    status: "close",
   },
 };
 
