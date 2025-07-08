@@ -62,7 +62,7 @@ export default function StatusPage() {
     setSelected(status);
     if (visible) {
       update({
-        fields: { status, location },
+        fields: { status, location, lat: loc?.lat, lng: loc?.lng },
         uid: currentMember?.uid,
       });
     }
@@ -83,8 +83,6 @@ export default function StatusPage() {
       }
     );
   }, []);
-
-  console.log(loc);
 
   const handleVisibilityChange = (isVisible: boolean) => {
     setVisible(isVisible);

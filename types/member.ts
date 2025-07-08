@@ -13,6 +13,8 @@ export type Member = {
   image: string | null;
   interests: string[];
   location: string | null;
+  lat?: number | null;
+  lng?: number | null;
   status: Status | null;
 };
 

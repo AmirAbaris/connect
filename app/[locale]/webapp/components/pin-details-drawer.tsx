@@ -10,80 +10,94 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Member } from "@/types/member";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
-const mockData = {
-  cafe: "کافه مرکزی",
-  user: {
-    name: "سارا محمدی",
-    age: 26,
-    avatar: null, // or a URL
-    interests: ["کتاب", "موسیقی", "کافه گردی"],
-    bio: "دانشجوی معماری، عاشق کتاب و قهوه. دوست دارم با آدمای جدید آشنا بشم!",
-    status: {
-      color: "green", // green | yellow | red
-      icon: "☕", // ☕ | 📖 | 🚫
-      label: "آماده برای چت، ملاقات با افراد جدید، یا شاید بیشتر",
-    },
+type Props = {
+  data: Member;
+};
+
+const STATUS_OPTIONS = {
+  open: {
+    icon: "☕",
+    color: "green",
+    label: "آماده برای چت",
+  },
+  neutral: {
+    icon: "📖",
+    color: "yellow",
+    label: "اوکی با گپ کوتاه",
+  },
+  close: {
+    icon: "🚫",
+    color: "red",
+    label: "مزاحم نشو",
   },
 };
 
-export function PinDetailsDrawer() {
-  const { cafe, user } = mockData;
+export function PinDetailsDrawer({ data }: Props) {
+  const { location, name, age, interests, bio, status, image } = data;
+  const statusObj = status ? STATUS_OPTIONS[status] : null;
+
   return (
     <DrawerContent className="rounded-t-2xl max-w-2xl p-0 rtl flex flex-col items-center justify-center min-h-[60vh] mx-auto w-full text-center">
       <Card className="w-full border-none shadow-none bg-transparent p-0 flex flex-col items-center">
         <CardHeader className="flex w-full flex-col items-center gap-2 pb-2">
           <span className="text-base text-muted-foreground font-medium mt-3">
-            {cafe}
+            {location || "نامشخص"}
           </span>
           <Avatar className="w-20 h-20 border-4 border-primary/30 shadow bg-background">
-            {user.avatar ? (
-              <AvatarImage src={user.avatar} alt={user.name} />
+            {image ? (
+              <AvatarImage src={image} alt={name} />
             ) : (
               <AvatarFallback className="text-3xl text-primary bg-background">
-                {user.name[0]}
+                {name?.[0] || "?"}
               </AvatarFallback>
             )}
           </Avatar>
-          <div
-            className={`flex items-center gap-2 mt-2 px-4 py-1 rounded-xl font-semibold text-sm
-              ${
-                user.status.color === "green"
-                  ? "bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400"
-                  : ""
-              }
-              ${
-                user.status.color === "yellow"
-                  ? "bg-yellow-500/10 border border-yellow-500/20 text-yellow-600 dark:text-yellow-400"
-                  : ""
-              }
-              ${
-                user.status.color === "red"
-                  ? "bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 opacity-80"
-                  : ""
-              }
-            `}
-          >
-            <span className="text-lg">{user.status.icon}</span>
-            <span>{user.status.label}</span>
-          </div>
-          <CardTitle className="text-2xl font-bold text-primary mt-2">
-            {user.name}
-          </CardTitle>
-          <span className="text-base text-muted-foreground">
-            {user.age} ساله
+          {statusObj && (
+            <div
+              className={`flex items-center gap-2 mt-2 px-4 py-1 rounded-xl font-semibold text-sm
+                ${
+                  statusObj.color === "green"
+                    ? "bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400"
+                    : ""
+                }
+                ${
+                  statusObj.color === "yellow"
+                    ? "bg-yellow-500/10 border border-yellow-500/20 text-yellow-600 dark:text-yellow-400"
+                    : ""
+                }
+                ${
+                  statusObj.color === "red"
+                    ? "bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 opacity-80"
+                    : ""
+                }
+              `}
+            >
+              <span className="text-lg">{statusObj.icon}</span>
+              <span>{statusObj.label}</span>
+            </div>
+          )}
+          <span className="text-sm text-muted-foreground">
+            {age ? `${age} ساله` : ""}
           </span>
         </CardHeader>
         <CardContent className="flex flex-col gap-4 items-center">
+          <DialogTitle className="text-2xl font-bold text-primary mt-2">
+            {name}
+          </DialogTitle>
           <div className="flex flex-wrap gap-2 justify-center">
-            {user.interests.map((interest) => (
-              <Badge key={interest} variant="default">
-                {interest}
-              </Badge>
-            ))}
+            {interests?.length
+              ? interests.map((interest) => (
+                  <Badge key={interest} variant="default">
+                    {interest}
+                  </Badge>
+                ))
+              : null}
           </div>
           <DrawerDescription className="text-base text-foreground text-center mt-2">
-            {user.bio}
+            {bio}
           </DrawerDescription>
         </CardContent>
         <DrawerFooter className="flex flex-row gap-2 justify-center mt-4">

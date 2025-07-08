@@ -7,10 +7,12 @@ import { LatLngExpression } from "leaflet";
 import { useState } from "react";
 import { Drawer } from "@/components/ui/drawer";
 import { PinDetailsDrawer } from "./pin-details-drawer";
+import { Member } from "@/types/member";
 
 interface LeafletMapProps {
   center: LatLngExpression;
   zoom?: number;
+  members: Member[];
 }
 
 const customIcon = L.icon({
@@ -21,12 +23,14 @@ const customIcon = L.icon({
   shadowUrl: undefined,
 });
 
-export default function LeafletMap({ center, zoom = 13 }: LeafletMapProps) {
+const center = [35.8327, 50.9916];
+
+export default function LeafletMap({ zoom = 13, members }: LeafletMapProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   return (
     <>
       <MapContainer
-        center={center}
+        center={center as LatLngExpression}
         zoom={zoom}
         style={{ height: "100%", width: "100%", zIndex: 1 }}
       >
@@ -35,18 +39,20 @@ export default function LeafletMap({ center, zoom = 13 }: LeafletMapProps) {
           attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
         />
 
-        {/* Use the custom icon here */}
-        <Marker
-          position={center}
-          icon={customIcon}
-          eventHandlers={{
-            click: () => setDrawerOpen(true),
-          }}
-        >
-          <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
-            <PinDetailsDrawer />
-          </Drawer>
-        </Marker>
+        {members?.map((member) => (
+          <Marker
+            key={member.id}
+            position={[member.lat || 0, member.lng || 0]}
+            icon={customIcon}
+            eventHandlers={{
+              click: () => setDrawerOpen(true),
+            }}
+          >
+            <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+              <PinDetailsDrawer data={member} />
+            </Drawer>
+          </Marker>
+        ))}
       </MapContainer>
     </>
   );
