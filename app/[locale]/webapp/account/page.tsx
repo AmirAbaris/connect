@@ -85,6 +85,7 @@ export default function AccountPage() {
     watch,
   } = form;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
     update({ fields: data, uid });
   };
