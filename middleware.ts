@@ -18,6 +18,14 @@ export default function middleware(request: NextRequest) {
     }
   }
 
+  if (pathname.startsWith("/fa/auth")) {
+    const token = request.cookies.get(tokenKey)?.value;
+    if (token) {
+      const homeUrl = new URL("/fa/webapp/account", request.url);
+      return NextResponse.redirect(homeUrl);
+    }
+  }
+
   return intlMiddleware(request);
 }
 
