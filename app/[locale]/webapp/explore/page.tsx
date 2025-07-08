@@ -2,7 +2,6 @@
 
 import useMember from "@/hooks/use-member";
 import dynamic from "next/dynamic";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Loader } from "lucide-react";
 
 const LeafletMap = dynamic(() => import("../components/leafletmap"), {
