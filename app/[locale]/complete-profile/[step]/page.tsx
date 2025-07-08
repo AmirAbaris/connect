@@ -34,7 +34,6 @@ export default function CompleteProfileStep() {
 
     if (isLoadingUserSession) return;
     const uid = session?.user.id;
-    console.log("uid", uid);
 
     // db inset
     addToMember({

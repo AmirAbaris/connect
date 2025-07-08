@@ -1,22 +1,23 @@
 "use client";
 
-import { Skeleton } from "@/components/ui/skeleton";
 import useMember from "@/hooks/use-member";
 import dynamic from "next/dynamic";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Loader } from "lucide-react";
 
 const LeafletMap = dynamic(() => import("../components/leafletmap"), {
   ssr: false,
 });
 
 export default function ExplorePage() {
-  const { members } = useMember();
+  const { members, isLoadingMembers } = useMember();
 
   const visibleMembers = members?.filter((item) => item.status);
 
-  if (!members)
+  if (isLoadingMembers)
     return (
-      <div className="flex flex-col items-center justify-center h-dvh">
-        <h1>اوپس</h1>
+      <div className="flex items-center justify-center h-dvh w-full">
+        <Loader className="animate-spin text-primary" />
       </div>
     );
 
