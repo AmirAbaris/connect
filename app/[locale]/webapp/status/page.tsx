@@ -22,21 +22,18 @@ const STATUS_OPTIONS = [
   {
     key: "open" as Status,
     icon: "☕",
-    color: "green",
     label: "آماده برای چت",
     desc: "دوست دارم با افراد جدید آشنا بشم!",
   },
   {
     key: "neutral" as Status,
     icon: "📖",
-    color: "yellow",
     label: "اوکی با گپ کوتاه",
     desc: "مشغولم ولی خوشحال میشم ببینمت.",
   },
   {
     key: "close" as Status,
     icon: "🚫",
-    color: "red",
     label: "مزاحم نشو",
     desc: "در حال کار یا استراحت هستم.",
   },
@@ -59,16 +56,6 @@ export default function StatusPage() {
     }
   }, [currentMember]);
 
-  const handleStatusChange = (status: Status) => {
-    setSelected(status);
-    if (visible && !isLoadingLocation) {
-      update({
-        fields: { status, location, lat: loc?.lat, lng: loc?.lng },
-        uid: currentMember?.uid,
-      });
-    }
-  };
-
   // a new effect for looking at user geo data
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -84,6 +71,30 @@ export default function StatusPage() {
       }
     );
   }, []);
+
+  useEffect(() => {
+    if (currentMember) {
+      update({
+        fields: {
+          status: currentMember.status,
+          location,
+          lat: loc?.lat,
+          lng: loc?.lng,
+        },
+        uid: currentMember?.uid,
+      });
+    }
+  }, [location]);
+
+  const handleStatusChange = (status: Status) => {
+    setSelected(status);
+    if (visible && !isLoadingLocation) {
+      update({
+        fields: { status, location, lat: loc?.lat, lng: loc?.lng },
+        uid: currentMember?.uid,
+      });
+    }
+  };
 
   const handleVisibilityChange = (isVisible: boolean) => {
     setVisible(isVisible);
