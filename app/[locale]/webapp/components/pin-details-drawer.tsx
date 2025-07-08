@@ -49,7 +49,7 @@ export function PinDetailsDrawer({ data }: Props) {
           <span className="text-base text-muted-foreground font-medium mt-3">
             {location || "نامشخص"}
           </span>
-          <Avatar className="w-20 h-20 border-4 border-primary/30 shadow bg-background">
+          <Avatar className="w-40 h-40 border-4 border-primary/30 shadow bg-background">
             {image ? (
               <AvatarImage src={image} alt={name} />
             ) : (
