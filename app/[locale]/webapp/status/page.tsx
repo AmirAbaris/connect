@@ -72,20 +72,6 @@ export default function StatusPage() {
     );
   }, []);
 
-  useEffect(() => {
-    if (currentMember) {
-      update({
-        fields: {
-          status: currentMember.status,
-          location,
-          lat: loc?.lat,
-          lng: loc?.lng,
-        },
-        uid: currentMember?.uid,
-      });
-    }
-  }, [location]);
-
   const handleStatusChange = (status: Status) => {
     setSelected(status);
     if (visible && !isLoadingLocation) {
