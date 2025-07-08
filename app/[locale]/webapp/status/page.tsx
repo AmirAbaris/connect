@@ -14,6 +14,8 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import useMember from "@/hooks/use-member";
 import { Status } from "@/types/member";
+import { Skeleton } from "@/components/ui/skeleton";
+import useMap from "@/hooks/use-map";
 
 const STATUS_OPTIONS = [
   {
@@ -39,13 +41,14 @@ const STATUS_OPTIONS = [
   },
 ];
 
-const USER_LOCATION = "کافه مرکزی";
-
 export default function StatusPage() {
   const { currentMember, update, isPendingUpdate } = useMember();
 
   const [selected, setSelected] = useState<Status>("open");
   const [visible, setVisible] = useState(false);
+  const [loc, setLoc] = useState<{ lat: number; lng: number } | null>(null);
+  const [geoIsLoading, setGeoIsLoading] = useState(true);
+  const { location, isLoadingLocation } = useMap(loc);
 
   // Initialize from currentMember data
   useEffect(() => {
@@ -65,6 +68,24 @@ export default function StatusPage() {
     }
   };
 
+  // a new effect for looking at user geo data
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLoc({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+        setGeoIsLoading(false);
+      },
+      () => {
+        setGeoIsLoading(false);
+      }
+    );
+  }, []);
+
+  console.log(loc);
+
   const handleVisibilityChange = (isVisible: boolean) => {
     setVisible(isVisible);
     const newStatus = isVisible ? selected : null;
@@ -74,15 +95,35 @@ export default function StatusPage() {
     });
   };
 
-  if (!currentMember) {
+  if (isPendingUpdate || geoIsLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-dvh pb-40 pt-12 bg-background rtl px-2 sm:px-4">
-        <Card className="w-full max-w-md mx-auto border border-border bg-background text-foreground shadow-lg p-8 flex flex-col items-center gap-6">
-          <CardHeader className="flex flex-col items-center gap-2 pb-2 w-full">
-            <CardTitle className="text-2xl font-bold text-primary mt-2">
-              در حال بارگذاری...
-            </CardTitle>
+        <Card className="w-full max-w-3xl mx-auto border border-border bg-background text-foreground shadow-lg p-3 sm:p-6 md:p-10 flex flex-col gap-6 sm:gap-8">
+          {/* Skeleton for User Location */}
+          <div className="flex flex-col items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
+            <Skeleton className="h-8 w-40 rounded-xl mb-1" />
+            <Skeleton className="h-4 w-32" />
+          </div>
+          <Separator className="my-1 sm:my-2" />
+          <CardHeader className="flex flex-col items-center gap-0.5 sm:gap-1 pb-1 sm:pb-2">
+            <Skeleton className="h-8 w-32 mt-1 sm:mt-2" />
           </CardHeader>
+          <CardContent className="flex flex-col gap-4 sm:gap-8 pt-0">
+            <div className="flex flex-col gap-2 sm:gap-4">
+              {[...Array(3)].map((_, i) => (
+                <Skeleton
+                  key={i}
+                  className="h-14 sm:h-[56px] w-full rounded-xl"
+                />
+              ))}
+            </div>
+            <Separator className="my-1 sm:my-2" />
+            <div className="flex flex-col items-center gap-2 sm:gap-4 mt-1 sm:mt-2 justify-center bg-muted/60 rounded-xl py-3 sm:py-4 px-3">
+              <Skeleton className="h-6 w-24 mb-2" />
+              <Skeleton className="h-8 w-16 rounded-full" />
+              <Skeleton className="h-4 w-32 mt-2" />
+            </div>
+          </CardContent>
         </Card>
       </div>
     );
@@ -97,10 +138,14 @@ export default function StatusPage() {
             variant="secondary"
             className="text-base sm:text-lg px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-accent/60 border-accent/40"
           >
-            📍 {currentMember.location || USER_LOCATION}
+            {isLoadingLocation ? (
+              <Skeleton className="h-6 w-24" />
+            ) : (
+              location || "نامشخص"
+            )}
           </Badge>
           <CardDescription className="text-xs sm:text-base text-muted-foreground mt-0.5 sm:mt-1">
-            موقعیت فعلی شما (بر اساس Google Places API)
+            موقعیت فعلی شما
           </CardDescription>
         </div>
         <Separator className="my-1 sm:my-2" />
