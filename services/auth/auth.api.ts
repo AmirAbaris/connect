@@ -51,12 +51,10 @@ export const resetPassword = async (newPassword: string): Promise<void> => {
   if (error) throw error;
 };
 
-export const getSession = async (): Promise<Session> => {
+export const getSession = async (): Promise<Session | null> => {
   const { data, error } = await supabaseBrowserClient.auth.getSession();
 
   if (error) throw error;
-
-  if (!data.session) throw new Error("No session found");
 
   return data.session;
 };

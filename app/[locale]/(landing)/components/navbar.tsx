@@ -12,10 +12,31 @@ import {
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
+import useAuth from "@/hooks/use-auth";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations("Navbar");
+  const { session, isLoadingUserSession } = useAuth();
+  const isLoggedIn = !!session?.user;
+
+  if (isLoadingUserSession) {
+    return (
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
+        <div className="container mx-auto px-6">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-black">
+                <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                  {t("logo")}
+                </span>
+              </h1>
+            </div>
+          </div>
+        </div>
+      </nav>
+    );
+  }
 
   const navItems = [
     { href: "/", label: t("home") },
@@ -52,12 +73,25 @@ export default function Navbar() {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="ghost" asChild>
-              <Link href="/auth/login">{t("login")}</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/auth/signup">{t("signup")}</Link>
-            </Button>
+            {isLoggedIn ? (
+              <>
+                <Button variant="ghost" asChild>
+                  <Link href="/webapp/status">داشبورد</Link>
+                </Button>
+                <Button variant="outline" asChild>
+                  <Link href="/webapp/account">حساب کاربری</Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" asChild>
+                  <Link href="/auth/login">{t("login")}</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/auth/signup">{t("signup")}</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -91,19 +125,57 @@ export default function Navbar() {
                     </Link>
                   ))}
                   <div className="flex flex-col gap-4 pt-6 border-t border-border">
-                    <Button variant="ghost" asChild className="justify-start">
-                      <Link href="/auth/login" onClick={() => setIsOpen(false)}>
-                        {t("login")}
-                      </Link>
-                    </Button>
-                    <Button asChild className="justify-start">
-                      <Link
-                        href="/auth/signup"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        {t("signup")}
-                      </Link>
-                    </Button>
+                    {isLoggedIn ? (
+                      <>
+                        <Button
+                          variant="ghost"
+                          asChild
+                          className="justify-start"
+                        >
+                          <Link
+                            href="/webapp/status"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            داشبورد
+                          </Link>
+                        </Button>
+                        <Button
+                          variant="outline"
+                          asChild
+                          className="justify-start"
+                        >
+                          <Link
+                            href="/webapp/account"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            حساب کاربری
+                          </Link>
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          variant="ghost"
+                          asChild
+                          className="justify-start"
+                        >
+                          <Link
+                            href="/auth/login"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            {t("login")}
+                          </Link>
+                        </Button>
+                        <Button asChild className="justify-start">
+                          <Link
+                            href="/auth/signup"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            {t("signup")}
+                          </Link>
+                        </Button>
+                      </>
+                    )}
                   </div>
                 </div>
               </SheetContent>
