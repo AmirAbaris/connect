@@ -37,7 +37,7 @@ export default function CompleteProfileStep() {
 
     // db inset
     addToMember({
-      newMember: memberState as Omit<Member, "id" | "uid">,
+      newMember: { ...memberState, ...data } as Omit<Member, "id" | "uid">,
       uid,
     });
   };
