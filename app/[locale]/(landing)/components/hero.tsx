@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 export default function Hero() {
   const t = useTranslations("Hero");
 
   return (
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with gradient and subtle pattern */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/30" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]" />
@@ -48,7 +49,7 @@ export default function Hero() {
 
                 <div className="space-y-6">
                   <div className="flex items-center gap-4 p-4 bg-green-500/10 border border-green-500/20 rounded-xl">
-                    <div className="w-4 h-4 bg-green-500 rounded-full" />
+                    <div className="w-4 h-4 bg-green-500 rounded-full shrink-0" />
                     <div>
                       <p className="font-semibold text-green-600 dark:text-green-400">
                         {t("greenSignal")}
@@ -60,7 +61,7 @@ export default function Hero() {
                   </div>
 
                   <div className="flex items-center gap-4 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
-                    <div className="w-4 h-4 bg-yellow-500 rounded-full" />
+                    <div className="w-4 h-4 bg-yellow-500 rounded-full shrink-0" />
                     <div>
                       <p className="font-semibold text-yellow-600 dark:text-yellow-400">
                         {t("yellowSignal")}
@@ -72,7 +73,7 @@ export default function Hero() {
                   </div>
 
                   <div className="flex items-center gap-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl">
-                    <div className="w-4 h-4 bg-red-500 rounded-full" />
+                    <div className="w-4 h-4 bg-red-500 rounded-full shrink-0" />
                     <div>
                       <p className="font-semibold text-red-600 dark:text-red-400">
                         {t("redSignal")}
@@ -103,14 +104,16 @@ export default function Hero() {
               </div>
 
               <div className="space-y-4">
-                <Button
-                  size="lg"
-                  className="w-full text-lg px-8 py-6 h-auto bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg"
-                >
-                  {t("cta")} 🚀
-                </Button>
+                <Link href="/auth/signup" passHref>
+                  <Button
+                    size="lg"
+                    className="w-full text-lg px-8 py-6 h-auto bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg"
+                  >
+                    {t("cta")} 🚀
+                  </Button>
+                </Link>
 
-                <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
+                <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground mt-5">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full" />
                     <span>{t("usersTrusted")}</span>

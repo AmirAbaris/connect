@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 export default function CTASection() {
   const t = useTranslations("CTA");
@@ -26,19 +27,14 @@ export default function CTASection() {
 
           {/* Action buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Button
-              size="lg"
-              className="text-lg px-8 py-6 h-auto bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg"
-            >
-              {t("primaryCTA")} 🎯
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="text-lg px-8 py-6 h-auto border-2 hover:bg-muted/50"
-            >
-              {t("secondaryCTA")} 📱
-            </Button>
+            <Link href="/auth/signup" passHref>
+              <Button
+                size="lg"
+                className="text-lg px-8 py-6 h-auto bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg"
+              >
+                {t("primaryCTA")} 🎯
+              </Button>
+            </Link>
           </div>
 
           {/* Social proof */}

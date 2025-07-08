@@ -18,6 +18,14 @@ export default function middleware(request: NextRequest) {
     }
   }
 
+  if (pathname.startsWith("/fa/complete-profile")) {
+    const token = request.cookies.get(tokenKey)?.value;
+
+    if (token) {
+      return NextResponse.redirect("/fa/webapp/status");
+    }
+  }
+
   return intlMiddleware(request);
 }
 
