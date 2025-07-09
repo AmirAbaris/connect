@@ -11,8 +11,47 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Connect - اپلیکیشن اجتماعی نقشه‌محور",
+  description:
+    "با افراد اطراف خود آشنا شوید. موقعیت خود را به اشتراک بگذارید و با افراد جدید در نزدیکی خود ارتباط برقرار کنید.",
+  keywords: ["اجتماعی", "نقشه", "چت", "آشنایی", "موقعیت مکانی", "ایران"],
+  authors: [{ name: "Connect Team" }],
+  creator: "Connect",
+  publisher: "Connect",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    title: "Connect - اپلیکیشن اجتماعی نقشه‌محور",
+    description:
+      "با افراد اطراف خود آشنا شوید. موقعیت خود را به اشتراک بگذارید و با افراد جدید در نزدیکی خود ارتباط برقرار کنید.",
+    url: defaultUrl,
+    siteName: "Connect",
+    locale: "fa_IR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Connect - اپلیکیشن اجتماعی نقشه‌محور",
+    description:
+      "با افراد اطراف خود آشنا شوید. موقعیت خود را به اشتراک بگذارید و با افراد جدید در نزدیکی خود ارتباط برقرار کنید.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: "your-google-verification-code",
+  },
 };
 
 const vazirFont = localFont({
@@ -55,9 +94,7 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl" suppressHydrationWarning>
       <body className={`${vazirFont.variable} font-vazir antialiased`}>
-        <ClientProviders>
-          {children}
-        </ClientProviders>
+        <ClientProviders>{children}</ClientProviders>
         <Toaster className="!font-vazir" richColors />
       </body>
     </html>

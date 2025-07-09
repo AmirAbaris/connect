@@ -31,12 +31,14 @@ export const signIn = async (
   if (error) throw error;
 };
 
-// TODO: make url in env and use it here
 export const forgotPassword = async (email: string): Promise<void> => {
+  const defaultUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000";
   const { error } = await supabaseBrowserClient.auth.resetPasswordForEmail(
     email,
     {
-      redirectTo: "http://localhost:3000/fa/auth/reset-password",
+      redirectTo: `${defaultUrl}/fa/auth/reset-password`,
     }
   );
 
