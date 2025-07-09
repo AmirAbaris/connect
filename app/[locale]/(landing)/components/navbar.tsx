@@ -40,7 +40,6 @@ export default function Navbar() {
 
   const navItems = [
     { href: "/", label: t("home") },
-    { href: "/features", label: t("features") },
     { href: "/about", label: t("about") },
     { href: "/contact", label: t("contact") },
   ];

@@ -16,7 +16,7 @@ import useMember from "@/hooks/use-member";
 import { Status } from "@/types/member";
 import { Skeleton } from "@/components/ui/skeleton";
 import useMap from "@/hooks/use-map";
-import { Loader2 } from "lucide-react";
+import { Loader2, RefreshCw } from "lucide-react";
 
 const STATUS_OPTIONS = [
   {
@@ -71,6 +71,13 @@ export default function StatusPage() {
       }
     );
   }, []);
+
+  const refreshLocation = () => {
+    update({
+      fields: { location, lat: loc?.lat, lng: loc?.lng },
+      uid: currentMember?.uid,
+    });
+  };
 
   const handleStatusChange = (status: Status) => {
     setSelected(status);
@@ -130,16 +137,33 @@ export default function StatusPage() {
       <Card className="w-full max-w-3xl mx-auto border border-border bg-background text-foreground shadow-lg p-3 sm:p-6 md:p-10 flex flex-col gap-6 sm:gap-8">
         {/* User Location */}
         <div className="flex flex-col items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
-          <Badge
-            variant="secondary"
-            className="text-base sm:text-lg px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-accent/60 border-accent/40"
-          >
-            {isLoadingLocation ? (
-              <Skeleton className="h-6 w-24" />
-            ) : (
-              location || "نامشخص"
-            )}
-          </Badge>
+          <div className="flex items-center gap-2">
+            <Badge
+              variant="secondary"
+              className="text-base sm:text-lg px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-accent/60 border-accent/40"
+            >
+              {isLoadingLocation ? (
+                <Skeleton className="h-6 w-24" />
+              ) : (
+                location || "نامشخص"
+              )}
+            </Badge>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={refreshLocation}
+              disabled={isPendingUpdate}
+              className="h-8 w-8 p-0"
+              aria-label="آپدیت موقعیت روی نقشه"
+              title="آپدیت موقعیت روی نقشه"
+            >
+              {isPendingUpdate ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <RefreshCw className="h-4 w-4" />
+              )}
+            </Button>
+          </div>
           <CardDescription className="text-xs sm:text-base text-muted-foreground mt-0.5 sm:mt-1">
             موقعیت فعلی شما
           </CardDescription>
