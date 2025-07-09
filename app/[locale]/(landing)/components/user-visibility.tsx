@@ -11,13 +11,15 @@ export default function UserVisibility() {
           <div className="text-center space-y-6 mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-sm font-medium text-blue-600 dark:text-blue-400">
               <span>👥</span>
-              {t("header")}
+              قابلیت دیدن vibe
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-foreground">
-              {t("title")}
+              ببین کی chill ـه، کی تو فاز خودشه 👀
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              {t("description")}
+              دیگه لازم نیست حدس بزنی کی حال حرف زدن داره. با کانکت، همه می‌تونن
+              vibe خودشون رو بذارن و تو هم راحت تصمیم می‌گیری بری سر صحبت یا نه.
+              همه چی real و بدون awkward شدن.
             </p>
           </div>
 
@@ -54,7 +56,7 @@ export default function UserVisibility() {
                         </span>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        در کافه مرکزی • ۲ دقیقه پیش آنلاین شد
+                        vibe: social • chill
                       </p>
                     </div>
                   </div>
@@ -75,7 +77,7 @@ export default function UserVisibility() {
                         </span>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        در کافه دانشگاه • در حال مطالعه
+                        vibe: solo • study mode
                       </p>
                     </div>
                   </div>
@@ -96,7 +98,7 @@ export default function UserVisibility() {
                         </span>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        در کافه کتابخانه • در حال کار
+                        vibe: do not disturb • grinding
                       </p>
                     </div>
                   </div>
@@ -108,7 +110,7 @@ export default function UserVisibility() {
             <div className="space-y-8">
               <div className="space-y-6">
                 <h3 className="text-3xl font-bold text-foreground">
-                  {t("featuresTitle")}
+                  چرا کانکت؟ 🤔
                 </h3>
 
                 <div className="space-y-6">
@@ -119,10 +121,11 @@ export default function UserVisibility() {
                     </div>
                     <div>
                       <h4 className="text-xl font-semibold text-foreground mb-2">
-                        {t("feature1Title")}
+                        فقط real ones می‌بیننت
                       </h4>
                       <p className="text-muted-foreground leading-relaxed">
-                        {t("feature1Description")}
+                        فقط کاربرای کانکت می‌تونن vibe تو رو ببینن. حریم خصوصی
+                        فول، هیچکس خارج از vibe zone نمی‌تونه ببینه.
                       </p>
                     </div>
                   </div>
@@ -134,10 +137,11 @@ export default function UserVisibility() {
                     </div>
                     <div>
                       <h4 className="text-xl font-semibold text-foreground mb-2">
-                        {t("feature2Title")}
+                        امنیت واقعی
                       </h4>
                       <p className="text-muted-foreground leading-relaxed">
-                        {t("feature2Description")}
+                        اطلاعاتت پیش خودته. فقط اسم و vibe نشون داده می‌شه، هیچ
+                        دیتای اضافه‌ای پخش نمی‌شه.
                       </p>
                     </div>
                   </div>
@@ -149,35 +153,18 @@ export default function UserVisibility() {
                     </div>
                     <div>
                       <h4 className="text-xl font-semibold text-foreground mb-2">
-                        {t("feature3Title")}
+                        vibeت لحظه‌ای آپدیت می‌شه
                       </h4>
                       <p className="text-muted-foreground leading-relaxed">
-                        {t("feature3Description")}
+                        هر تغییری تو حالت یا vibe فوراً به بقیه نشون داده می‌شه.
+                        همه چی real time.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Stats */}
-              <div className="grid grid-cols-2 gap-6 pt-8 border-t border-border/50">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">
-                    ۹۸٪
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    رضایت کاربران
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">
-                    ۵۰K+
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    اتصال موفق
-                  </div>
-                </div>
-              </div>
+              {/* Removed stats section for authenticity */}
             </div>
           </div>
         </div>

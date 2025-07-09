@@ -3,8 +3,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export default function Hero() {
-  const t = useTranslations("Hero");
-
+  // Not using t() for most texts, going full Gen Z/casual
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with gradient and subtle pattern */}
@@ -21,17 +20,19 @@ export default function Hero() {
           <div className="text-center space-y-8 mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-sm font-medium text-primary mb-6">
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-              {t("subtitle")}
+              دیگه حدس نزن کی حال داره 😎
             </div>
 
             <h1 className="text-7xl md:text-8xl lg:text-9xl font-black leading-tight">
               <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                {t("title")}
+                کانکت
               </span>
             </h1>
 
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              {t("description")}
+              تو کافه یا جمع، نمی‌دونی کی فازش چیه؟ با کانکت، هرکی vibe خودشو
+              می‌ذاره. می‌فهمی کی social ـه، کی solo ـه، کی اصلاً حال نداره. همه
+              چی real و بدون awkward شدن.
             </p>
           </div>
 
@@ -43,7 +44,7 @@ export default function Hero() {
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
                   <h3 className="text-2xl font-bold text-foreground">
-                    {t("exampleTitle")}
+                    سیستم vibe:
                   </h3>
                 </div>
 
@@ -52,10 +53,10 @@ export default function Hero() {
                     <div className="w-4 h-4 bg-green-500 rounded-full shrink-0" />
                     <div>
                       <p className="font-semibold text-green-600 dark:text-green-400">
-                        {t("greenSignal")}
+                        ☕ سبز — social, آماده چت و آشنایی
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {t("greenSignalDesc")}
+                        حال خوب، vibe مثبت، بیا حرف بزنیم :)
                       </p>
                     </div>
                   </div>
@@ -64,10 +65,10 @@ export default function Hero() {
                     <div className="w-4 h-4 bg-yellow-500 rounded-full shrink-0" />
                     <div>
                       <p className="font-semibold text-yellow-600 dark:text-yellow-400">
-                        {t("yellowSignal")}
+                        📖 زرد — مشغول، ولی اوکی با یه سلام
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {t("yellowSignalDesc")}
+                        دارم کار می‌کنم یا chillم، ولی اگه vibeت خوبه بیا.
                       </p>
                     </div>
                   </div>
@@ -76,10 +77,10 @@ export default function Hero() {
                     <div className="w-4 h-4 bg-red-500 rounded-full shrink-0" />
                     <div>
                       <p className="font-semibold text-red-600 dark:text-red-400">
-                        {t("redSignal")}
+                        🚫 قرمز — اصلاً حال ندارم
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {t("redSignalDesc")}
+                        الان تو mood معاشرت نیستم، بعداً بیا.
                       </p>
                     </div>
                   </div>
@@ -95,11 +96,12 @@ export default function Hero() {
                     <span className="text-primary text-lg">🎯</span>
                   </div>
                   <h3 className="text-xl font-bold text-foreground">
-                    {t("ourGoalTitle")}
+                    هدف کانکت
                   </h3>
                 </div>
                 <p className="text-lg text-foreground/90 leading-relaxed">
-                  {t("goal")}
+                  همه vibe خودشونو بذارن، ارتباطات واقعی‌تر و بدون استرس باشه.
+                  دیگه کسی تو جمع حس awkward بودن نکنه.
                 </p>
               </div>
 
@@ -109,20 +111,9 @@ export default function Hero() {
                     size="lg"
                     className="w-full text-lg px-8 py-6 h-auto bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg"
                   >
-                    {t("cta")} 🚀
+                    شروع کن 🚀
                   </Button>
                 </Link>
-
-                <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground mt-5">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full" />
-                    <span>{t("usersTrusted")}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full" />
-                    <span>{t("uptime")}</span>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
