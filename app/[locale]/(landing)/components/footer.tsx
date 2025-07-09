@@ -1,11 +1,7 @@
-"use client";
-
 import Link from "next/link";
-import { useTranslations } from "next-intl";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const t = useTranslations("Footer");
 
   const footerLinks = [
     { href: "/about", label: "درباره ما" },

@@ -1,8 +1,4 @@
-import { useTranslations } from "next-intl";
-
 export default function UserVisibility() {
-  const t = useTranslations("UserVisibility");
-
   return (
     <section className="py-24 bg-gradient-to-b from-background to-muted/20">
       <div className="container mx-auto px-6">

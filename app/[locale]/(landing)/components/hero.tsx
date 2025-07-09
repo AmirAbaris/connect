@@ -1,22 +1,17 @@
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export default function Hero() {
-  // Not using t() for most texts, going full Gen Z/casual
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background with gradient and subtle pattern */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/30" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]" />
 
-      {/* Floating elements for visual interest */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
 
       <div className="relative container mx-auto px-6 py-20">
         <div className="max-w-6xl mx-auto">
-          {/* Header section */}
           <div className="text-center space-y-8 mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-sm font-medium text-primary mb-6">
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
@@ -36,9 +31,7 @@ export default function Hero() {
             </p>
           </div>
 
-          {/* Main content grid */}
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left side - Signal system */}
             <div className="space-y-8">
               <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-3xl p-8 shadow-xl">
                 <div className="flex items-center gap-3 mb-6">
@@ -88,7 +81,6 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Right side - Goal and CTA */}
             <div className="space-y-8">
               <div className="bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 rounded-3xl p-8 shadow-xl">
                 <div className="flex items-center gap-3 mb-4">

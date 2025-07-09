@@ -1,10 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export default function CTASection() {
-  const t = useTranslations("CTA");
-
   return (
     <section className="py-24 bg-gradient-to-br from-primary/5 via-background to-secondary/5">
       <div className="container mx-auto px-6">
