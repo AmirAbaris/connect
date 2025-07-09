@@ -46,7 +46,7 @@ export default function CompleteProfileFirstStep(props: Props) {
   });
 
   const imageInputRef = useRef<HTMLInputElement>(null);
-  const imageFile = watch("image");
+  const imageFile = watch("imageFile");
 
   const handleImageButtonClick = () => {
     imageInputRef.current?.click();
@@ -54,12 +54,12 @@ export default function CompleteProfileFirstStep(props: Props) {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) setValue("image", file);
+    if (file) setValue("imageFile", file);
   };
 
   const onSubmit = (data: FirstStepData) => {
     handleData(data);
-    console.log('data from frist c');
+    console.log("data from frist c");
     router.push("/complete-profile/2");
   };
 
@@ -99,7 +99,7 @@ export default function CompleteProfileFirstStep(props: Props) {
                 size="icon"
                 variant="ghost"
                 className="absolute top-2 left-2 z-10 rounded-full bg-background/80 hover:bg-background"
-                onClick={() => setValue("image", null)}
+                onClick={() => setValue("imageFile", null)}
                 tabIndex={-1}
               >
                 <span className="sr-only">حذف عکس</span>

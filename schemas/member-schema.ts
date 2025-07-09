@@ -6,7 +6,7 @@ export const memberSchema = z.object({
   name: z.string().min(1, "نام الزامی است"),
   age: z.number().min(18, "سن باید حداقل ۱۸ سال باشد"),
   bio: z.string().nullable().optional(),
-  image: z.instanceof(File).nullable().optional(),
+  imageFile: z.instanceof(File).nullable().optional(),
   interests: z.array(z.string()).optional(),
   location: z.string().nullable().optional(),
 });
@@ -14,7 +14,7 @@ export const memberSchema = z.object({
 export const firstFormPageSchema = memberSchema.pick({
   name: true,
   age: true,
-  image: true,
+  imageFile: true,
 });
 
 export const secondFormPageSchema = memberSchema.pick({

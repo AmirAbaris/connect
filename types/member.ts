@@ -15,7 +15,7 @@ export type Member = {
   lat?: number | null;
   lng?: number | null;
   status: Status | null;
-  image: File | null;
+  image?: string | null;
 };
 
 export type FirstStepData = z.infer<typeof firstFormPageSchema>;

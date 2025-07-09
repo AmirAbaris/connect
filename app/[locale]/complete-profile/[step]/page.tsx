@@ -38,10 +38,11 @@ export default function CompleteProfileStep() {
     console.log("memberState from parent", memberState);
 
     // db inset
+    const { imageFile, ...memberData } = memberState;
     addToMember({
-      newMember: { ...memberState, ...data } as Member,
+      newMember: { ...memberData, ...data } as Member,
       uid,
-      image: memberState.image || null,
+      image: imageFile || null,
     });
   };
 
