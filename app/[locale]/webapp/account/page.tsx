@@ -208,6 +208,7 @@ export default function AccountPage() {
   }
 
   const watchedImage = watch("image");
+  const watchedAge = watch("age");
 
   return (
     <div className="min-h-dvh pb-40 pt-12 flex flex-col items-center justify-center bg-background rtl px-2 sm:px-4">
@@ -288,10 +289,11 @@ export default function AccountPage() {
                   سن
                 </Label>
                 <Select
-                  value={String(currentMember?.age)}
-                  onValueChange={(v) =>
-                    setValue("age", Number(v), { shouldDirty: true })
-                  }
+                  value={String(watchedAge)}
+                  onValueChange={(v) => {
+                    if (!v) return;
+                    setValue("age", Number(v), { shouldDirty: true });
+                  }}
                 >
                   <SelectTrigger className="bg-background border border-input rounded-md px-4 py-2 text-base w-full">
                     <SelectValue placeholder="سن" />
