@@ -98,7 +98,7 @@ export default function StatusPage() {
     });
   };
 
-  if (!currentMember || geoIsLoading) {
+  if (geoIsLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-dvh pb-40 pt-12 bg-background rtl px-2 sm:px-4">
         <Card className="w-full max-w-3xl mx-auto border border-border bg-background text-foreground shadow-lg p-3 sm:p-6 md:p-10 flex flex-col gap-6 sm:gap-8">
@@ -126,6 +126,38 @@ export default function StatusPage() {
               <Skeleton className="h-8 w-16 rounded-full" />
               <Skeleton className="h-4 w-32 mt-2" />
             </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!currentMember) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-dvh pb-40 pt-12 bg-background rtl px-2 sm:px-4">
+        <Card className="w-full max-w-3xl mx-auto border border-border bg-background text-foreground shadow-lg p-3 sm:p-6 md:p-10 flex flex-col gap-6 sm:gap-8">
+          <CardHeader className="flex flex-col items-center gap-4 pb-4">
+            <CardTitle className="text-xl sm:text-3xl font-extrabold text-destructive">
+              پروفایل شما تکمیل نشده است
+            </CardTitle>
+            <CardDescription className="text-center text-muted-foreground">
+              برای استفاده از این بخش، ابتدا باید پروفایل خود را تکمیل کنید
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col items-center gap-4">
+            <div className="text-center">
+              <p className="text-muted-foreground mb-4">
+                اطلاعات پروفایل شما ناقص است. لطفاً برای ادامه، پروفایل خود را
+                تکمیل کنید.
+              </p>
+            </div>
+            <Button
+              onClick={() => (window.location.href = "/complete-profile/1")}
+              className="w-full max-w-xs"
+              size="lg"
+            >
+              تکمیل پروفایل
+            </Button>
           </CardContent>
         </Card>
       </div>

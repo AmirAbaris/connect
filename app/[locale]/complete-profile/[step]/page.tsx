@@ -29,7 +29,7 @@ export default function CompleteProfileStep() {
     addMember(data);
   };
 
-  const handleSecondStepData = (data: SecondStepData) => {
+  const handleSecondStepData = async (data: SecondStepData) => {
     addMember(data);
 
     if (isLoadingUserSession) return;

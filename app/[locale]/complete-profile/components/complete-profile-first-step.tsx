@@ -37,12 +37,17 @@ export default function CompleteProfileFirstStep(props: Props) {
     register,
     handleSubmit,
     control,
-    formState: { isValid, isSubmitting },
+    formState,
     getValues,
     setValue,
     watch,
   } = useForm<FirstStepData>({
     resolver: zodResolver(firstFormPageSchema),
+    defaultValues: {
+      name: "",
+      age: undefined,
+      imageFile: null,
+    },
   });
 
   const imageInputRef = useRef<HTMLInputElement>(null);
@@ -58,6 +63,8 @@ export default function CompleteProfileFirstStep(props: Props) {
   };
 
   const onSubmit = (data: FirstStepData) => {
+    console.log("Form data:", data);
+    console.log("Form errors:", formState.errors);
     handleData(data);
     console.log("data from frist c");
     router.push("/complete-profile/2");
@@ -199,7 +206,7 @@ export default function CompleteProfileFirstStep(props: Props) {
           <Button
             type="submit"
             form="profile-form"
-            disabled={isSubmitting || !isValid}
+            disabled={formState.isSubmitting || !formState.isValid}
             className="w-full"
           >
             ادامه
