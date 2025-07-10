@@ -211,6 +211,19 @@ export default function TermsPage() {
           </div>
         </div>
 
+        {/* Disclaimer */}
+        <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-6 my-10 text-center">
+          <h2 className="text-xl font-bold mb-2 text-destructive">
+            سلب مسئولیت
+          </h2>
+          <p className="text-destructive text-sm leading-relaxed">
+            این پلتفرم صرفاً برای آشنایی و ارتباط اولیه کاربران است. مسئولیت
+            کامل هرگونه ملاقات حضوری یا تعامل خارج از اپلیکیشن، ۱۰۰٪ بر عهده خود
+            کاربران است و تیم Connect هیچ مسئولیتی در قبال پیامدهای آن ندارد. با
+            استفاده از این سرویس، شما با این شرایط موافقت می‌کنید.
+          </p>
+        </div>
+
         {/* Contact */}
         <div className="text-center bg-card/50 rounded-lg p-8 border border-border/50">
           <h2 className="text-2xl font-bold mb-6 flex items-center justify-center gap-2">

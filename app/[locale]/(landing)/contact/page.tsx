@@ -36,13 +36,13 @@ export default function ContactPage() {
               </p>
             </div>
 
-            <div className="bg-primary/10 rounded-lg p-4 mb-6">
-              <a
+            <div className="bg-primary/10 rounded-lg p-4 mb-6 overflow-x-auto max-w-full">
+              <Link
                 href="mailto:thisisamirabaris@gmail.com"
-                className="text-lg font-mono text-primary hover:underline"
+                className="text-xs sm:text-sm md:text-lg font-mono text-primary hover:underline break-all"
               >
                 thisisamirabaris@gmail.com
-              </a>
+              </Link>
             </div>
 
             <p className="text-sm text-muted-foreground">

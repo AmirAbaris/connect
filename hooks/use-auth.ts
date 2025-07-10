@@ -25,9 +25,7 @@ export default function useAuth() {
     onError: () =>
       toast.error("ثبت‌نام ناموفق بود. لطفاً ایمیل و رمز عبور را بررسی کنید."),
     onSuccess: () => {
-      toast.success(
-        "ثبت‌نام انجام شد. لطفاً ایمیل خود را برای تأیید بررسی کنید."
-      );
+      toast.success("ثبت‌نام انجام شد.");
       router.push("/complete-profile/1");
     },
   });
