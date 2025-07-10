@@ -32,9 +32,8 @@ export const signIn = async (
 };
 
 export const forgotPassword = async (email: string): Promise<void> => {
-  const defaultUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "https://connect-black.vercel.app";
+  // TODO: fix later
+  const defaultUrl = "https://connect-black.vercel.app";
   const { error } = await supabaseBrowserClient.auth.resetPasswordForEmail(
     email,
     {
