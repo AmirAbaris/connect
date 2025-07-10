@@ -40,7 +40,8 @@ const STATUS_OPTIONS = [
 ];
 
 export default function StatusPage() {
-  const { currentMember, update, isPendingUpdate } = useMember();
+  const { currentMember, isLoadingCurrentMember, update, isPendingUpdate } =
+    useMember();
 
   const [selected, setSelected] = useState<Status>("open");
   const [visible, setVisible] = useState(false);
@@ -73,6 +74,18 @@ export default function StatusPage() {
   }, []);
 
   const refreshLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLoc({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+        setGeoIsLoading(false);
+      },
+      () => {
+        setGeoIsLoading(false);
+      }
+    );
     update({
       fields: { location, lat: loc?.lat, lng: loc?.lng },
       uid: currentMember?.uid,
@@ -98,7 +111,7 @@ export default function StatusPage() {
     });
   };
 
-  if (geoIsLoading) {
+  if (geoIsLoading || isLoadingCurrentMember) {
     return (
       <div className="flex flex-col items-center justify-center min-h-dvh pb-40 pt-12 bg-background rtl px-2 sm:px-4">
         <Card className="w-full max-w-3xl mx-auto border border-border bg-background text-foreground shadow-lg p-3 sm:p-6 md:p-10 flex flex-col gap-6 sm:gap-8">
@@ -132,7 +145,12 @@ export default function StatusPage() {
     );
   }
 
-  if (!currentMember) {
+  if (
+    !currentMember &&
+    !isLoadingCurrentMember &&
+    !isLoadingLocation &&
+    !geoIsLoading
+  ) {
     return (
       <div className="flex flex-col items-center justify-center min-h-dvh pb-40 pt-12 bg-background rtl px-2 sm:px-4">
         <Card className="w-full max-w-3xl mx-auto border border-border bg-background text-foreground shadow-lg p-3 sm:p-6 md:p-10 flex flex-col gap-6 sm:gap-8">

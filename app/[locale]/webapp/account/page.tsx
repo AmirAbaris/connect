@@ -175,7 +175,7 @@ export default function AccountPage() {
     );
   }
 
-  if (!currentMember) {
+  if (!currentMember && !isLoadingCurrentMember) {
     return (
       <div className="flex flex-col items-center justify-center min-h-dvh pb-40 pt-12 bg-background rtl px-2 sm:px-4">
         <Card className="w-full max-w-3xl mx-auto border border-border bg-background text-foreground shadow-lg p-3 sm:p-6 md:p-10 flex flex-col gap-6 sm:gap-8">
