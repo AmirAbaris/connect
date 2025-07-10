@@ -86,10 +86,12 @@ export default function StatusPage() {
         setGeoIsLoading(false);
       }
     );
-    update({
-      fields: { location, lat: loc?.lat, lng: loc?.lng },
-      uid: currentMember?.uid,
-    });
+    if (location && location !== "نامشخص") {
+      update({
+        fields: { location, lat: loc?.lat, lng: loc?.lng },
+        uid: currentMember?.uid,
+      });
+    }
   };
 
   const handleStatusChange = (status: Status) => {
@@ -232,7 +234,12 @@ export default function StatusPage() {
                 variant={selected === opt.key ? "default" : "outline"}
                 className="flex items-center gap-2 sm:gap-3 justify-start w-full text-base sm:text-lg font-bold rounded-xl min-h-14 sm:min-h-[56px]"
                 onClick={() => handleStatusChange(opt.key)}
-                disabled={!visible || isPendingUpdate}
+                disabled={
+                  !visible ||
+                  isPendingUpdate ||
+                  !location ||
+                  location === "نامشخص"
+                }
               >
                 <span className="text-xl sm:text-3xl">{opt.icon}</span>
                 <span className="flex flex-col items-start">
