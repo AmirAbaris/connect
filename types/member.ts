@@ -16,7 +16,7 @@ export type Member = {
   lng?: number | null;
   status: Status | null;
   image?: string | null;
-  statusUpdatedAt?: string | null;
+  status_updated_at?: string | null;
 };
 
 export type FirstStepData = z.infer<typeof firstFormPageSchema>;

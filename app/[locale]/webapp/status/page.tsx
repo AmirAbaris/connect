@@ -94,7 +94,7 @@ export default function StatusPage() {
           location,
           lat: loc?.lat,
           lng: loc?.lng,
-          statusUpdatedAt: new Date().toISOString(),
+          status_updated_at: new Date().toISOString(),
         },
         uid: currentMember?.uid,
       });
@@ -110,7 +110,7 @@ export default function StatusPage() {
           location,
           lat: loc?.lat,
           lng: loc?.lng,
-          statusUpdatedAt: new Date().toISOString(),
+          status_updated_at: new Date().toISOString(),
         },
         uid: currentMember?.uid,
       });
@@ -126,7 +126,7 @@ export default function StatusPage() {
         location,
         lat: loc?.lat,
         lng: loc?.lng,
-        statusUpdatedAt: new Date().toISOString(),
+        status_updated_at: new Date().toISOString(),
       },
       uid: currentMember?.uid,
     });
