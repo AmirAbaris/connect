@@ -6,24 +6,29 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { Shield, User, MapPin, Database, Lock, Mail } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function TermsPage() {
+  const t = useTranslations();
+  const lastUpdated = t("Terms.lastUpdated", {
+    date: new Date().toLocaleDateString("fa-IR"),
+  });
   return (
     <div className="min-h-screen bg-background pt-32 pb-20">
       <div className="container mx-auto max-w-4xl px-6">
         {/* Hero */}
         <div className="text-center mb-16">
           <Badge variant="outline" className="mb-6">
-            قوانین و حریم خصوصی
+            {t("Terms.badge")}
             <Shield className="w-4 h-4 ml-2" />
           </Badge>
 
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            قوانین استفاده و حریم خصوصی
+            {t("Terms.mainTitle")}
           </h1>
 
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            آخرین به‌روزرسانی: {new Date().toLocaleDateString("fa-IR")}
+            {lastUpdated}
           </p>
         </div>
 
@@ -31,7 +36,7 @@ export default function TermsPage() {
         <div className="mb-16">
           <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
             <Database className="w-6 h-6 text-primary" />
-            اطلاعاتی که جمع‌آوری می‌کنیم
+            {t("Terms.dataCollectionTitle")}
           </h2>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -39,13 +44,12 @@ export default function TermsPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <User className="w-5 h-5 text-primary" />
-                  اطلاعات حساب کاربری
+                  {t("Terms.accountInfoTitle")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  هنگام ثبت‌نام، ایمیل، رمز عبور (رمزگذاری شده) و سایر شناسه‌های
-                  کاربری را جمع‌آوری می‌کنیم.
+                  {t("Terms.accountInfoDesc")}
                 </p>
               </CardContent>
             </Card>
@@ -54,13 +58,12 @@ export default function TermsPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <User className="w-5 h-5 text-primary" />
-                  اطلاعات پروفایل
+                  {t("Terms.profileInfoTitle")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  شامل نام، علایق و سایر اطلاعاتی که برای تکمیل پروفایل ارائه
-                  می‌دهید.
+                  {t("Terms.profileInfoDesc")}
                 </p>
               </CardContent>
             </Card>
@@ -69,13 +72,12 @@ export default function TermsPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Lock className="w-5 h-5 text-primary" />
-                  اطلاعات احراز هویت
+                  {t("Terms.authInfoTitle")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  از Supabase Auth برای مدیریت ورود، بازنشانی رمز عبور و
-                  توکن‌های جلسه استفاده می‌کنیم.
+                  {t("Terms.authInfoDesc")}
                 </p>
               </CardContent>
             </Card>
@@ -84,13 +86,12 @@ export default function TermsPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MapPin className="w-5 h-5 text-primary" />
-                  اطلاعات نقشه
+                  {t("Terms.mapInfoTitle")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  در صورت استفاده از ویژگی‌های نقشه، موقعیت مکانی، پین‌ها و
-                  متادیتای مرتبط را جمع‌آوری می‌کنیم.
+                  {t("Terms.mapInfoDesc")}
                 </p>
               </CardContent>
             </Card>
@@ -102,29 +103,29 @@ export default function TermsPage() {
         {/* How We Use Data */}
         <div className="mb-16">
           <h2 className="text-2xl font-bold mb-6">
-            نحوه استفاده از اطلاعات شما
+            {t("Terms.howWeUseDataTitle")}
           </h2>
 
           <div className="space-y-4 text-muted-foreground leading-relaxed">
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-              <p>ارائه، نگهداری و بهبود خدمات ما</p>
+              <p>{t("Terms.howWeUseDataList1")}</p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-              <p>احراز هویت کاربران و امنیت حساب‌ها</p>
+              <p>{t("Terms.howWeUseDataList2")}</p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-              <p>شخصی‌سازی تجربه شما (مثل نمایش اطلاعات مرتبط نقشه)</p>
+              <p>{t("Terms.howWeUseDataList3")}</p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-              <p>ارتباط با شما در مورد به‌روزرسانی‌ها، امنیت یا پشتیبانی</p>
+              <p>{t("Terms.howWeUseDataList4")}</p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-              <p>رعایت تعهدات قانونی</p>
+              <p>{t("Terms.howWeUseDataList5")}</p>
             </div>
           </div>
         </div>
@@ -133,11 +134,13 @@ export default function TermsPage() {
 
         {/* Data Sharing */}
         <div className="mb-16">
-          <h2 className="text-2xl font-bold mb-6">اشتراک‌گذاری اطلاعات</h2>
+          <h2 className="text-2xl font-bold mb-6">
+            {t("Terms.dataSharingTitle")}
+          </h2>
 
           <div className="bg-card/50 rounded-lg p-6 border border-border/50">
             <p className="text-muted-foreground">
-              ما اطلاعات شما را نمی‌فروشیم!
+              {t("Terms.dataSharingDesc")}
             </p>
           </div>
         </div>
@@ -149,24 +152,23 @@ export default function TermsPage() {
           <div>
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
               <Lock className="w-6 h-6 text-primary" />
-              امنیت اطلاعات
+              {t("Terms.securityTitle")}
             </h2>
             <p className="text-muted-foreground leading-relaxed">
-              ما از استانداردهای امنیتی صنعتی، شامل رمزگذاری و کنترل‌های دسترسی،
-              برای محافظت از اطلاعات شما استفاده می‌کنیم.
+              {t("Terms.securityDesc")}
             </p>
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold mb-6">حقوق شما</h2>
+            <h2 className="text-2xl font-bold mb-6">
+              {t("Terms.yourRightsTitle")}
+            </h2>
             <div className="space-y-3 text-muted-foreground">
-              <p className="text-sm">شما می‌توانید:</p>
+              <p className="text-sm">{t("Terms.yourRightsListIntro")}</p>
               <div className="space-y-2">
                 <div className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-sm">
-                    دسترسی، به‌روزرسانی یا حذف اطلاعات خود را درخواست کنید
-                  </p>
+                  <p className="text-sm">{t("Terms.yourRightsList1")}</p>
                 </div>
               </div>
             </div>
@@ -178,18 +180,20 @@ export default function TermsPage() {
         {/* Retention & Changes */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           <div>
-            <h2 className="text-2xl font-bold mb-6">نگهداری اطلاعات</h2>
+            <h2 className="text-2xl font-bold mb-6">
+              {t("Terms.retentionTitle")}
+            </h2>
             <p className="text-muted-foreground leading-relaxed">
-              ما اطلاعات شما را تا زمانی که حساب کاربری فعال است یا طبق الزامات
-              قانونی نگهداری می‌کنیم.
+              {t("Terms.retentionDesc")}
             </p>
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold mb-6">تغییرات</h2>
+            <h2 className="text-2xl font-bold mb-6">
+              {t("Terms.changesTitle")}
+            </h2>
             <p className="text-muted-foreground leading-relaxed">
-              ممکن است این قوانین را به‌روزرسانی کنیم. در صورت تغییرات مهم، شما
-              را مطلع خواهیم کرد.
+              {t("Terms.changesDesc")}
             </p>
           </div>
         </div>
@@ -197,13 +201,10 @@ export default function TermsPage() {
         {/* Disclaimer */}
         <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-6 my-10 text-center">
           <h2 className="text-xl font-bold mb-2 text-destructive">
-            سلب مسئولیت
+            {t("Terms.disclaimerTitle")}
           </h2>
           <p className="text-destructive text-sm leading-relaxed">
-            این پلتفرم صرفاً برای آشنایی و ارتباط اولیه کاربران است. مسئولیت
-            کامل هرگونه ملاقات حضوری یا تعامل خارج از اپلیکیشن، ۱۰۰٪ بر عهده خود
-            کاربران است و تیم Connect هیچ مسئولیتی در قبال پیامدهای آن ندارد. با
-            استفاده از این سرویس، شما با این شرایط موافقت می‌کنید.
+            {t("Terms.disclaimerDesc")}
           </p>
         </div>
       </div>
