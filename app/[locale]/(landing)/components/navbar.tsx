@@ -74,10 +74,10 @@ export default function Navbar() {
             {isLoggedIn ? (
               <>
                 <Button variant="ghost" asChild>
-                  <Link href="/webapp/status">داشبورد</Link>
+                  <Link href="/webapp/status">{t("dashboard")}</Link>
                 </Button>
                 <Button variant="outline" asChild>
-                  <Link href="/webapp/account">حساب کاربری</Link>
+                  <Link href="/webapp/account">{t("account")}</Link>
                 </Button>
               </>
             ) : (
@@ -98,7 +98,7 @@ export default function Navbar() {
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
                   <Menu className="h-5 w-5" />
-                  <span className="sr-only">Toggle menu</span>
+                  <span className="sr-only">{t("toggleMenu")}</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="left">
@@ -134,7 +134,7 @@ export default function Navbar() {
                             href="/webapp/status"
                             onClick={() => setIsOpen(false)}
                           >
-                            داشبورد
+                            {t("dashboard")}
                           </Link>
                         </Button>
                         <Button
@@ -146,7 +146,7 @@ export default function Navbar() {
                             href="/webapp/account"
                             onClick={() => setIsOpen(false)}
                           >
-                            حساب کاربری
+                            {t("account")}
                           </Link>
                         </Button>
                       </>
