@@ -54,6 +54,8 @@ export default function AccountPage() {
     isPendingUpdate,
     uploadImage,
     isPendingUploadImage,
+    deleteMember,
+    isPendingDeleteMember,
   } = useMember();
   const { session } = useAuth();
   const uid = session?.user?.id;
@@ -145,6 +147,7 @@ export default function AccountPage() {
           </CardContent>
           <CardFooter className="flex flex-row gap-4 justify-end mt-4">
             <Skeleton className="h-12 w-24 rounded-md" />
+            <Skeleton className="h-12 w-40 rounded-md" />
           </CardFooter>
         </Card>
       </div>
@@ -371,12 +374,21 @@ export default function AccountPage() {
           <CardFooter className="flex flex-row gap-4 justify-end mt-4 px-0">
             <Button
               type="button"
-              variant="destructive"
+              variant="outline"
               onClick={() => signOut()}
               disabled={isPendingSignOut}
               className="px-8 py-3 text-lg font-bold"
             >
               {isPendingSignOut ? t("signingOut") : t("signOut")}
+            </Button>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => deleteMember({ uid })}
+              disabled={isPendingDeleteMember}
+              className="px-8 py-3 text-lg font-bold"
+            >
+              {isPendingDeleteMember ? t("deleting") : t("deleteAccount")}
             </Button>
           </CardFooter>
           <InterestsModal

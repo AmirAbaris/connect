@@ -280,7 +280,9 @@
     "saving": "در حال ذخیره...",
     "saveChanges": "ذخیره تغییرات",
     "signingOut": "در حال خروج...",
-    "signOut": "خروج"
+    "signOut": "خروج",
+    "deleteAccount": "حذف حساب",
+    "deleting": "در حال حذف..."
   },
   "InterestsModal": {
     "title": "علاقه‌مندی‌ها",
@@ -341,7 +343,9 @@
     "addSuccess": "عضو با موفقیت اضافه شد",
     "addError": "افزودن عضو با خطا مواجه شد",
     "updateSuccess": "عضو با موفقیت بروزرسانی شد",
-    "updateError": "بروزرسانی عضو با خطا مواجه شد"
+    "updateError": "بروزرسانی عضو با خطا مواجه شد",
+    "deleteSuccess": "عضو با موفقیت حذف شد",
+    "deleteError": "حذف عضو با خطا مواجه شد"
   },
   "AuthToasts": {
     "signupError": "ثبت‌نام ناموفق بود. لطفاً ایمیل و رمز عبور را بررسی کنید.",

@@ -125,3 +125,13 @@ export async function uploadMemberImage(
 
   return data.publicUrl;
 }
+
+export async function deleteMember(uid: string | undefined): Promise<void> {
+  if (!uid) return;
+  const { error } = await supabaseBrowserClient
+    .from("member")
+    .delete()
+    .eq("uid", uid);
+
+  if (error) throw error;
+}

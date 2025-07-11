@@ -2,6 +2,7 @@ import {
   createMember,
   fetchCurrentMember,
   fetchMembers,
+  deleteMember,
   updateMember,
   uploadMemberImage,
 } from "@/services/member/member.api";
@@ -77,6 +78,18 @@ export default function useMember() {
     mutationFn: (image: File) => uploadMemberImage(image, uid),
   });
 
+  const deleteMemberMutation = useMutation({
+    mutationKey: ["member"],
+    mutationFn: ({ uid }: { uid: string | undefined }) => deleteMember(uid),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["member"] });
+      toast.success(t("deleteSuccess"));
+    },
+    onError: () => {
+      toast.error(t("deleteError"));
+    },
+  });
+
   return {
     members: members.data,
     isLoadingMembers: members.isLoading,
@@ -95,5 +108,7 @@ export default function useMember() {
 
     uploadImage: uploadImage.mutate,
     isPendingUploadImage: uploadImage.isPending,
+    deleteMember: deleteMemberMutation.mutate,
+    isPendingDeleteMember: deleteMemberMutation.isPending,
   };
 }

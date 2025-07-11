@@ -280,7 +280,9 @@
     "saving": "Saving...",
     "saveChanges": "Save changes",
     "signingOut": "Signing out...",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "deleteAccount": "Delete account",
+    "deleting": "Deleting..."
   },
   "InterestsModal": {
     "title": "Interests",
@@ -341,7 +343,9 @@
     "addSuccess": "Member added successfully",
     "addError": "Failed to add member",
     "updateSuccess": "Member updated successfully",
-    "updateError": "Failed to update member"
+    "updateError": "Failed to update member",
+    "deleteSuccess": "Member deleted successfully",
+    "deleteError": "Failed to delete member"
   },
   "AuthToasts": {
     "signupError": "Sign up failed. Please check your email and password.",

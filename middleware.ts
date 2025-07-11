@@ -9,19 +9,32 @@ const tokenKey = "sb-dtnknotqorxmauptuipr-auth-token";
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (pathname.startsWith("/fa/webapp")) {
+  const isWebappRoute = routing.locales.some((locale) =>
+    pathname.startsWith(`/${locale}/webapp`)
+  );
+
+  if (isWebappRoute) {
     const token = request.cookies.get(tokenKey)?.value;
 
     if (!token) {
-      const loginUrl = new URL("/auth/login", request.url);
+      // Extract locale from pathname
+      const locale = pathname.split("/")[1];
+      const loginUrl = new URL(`/${locale}/auth/login`, request.url);
       return NextResponse.redirect(loginUrl);
     }
   }
 
-  if (pathname.startsWith("/fa/auth")) {
+  // Check if pathname starts with any locale + auth
+  const isAuthRoute = routing.locales.some((locale) =>
+    pathname.startsWith(`/${locale}/auth`)
+  );
+
+  if (isAuthRoute) {
     const token = request.cookies.get(tokenKey)?.value;
     if (token) {
-      const homeUrl = new URL("/fa/webapp/account", request.url);
+      // Extract locale from pathname
+      const locale = pathname.split("/")[1];
+      const homeUrl = new URL(`/${locale}/webapp/account`, request.url);
       return NextResponse.redirect(homeUrl);
     }
   }
