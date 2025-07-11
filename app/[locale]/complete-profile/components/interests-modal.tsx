@@ -11,27 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-
-const INTERESTS = [
-  "ورزش",
-  "موسیقی",
-  "کتاب",
-  "فیلم",
-  "سفر",
-  "تکنولوژی",
-  "هنر",
-  "بازی",
-  "غذا",
-  "طبیعت",
-  "انیمه",
-  "میم",
-  "استریم",
-  "پادکست",
-  "یوتیوب",
-  "سوشال مدیا",
-  "کریپتو",
-  "برنامه‌نویسی",
-];
+import { useTranslations } from "next-intl";
 
 type InterestsModalProps = {
   open: boolean;
@@ -46,6 +26,8 @@ export function InterestsModal({
   selected,
   onChange,
 }: InterestsModalProps) {
+  const t = useTranslations("InterestsModal");
+  const INTERESTS = t.raw("interests") as string[];
   const [localSelected, setLocalSelected] = useState<string[]>(selected || []);
 
   const toggleInterest = (interest: string) => {
@@ -66,11 +48,11 @@ export function InterestsModal({
       <DialogContent className="max-w-sm w-full rounded-2xl p-6">
         <DialogHeader>
           <DialogTitle className="text-lg font-bold text-primary">
-            علاقه‌مندی‌ها
+            {t("title")}
           </DialogTitle>
         </DialogHeader>
         <Label className="block text-base font-bold text-primary mb-2 text-center">
-          موضوعات مورد علاقه‌ات رو انتخاب کن
+          {t("label")}
         </Label>
         <div className="flex flex-wrap gap-2 justify-center my-4">
           {INTERESTS.map((interest) => (
@@ -94,7 +76,7 @@ export function InterestsModal({
           </div>
         )}
         <DialogFooter>
-          <Button onClick={handleDone}>انجام شد</Button>
+          <Button onClick={handleDone}>{t("done")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

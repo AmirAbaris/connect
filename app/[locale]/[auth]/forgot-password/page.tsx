@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Mail, ArrowLeft } from "lucide-react";
+import { Mail, ArrowLeft, ArrowRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useAuth from "@/hooks/use-auth";
@@ -10,6 +10,7 @@ import { AuthForgotPasswordType } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { forgetPasswordUserSchema } from "@/schemas/user-schema";
 import { useForm } from "react-hook-form";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function ForgotPasswordPage() {
   const {
@@ -20,6 +21,8 @@ export default function ForgotPasswordPage() {
     resolver: zodResolver(forgetPasswordUserSchema),
   });
   const { forgetPassword, isPendingForgetPassword } = useAuth();
+  const t = useTranslations("ForgotPassword");
+  const locale = useLocale();
 
   const onSubmit = (data: AuthForgotPasswordType) => {
     forgetPassword(data);
@@ -39,17 +42,14 @@ export default function ForgotPasswordPage() {
           <Link href="/" className="inline-block mb-6">
             <h1 className="text-3xl font-black">
               <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                کانکت
+                {t("logo")}
               </span>
             </h1>
           </Link>
           <h2 className="text-2xl font-bold text-foreground mb-2">
-            رمز عبور خود را فراموش کرده‌اید؟
+            {t("header")}
           </h2>
-          <p className="text-muted-foreground">
-            نگران نباشید! ایمیل خود را وارد کنید و ما لینک بازنشانی رمز عبور را
-            برای شما ارسال می‌کنیم.
-          </p>
+          <p className="text-muted-foreground">{t("subheader")}</p>
         </div>
 
         {/* Forgot Password Form */}
@@ -61,7 +61,7 @@ export default function ForgotPasswordPage() {
                 htmlFor="email"
                 className="text-sm font-medium text-foreground"
               >
-                ایمیل
+                {t("emailLabel")}
               </Label>
               <div className="relative">
                 <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -71,7 +71,7 @@ export default function ForgotPasswordPage() {
                   required
                   {...register("email")}
                   className="w-full pr-10 pl-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                  placeholder="example@email.com"
+                  placeholder={t("emailPlaceholder")}
                 />
               </div>
             </div>
@@ -85,12 +85,16 @@ export default function ForgotPasswordPage() {
               {isPendingForgetPassword ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
-                  در حال ارسال...
+                  {t("sending")}
                 </>
               ) : (
                 <>
-                  ارسال لینک بازنشانی
-                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  {t("submit")}
+                  {locale === "fa" ? (
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                  ) : (
+                    <ArrowRight className="w-4 h-4 mr-2" />
+                  )}
                 </>
               )}
             </Button>
@@ -98,11 +102,13 @@ export default function ForgotPasswordPage() {
 
           {/* Help Section */}
           <div className="mt-6 p-4 bg-muted/30 rounded-lg">
-            <h4 className="font-medium text-foreground mb-2">نکات مهم:</h4>
+            <h4 className="font-medium text-foreground mb-2">
+              {t("helpTitle")}
+            </h4>
             <ul className="text-sm text-muted-foreground space-y-1">
-              <li>• لینک بازنشانی فقط ۱ ساعت معتبر است</li>
-              <li>• ایمیل را در پوشه اسپم بررسی کنید</li>
-              <li>• اگر مشکل ادامه دارد، با پشتیبانی تماس بگیرید</li>
+              <li>{t("help1")}</li>
+              <li>{t("help2")}</li>
+              <li>{t("help3")}</li>
             </ul>
           </div>
         </div>
@@ -110,21 +116,21 @@ export default function ForgotPasswordPage() {
         {/* Navigation Links */}
         <div className="text-center mt-6 space-y-2">
           <p className="text-muted-foreground">
-            رمز عبور خود را به خاطر دارید؟{" "}
+            {t("rememberPassword")}{" "}
             <Link
               href="/login"
               className="text-primary hover:underline font-medium"
             >
-              وارد شوید
+              {t("login")}
             </Link>
           </p>
           <p className="text-muted-foreground">
-            حساب کاربری ندارید؟{" "}
+            {t("noAccount")}{" "}
             <Link
               href="/signup"
               className="text-primary hover:underline font-medium"
             >
-              ثبت‌نام کنید
+              {t("signup")}
             </Link>
           </p>
         </div>
@@ -134,15 +140,15 @@ export default function ForgotPasswordPage() {
           <div className="flex items-center justify-center gap-6 text-xs text-muted-foreground">
             <div className="flex items-center gap-1">
               <span>🔒</span>
-              <span>امن</span>
+              <span>{t("secure")}</span>
             </div>
             <div className="flex items-center gap-1">
               <span>⚡</span>
-              <span>سریع</span>
+              <span>{t("fast")}</span>
             </div>
             <div className="flex items-center gap-1">
               <span>🛡️</span>
-              <span>خصوصی</span>
+              <span>{t("private")}</span>
             </div>
           </div>
         </div>

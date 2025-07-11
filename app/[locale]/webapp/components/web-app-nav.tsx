@@ -4,27 +4,29 @@ import { Button } from "@/components/ui/button";
 import { User, Compass, Signal } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const NAV_ITEMS = [
-  {
-    key: "explore",
-    label: "اکسپلور",
-    icon: Compass,
-  },
-  {
-    key: "status",
-    label: "وضعیت",
-    icon: Signal,
-  },
-  {
-    key: "account",
-    label: "حساب",
-    icon: User,
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function WebAppNav() {
+  const t = useTranslations("WebAppNav");
   const pathname = usePathname();
+
+  const NAV_ITEMS = [
+    {
+      key: "explore",
+      label: t("explore"),
+      icon: Compass,
+    },
+    {
+      key: "status",
+      label: t("status"),
+      icon: Signal,
+    },
+    {
+      key: "account",
+      label: t("account"),
+      icon: User,
+    },
+  ];
 
   return (
     <nav

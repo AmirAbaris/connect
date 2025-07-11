@@ -3,7 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Mail, Lock, ArrowLeft, Loader2 } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  ArrowLeft,
+  Loader2,
+  ArrowRight,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
@@ -11,8 +19,11 @@ import { AuthUserType } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "@/schemas/user-schema";
 import useAuth from "@/hooks/use-auth";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function LoginPage() {
+  const t = useTranslations();
+  const locale = useLocale();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -41,16 +52,14 @@ export default function LoginPage() {
           <Link href="/" className="inline-block mb-6">
             <h1 className="text-3xl font-black">
               <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                کانکت
+                {t("Login.logo")}
               </span>
             </h1>
           </Link>
           <h2 className="text-2xl font-bold text-foreground mb-2">
-            به حساب کاربری خود وارد شوید
+            {t("Login.header")}
           </h2>
-          <p className="text-muted-foreground">
-            خوش آمدید! برای ادامه وارد حساب کاربری خود شوید
-          </p>
+          <p className="text-muted-foreground">{t("Login.subheader")}</p>
         </div>
 
         {/* Login Form */}
@@ -62,7 +71,7 @@ export default function LoginPage() {
                 htmlFor="email"
                 className="text-sm font-medium text-foreground"
               >
-                ایمیل
+                {t("Login.emailLabel")}
               </Label>
               <div className="relative">
                 <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -72,7 +81,7 @@ export default function LoginPage() {
                   required
                   {...register("email")}
                   className="w-full pr-10 pl-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                  placeholder="example@email.com"
+                  placeholder={t("Login.emailPlaceholder")}
                 />
               </div>
             </div>
@@ -84,13 +93,13 @@ export default function LoginPage() {
                   htmlFor="password"
                   className="text-sm font-medium text-foreground"
                 >
-                  رمز عبور
+                  {t("Login.passwordLabel")}
                 </Label>
                 <Link
                   href="/auth/forgot-password"
                   className="text-xs text-primary hover:underline"
                 >
-                  فراموش کردید؟
+                  {t("Login.forgotPassword")}
                 </Link>
               </div>
               <div className="relative">
@@ -101,7 +110,7 @@ export default function LoginPage() {
                   required
                   {...register("password")}
                   className="w-full pr-10 pl-12 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                  placeholder="رمز عبور خود را وارد کنید"
+                  placeholder={t("Login.passwordPlaceholder")}
                 />
                 <button
                   type="button"
@@ -123,11 +132,13 @@ export default function LoginPage() {
               type="submit"
               className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg py-3 text-base font-medium"
             >
-              ورود
+              {t("Login.submit")}
               {isPendingSignInWithPassword ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
+              ) : locale === "fa" ? (
                 <ArrowLeft className="w-4 h-4 mr-2" />
+              ) : (
+                <ArrowRight className="w-4 h-4 mr-2" />
               )}
             </Button>
           </form>
@@ -136,12 +147,12 @@ export default function LoginPage() {
         {/* Signup Link */}
         <div className="text-center mt-6">
           <p className="text-muted-foreground">
-            حساب کاربری ندارید؟{" "}
+            {t("Login.signupPrompt")}{" "}
             <Link
               href="/auth/signup"
               className="text-primary hover:underline font-medium"
             >
-              ثبت‌نام کنید
+              {t("Login.signupLink")}
             </Link>
           </p>
         </div>
@@ -151,15 +162,15 @@ export default function LoginPage() {
           <div className="flex items-center justify-center gap-6 text-xs text-muted-foreground">
             <div className="flex items-center gap-1">
               <span>🔒</span>
-              <span>امن</span>
+              <span>{t("Login.secure")}</span>
             </div>
             <div className="flex items-center gap-1">
               <span>⚡</span>
-              <span>سریع</span>
+              <span>{t("Login.fast")}</span>
             </div>
             <div className="flex items-center gap-1">
               <span>🛡️</span>
-              <span>خصوصی</span>
+              <span>{t("Login.private")}</span>
             </div>
           </div>
         </div>

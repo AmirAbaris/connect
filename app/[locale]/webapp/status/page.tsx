@@ -17,25 +17,26 @@ import { Status } from "@/types/member";
 import { Skeleton } from "@/components/ui/skeleton";
 import useMap from "@/hooks/use-map";
 import { Loader2, RefreshCw } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-const STATUS_OPTIONS = [
+const STATUS_KEYS = [
   {
     key: "open" as Status,
     icon: "☕",
-    label: "آماده برای چت",
-    desc: "دوست دارم با افراد جدید آشنا بشم!",
+    labelKey: "readyToChat",
+    descKey: "readyToChatDesc",
   },
   {
     key: "neutral" as Status,
     icon: "📖",
-    label: "اوکی با گپ کوتاه",
-    desc: "مشغولم ولی خوشحال میشم ببینمت.",
+    labelKey: "okWithShortChat",
+    descKey: "okWithShortChatDesc",
   },
   {
     key: "close" as Status,
     icon: "🚫",
-    label: "مزاحم نشو",
-    desc: "در حال کار یا استراحت هستم.",
+    labelKey: "doNotDisturb",
+    descKey: "doNotDisturbDesc",
   },
 ];
 
@@ -48,6 +49,7 @@ export default function StatusPage() {
   const [loc, setLoc] = useState<{ lat: number; lng: number } | null>(null);
   const [geoIsLoading, setGeoIsLoading] = useState(true);
   const { location, isLoadingLocation } = useMap(loc);
+  const t = useTranslations("Status");
 
   // Initialize from currentMember data
   useEffect(() => {
@@ -86,7 +88,7 @@ export default function StatusPage() {
         setGeoIsLoading(false);
       }
     );
-    if (location && location !== "نامشخص") {
+    if (location && location !== t("locationUnknown")) {
       update({
         fields: { location, lat: loc?.lat, lng: loc?.lng },
         uid: currentMember?.uid,
@@ -108,7 +110,7 @@ export default function StatusPage() {
     setVisible(isVisible);
     const newStatus = isVisible ? selected : null;
     update({
-      fields: { status: newStatus },
+      fields: { status: newStatus, location, lat: loc?.lat, lng: loc?.lng },
       uid: currentMember?.uid,
     });
   };
@@ -158,17 +160,16 @@ export default function StatusPage() {
         <Card className="w-full max-w-3xl mx-auto border border-border bg-background text-foreground shadow-lg p-3 sm:p-6 md:p-10 flex flex-col gap-6 sm:gap-8">
           <CardHeader className="flex flex-col items-center gap-4 pb-4">
             <CardTitle className="text-xl sm:text-3xl font-extrabold text-destructive">
-              پروفایل شما تکمیل نشده است
+              {t("profileIncompleteTitle")}
             </CardTitle>
             <CardDescription className="text-center text-muted-foreground">
-              برای استفاده از این بخش، ابتدا باید پروفایل خود را تکمیل کنید
+              {t("profileIncompleteDesc")}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-4">
             <div className="text-center">
               <p className="text-muted-foreground mb-4">
-                اطلاعات پروفایل شما ناقص است. لطفاً برای ادامه، پروفایل خود را
-                تکمیل کنید.
+                {t("profileIncompleteInfo")}
               </p>
             </div>
             <Button
@@ -176,7 +177,7 @@ export default function StatusPage() {
               className="w-full max-w-xs"
               size="lg"
             >
-              تکمیل پروفایل
+              {t("completeProfile")}
             </Button>
           </CardContent>
         </Card>
@@ -197,7 +198,7 @@ export default function StatusPage() {
               {isLoadingLocation ? (
                 <Skeleton className="h-6 w-24" />
               ) : (
-                location || "نامشخص"
+                location || t("locationUnknown")
               )}
             </Badge>
             <Button
@@ -206,8 +207,8 @@ export default function StatusPage() {
               onClick={refreshLocation}
               disabled={isPendingUpdate}
               className="h-8 w-8 p-0"
-              aria-label="آپدیت موقعیت روی نقشه"
-              title="آپدیت موقعیت روی نقشه"
+              aria-label={t("updateLocation")}
+              title={t("updateLocation")}
             >
               {isPendingUpdate ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -217,18 +218,18 @@ export default function StatusPage() {
             </Button>
           </div>
           <CardDescription className="text-xs sm:text-base text-muted-foreground mt-0.5 sm:mt-1">
-            موقعیت فعلی شما
+            {t("currentLocation")}
           </CardDescription>
         </div>
         <Separator className="my-1 sm:my-2" />
         <CardHeader className="flex flex-col items-center gap-0.5 sm:gap-1 pb-1 sm:pb-2">
           <CardTitle className="text-xl sm:text-3xl font-extrabold text-primary mt-1 sm:mt-2">
-            وضعیت من
+            {t("myStatus")}
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4 sm:gap-8 pt-0">
           <div className="flex flex-col gap-2 sm:gap-4">
-            {STATUS_OPTIONS.map((opt) => (
+            {STATUS_KEYS.map((opt) => (
               <Button
                 key={opt.key}
                 variant={selected === opt.key ? "default" : "outline"}
@@ -238,12 +239,12 @@ export default function StatusPage() {
                   !visible ||
                   isPendingUpdate ||
                   !location ||
-                  location === "نامشخص"
+                  location === t("locationUnknown")
                 }
               >
                 <span className="text-xl sm:text-3xl">{opt.icon}</span>
                 <span className="flex flex-col items-start">
-                  <span>{opt.label}</span>
+                  <span>{t(opt.labelKey)}</span>
                   <span
                     className={`text-xs sm:text-sm font-normal mt-0.5 sm:mt-1 ${
                       selected === opt.key
@@ -251,11 +252,11 @@ export default function StatusPage() {
                         : "text-muted-foreground"
                     }`}
                   >
-                    {opt.desc}
+                    {t(opt.descKey)}
                   </span>
                 </span>
                 {isPendingUpdate && selected === opt.key && (
-                  <Loader2 className="mr-auto h-4 w-4 animate-spin" />
+                  <Loader2 className="mx-3 h-4 w-4 animate-spin" />
                 )}
               </Button>
             ))}
@@ -263,7 +264,7 @@ export default function StatusPage() {
           <Separator className="my-1 sm:my-2" />
           <div className="flex flex-col items-center gap-2 sm:gap-4 mt-1 sm:mt-2 justify-center bg-muted/60 rounded-xl py-3 sm:py-4 px-3">
             <span className="text-base sm:text-lg font-bold">
-              نمایش به دیگران:
+              {t("showToOthers")}
             </span>
             <Switch
               checked={visible}
@@ -276,10 +277,13 @@ export default function StatusPage() {
               )}
             </Switch>
             <span className="text-xs sm:text-base text-muted-foreground text-center sm:text-right">
-              {visible
-                ? "وضعیت شما برای دیگران قابل مشاهده است"
-                : "پنهان از دیگران"}
+              {visible ? t("visible") : t("hidden")}
             </span>
+            {visible && (
+              <span className="text-xs text-muted-foreground/70 text-center">
+                {t("visibilityTimeout")}
+              </span>
+            )}
           </div>
         </CardContent>
       </Card>

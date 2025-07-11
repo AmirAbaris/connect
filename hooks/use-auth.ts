@@ -1,4 +1,5 @@
 import {
+  deleteUser,
   forgotPassword,
   getSession,
   resetPassword,
@@ -9,6 +10,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type SignInInput = { email: string; password: string };
 type ForgetPasswordInput = { email: string };
@@ -19,13 +21,13 @@ type ResetPasswordInput = {
 export default function useAuth() {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const t = useTranslations("AuthToasts");
   const signUpWithPassword = useMutation({
     mutationKey: ["auth", "signUp"],
     mutationFn: ({ email, password }: SignInInput) => signUp(email, password),
-    onError: () =>
-      toast.error("ثبت‌نام ناموفق بود. لطفاً ایمیل و رمز عبور را بررسی کنید."),
+    onError: () => toast.error(t("signupError")),
     onSuccess: () => {
-      toast.success("ثبت‌نام انجام شد.");
+      toast.success(t("signupSuccess"));
       router.push("/complete-profile/1");
     },
   });
@@ -34,10 +36,10 @@ export default function useAuth() {
     mutationKey: ["auth", "signIn"],
     mutationFn: ({ email, password }: SignInInput) => signIn(email, password),
     onError: () => {
-      toast.error("ورود ناموفق بود. لطفاً ایمیل و رمز عبور را بررسی کنید.");
+      toast.error(t("loginError"));
     },
     onSuccess: () => {
-      toast.success("ورود موفقیت‌آمیز بود.");
+      toast.success(t("loginSuccess"));
       router.push("/webapp/status");
     },
   });
@@ -45,10 +47,10 @@ export default function useAuth() {
   const signOutUser = useMutation({
     mutationKey: ["auth", "signOut"],
     mutationFn: signOut,
-    onError: () => toast.error("خروج ناموفق بود. لطفاً دوباره تلاش کنید."),
+    onError: () => toast.error(t("logoutError")),
     onSuccess: async () => {
       await queryClient.invalidateQueries();
-      toast.success("خروج موفقیت‌آمیز بود.");
+      toast.success(t("logoutSuccess"));
       router.push("/");
     },
   });
@@ -56,20 +58,17 @@ export default function useAuth() {
   const forgetPassword = useMutation({
     mutationKey: ["auth", "forgotPassword"],
     mutationFn: ({ email }: ForgetPasswordInput) => forgotPassword(email),
-    onError: () =>
-      toast.error("ارسال ایمیل بازیابی ناموفق بود. لطفاً دوباره تلاش کنید."),
-    onSuccess: () =>
-      toast.success("ایمیل بازیابی ارسال شد. لطفاً ایمیل خود را بررسی کنید."),
+    onError: () => toast.error(t("forgotError")),
+    onSuccess: () => toast.success(t("forgotSuccess")),
   });
 
   const resetUserPassword = useMutation({
     mutationKey: ["auth", "resetPassword"],
     mutationFn: ({ newPassword }: ResetPasswordInput) =>
       resetPassword(newPassword),
-    onError: () =>
-      toast.error("تغییر رمز عبور ناموفق بود. لطفاً دوباره تلاش کنید."),
+    onError: () => toast.error(t("resetError")),
     onSuccess: async () => {
-      toast.success("رمز عبور با موفقیت تغییر کرد.");
+      toast.success(t("resetSuccess"));
       await queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
       router.push("/auth/login");
     },
@@ -78,6 +77,16 @@ export default function useAuth() {
   const session = useQuery({
     queryKey: ["auth", "getSession"],
     queryFn: getSession,
+  });
+
+  const deleteUserMutation = useMutation({
+    mutationKey: ["auth", "deleteUser"],
+    mutationFn: deleteUser,
+    onError: () => toast.error(t("deleteError")),
+    onSuccess: () => {
+      toast.success(t("deleteSuccess"));
+      router.push("/");
+    },
   });
 
   return {
@@ -98,5 +107,8 @@ export default function useAuth() {
 
     session: session.data,
     isLoadingUserSession: session.isLoading,
+
+    deleteUser: deleteUserMutation.mutate,
+    isPendingDeleteUser: deleteUserMutation.isPending,
   };
 }

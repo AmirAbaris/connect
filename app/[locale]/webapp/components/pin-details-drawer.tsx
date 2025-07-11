@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Member } from "@/types/member";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import { useTranslations } from "next-intl";
 
 type Props = {
   data: Member;
@@ -19,24 +20,25 @@ const STATUS_OPTIONS = {
   open: {
     icon: "☕",
     color: "green",
-    label: "آماده برای چت",
+    labelKey: "statusOpen",
     status: "open",
   },
   neutral: {
     icon: "📖",
     color: "yellow",
-    label: "اوکی با گپ کوتاه",
+    labelKey: "statusNeutral",
     status: "neutral",
   },
   close: {
     icon: "🚫",
     color: "red",
-    label: "مزاحم نشو",
+    labelKey: "statusClose",
     status: "close",
   },
 };
 
 export function PinDetailsDrawer({ data }: Props) {
+  const t = useTranslations("PinDetailsDrawer");
   const { location, name, age, interests, bio, status, image } = data;
   const statusObj = status ? STATUS_OPTIONS[status] : null;
 
@@ -45,7 +47,7 @@ export function PinDetailsDrawer({ data }: Props) {
       <Card className="w-full border-none shadow-none bg-transparent p-0 flex flex-col items-center">
         <CardHeader className="flex w-full flex-col items-center gap-2 pb-2">
           <span className="text-base text-muted-foreground font-medium mt-3">
-            {location || "نامشخص"}
+            {location || t("unknownLocation")}
           </span>
           <Avatar className="w-40 h-40 border-4 border-primary/30 shadow bg-background">
             {image ? (
@@ -77,11 +79,11 @@ export function PinDetailsDrawer({ data }: Props) {
               `}
             >
               <span className="text-lg">{statusObj.icon}</span>
-              <span>{statusObj.label}</span>
+              <span>{t(statusObj.labelKey)}</span>
             </div>
           )}
           <span className="text-sm text-muted-foreground">
-            {age ? `${age} ساله` : ""}
+            {age ? `${age} ${t("ageSuffix")}` : ""}
           </span>
         </CardHeader>
         <CardContent className="flex flex-col gap-4 items-center">
@@ -103,7 +105,7 @@ export function PinDetailsDrawer({ data }: Props) {
         </CardContent>
         <DrawerFooter className="flex flex-row gap-2 justify-center mt-4">
           <DrawerClose>
-            <Button variant="outline">بستن</Button>
+            <Button variant="outline">{t("close")}</Button>
           </DrawerClose>
         </DrawerFooter>
       </Card>

@@ -1,11 +1,13 @@
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function Footer() {
+  const t = useTranslations("Footer");
   const currentYear = new Date().getFullYear();
 
   const footerLinks = [
-    { href: "/terms", label: "قوانین" },
-    { href: "/privacy", label: "حریم خصوصی" },
+    { href: "/terms", label: t("terms") },
+    { href: "/privacy", label: t("privacy") },
   ];
 
   return (
@@ -16,12 +18,11 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-start">
             <h3 className="text-2xl font-black mb-2">
               <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                کانکت
+                {t("logo")}
               </span>
             </h3>
             <p className="text-sm text-muted-foreground text-center md:text-right">
-              اپلیکیشنی که اضطراب اجتماعی رو کم می‌کنه و ارتباطات رو راحت‌تر
-              می‌کنه
+              {t("descriptionShort")}
             </p>
           </div>
 
@@ -43,9 +44,11 @@ export default function Footer() {
         <div className="border-t border-border/50 mt-8 pt-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="text-sm text-muted-foreground">
-              © {currentYear} کانکت. تمامی حقوق محفوظ است.
+              © {currentYear} {t("logo")}. {t("copyright")}
             </div>
-            <div className="text-sm text-muted-foreground">ساخته شده با 🤎</div>
+            <div className="text-sm text-muted-foreground">
+              {t("madeWithLove")}
+            </div>
           </div>
         </div>
       </div>

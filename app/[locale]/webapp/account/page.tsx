@@ -23,6 +23,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { InterestsModal } from "../../complete-profile/components/interests-modal";
+import { DeleteAccountModal } from "./components/delete-account-modal";
 import useAuth from "@/hooks/use-auth";
 import useMember from "@/hooks/use-member";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -30,6 +31,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef } from "react";
+import { useTranslations } from "next-intl";
 
 const profileSchema = z.object({
   name: z.string().min(2, "نام باید حداقل ۲ حرف باشد"),
@@ -42,6 +44,8 @@ const profileSchema = z.object({
 export default function AccountPage() {
   const { signOut, isPendingSignOut } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const t = useTranslations("Account");
   const {
     currentMember,
     isLoadingCurrentMember,
@@ -52,6 +56,8 @@ export default function AccountPage() {
     isPendingUpdate,
     uploadImage,
     isPendingUploadImage,
+    deleteMember,
+    isPendingDeleteMember,
   } = useMember();
   const { session } = useAuth();
   const uid = session?.user?.id;
@@ -143,6 +149,7 @@ export default function AccountPage() {
           </CardContent>
           <CardFooter className="flex flex-row gap-4 justify-end mt-4">
             <Skeleton className="h-12 w-24 rounded-md" />
+            <Skeleton className="h-12 w-40 rounded-md" />
           </CardFooter>
         </Card>
       </div>
@@ -155,10 +162,10 @@ export default function AccountPage() {
         <Card className="w-full max-w-md mx-auto border border-border bg-background text-foreground shadow-lg p-8 flex flex-col items-center gap-6">
           <CardHeader className="flex flex-col items-center gap-2 pb-2 w-full">
             <CardTitle className="text-2xl font-bold text-primary mt-2">
-              پروفایلی یافت نشد
+              {t("profileNotFoundTitle")}
             </CardTitle>
             <CardDescription className="text-base text-muted-foreground">
-              شما هنوز پروفایلی نساخته‌اید.
+              {t("profileNotFoundDesc")}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-4">
@@ -167,7 +174,7 @@ export default function AccountPage() {
               size="lg"
               onClick={() => refetchCurrentMember()}
             >
-              تلاش مجدد
+              {t("retry")}
             </Button>
           </CardContent>
         </Card>
@@ -181,17 +188,16 @@ export default function AccountPage() {
         <Card className="w-full max-w-3xl mx-auto border border-border bg-background text-foreground shadow-lg p-3 sm:p-6 md:p-10 flex flex-col gap-6 sm:gap-8">
           <CardHeader className="flex flex-col items-center gap-4 pb-4">
             <CardTitle className="text-xl sm:text-3xl font-extrabold text-destructive">
-              پروفایل شما تکمیل نشده است
+              {t("profileIncompleteTitle")}
             </CardTitle>
             <CardDescription className="text-center text-muted-foreground">
-              برای استفاده از این بخش، ابتدا باید پروفایل خود را تکمیل کنید
+              {t("profileIncompleteDesc")}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-4">
             <div className="text-center">
               <p className="text-muted-foreground mb-4">
-                اطلاعات پروفایل شما ناقص است. لطفاً برای ادامه، پروفایل خود را
-                تکمیل کنید.
+                {t("profileIncompleteInfo")}
               </p>
             </div>
             <Button
@@ -199,7 +205,7 @@ export default function AccountPage() {
               className="w-full max-w-xs"
               size="lg"
             >
-              تکمیل پروفایل
+              {t("completeProfile")}
             </Button>
           </CardContent>
         </Card>
@@ -215,10 +221,10 @@ export default function AccountPage() {
       <Card className="w-full max-w-2xl mx-auto border border-border bg-background text-foreground shadow-lg p-4 sm:p-8 flex flex-col gap-8">
         <CardHeader className="flex flex-col items-center gap-2 pb-2">
           <CardTitle className="text-2xl font-bold text-primary mt-2">
-            پروفایل من
+            {t("myProfile")}
           </CardTitle>
           <CardDescription className="text-base text-muted-foreground">
-            اطلاعات حساب کاربری خود را ویرایش کنید
+            {t("editProfileDesc")}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-8 pt-0">
@@ -243,7 +249,7 @@ export default function AccountPage() {
               className="mt-2"
               onClick={() => fileInputRef.current?.click()}
             >
-              {isPendingUploadImage ? "در حال آپلود..." : "تغییر عکس پروفایل"}
+              {isPendingUploadImage ? t("uploadingAvatar") : t("changeAvatar")}
             </Button>
             <input
               type="file"
@@ -266,12 +272,12 @@ export default function AccountPage() {
                   htmlFor="name"
                   className="text-base font-bold text-primary self-start"
                 >
-                  نام
+                  {t("name")}
                 </Label>
                 <Input
                   id="name"
                   {...register("name")}
-                  placeholder="مثلاً آرش"
+                  placeholder={t("namePlaceholder")}
                   className="text-base"
                   type="text"
                 />
@@ -286,7 +292,7 @@ export default function AccountPage() {
                   htmlFor="age"
                   className="text-base font-bold text-primary self-start"
                 >
-                  سن
+                  {t("age")}
                 </Label>
                 <Select
                   value={String(watchedAge)}
@@ -296,7 +302,7 @@ export default function AccountPage() {
                   }}
                 >
                   <SelectTrigger className="bg-background border border-input rounded-md px-4 py-2 text-base w-full">
-                    <SelectValue placeholder="سن" />
+                    <SelectValue placeholder={t("agePlaceholder")} />
                   </SelectTrigger>
                   <SelectContent className="border border-input rounded-md">
                     {Array.from({ length: 84 }, (_, i) => 16 + i).map((n) => (
@@ -319,12 +325,12 @@ export default function AccountPage() {
                 htmlFor="bio"
                 className="text-base font-bold text-primary self-start"
               >
-                بیو
+                {t("bio")}
               </Label>
               <textarea
                 id="bio"
                 {...register("bio")}
-                placeholder="یه جمله درباره خودت..."
+                placeholder={t("bioPlaceholder")}
                 className="text-base min-h-[80px] resize-none bg-background border border-input rounded-md px-3 py-2 w-full"
               />
               {errors.bio && (
@@ -336,12 +342,12 @@ export default function AccountPage() {
             {/* Interests */}
             <div className="w-full flex flex-col gap-2">
               <Label className="text-base font-bold text-primary self-start">
-                علاقه‌مندی‌ها
+                {t("interests")}
               </Label>
               <div className="flex flex-wrap gap-2 mb-2">
                 {(watch("interests") || []).length === 0 ? (
                   <span className="text-muted-foreground text-base">
-                    هیچ علاقه‌ای انتخاب نشده
+                    {t("noInterests")}
                   </span>
                 ) : (
                   (watch("interests") || []).map((interest: string) => (
@@ -356,7 +362,7 @@ export default function AccountPage() {
                 variant="outline"
                 onClick={() => setModalOpen(true)}
               >
-                انتخاب علاقه‌مندی‌ها
+                {t("selectInterests")}
               </Button>
             </div>
             <Button
@@ -364,18 +370,27 @@ export default function AccountPage() {
               className="px-8 py-3 text-lg font-bold"
               disabled={isPendingUpdate || !isDirty}
             >
-              {isPendingUpdate ? "در حال ذخیره..." : "ذخیره تغییرات"}
+              {isPendingUpdate ? t("saving") : t("saveChanges")}
             </Button>
           </form>
           <CardFooter className="flex flex-row gap-4 justify-end mt-4 px-0">
             <Button
               type="button"
-              variant="destructive"
+              variant="outline"
               onClick={() => signOut()}
               disabled={isPendingSignOut}
               className="px-8 py-3 text-lg font-bold"
             >
-              {isPendingSignOut ? "در حال خروج..." : "خروج"}
+              {isPendingSignOut ? t("signingOut") : t("signOut")}
+            </Button>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => setDeleteModalOpen(true)}
+              disabled={isPendingDeleteMember}
+              className="px-8 py-3 text-lg font-bold"
+            >
+              {t("deleteAccount")}
             </Button>
           </CardFooter>
           <InterestsModal
@@ -385,6 +400,15 @@ export default function AccountPage() {
             onChange={(ints) =>
               setValue("interests", ints, { shouldDirty: true })
             }
+          />
+          <DeleteAccountModal
+            open={deleteModalOpen}
+            onOpenChange={setDeleteModalOpen}
+            onConfirm={() => {
+              deleteMember({ uid });
+              setDeleteModalOpen(false);
+            }}
+            isPending={isPendingDeleteMember}
           />
         </CardContent>
       </Card>
