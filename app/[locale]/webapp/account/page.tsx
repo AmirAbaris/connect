@@ -23,6 +23,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { InterestsModal } from "../../complete-profile/components/interests-modal";
+import { DeleteAccountModal } from "./components/delete-account-modal";
 import useAuth from "@/hooks/use-auth";
 import useMember from "@/hooks/use-member";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -43,6 +44,7 @@ const profileSchema = z.object({
 export default function AccountPage() {
   const { signOut, isPendingSignOut } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const t = useTranslations("Account");
   const {
     currentMember,
@@ -384,11 +386,11 @@ export default function AccountPage() {
             <Button
               type="button"
               variant="destructive"
-              onClick={() => deleteMember({ uid })}
+              onClick={() => setDeleteModalOpen(true)}
               disabled={isPendingDeleteMember}
               className="px-8 py-3 text-lg font-bold"
             >
-              {isPendingDeleteMember ? t("deleting") : t("deleteAccount")}
+              {t("deleteAccount")}
             </Button>
           </CardFooter>
           <InterestsModal
@@ -398,6 +400,15 @@ export default function AccountPage() {
             onChange={(ints) =>
               setValue("interests", ints, { shouldDirty: true })
             }
+          />
+          <DeleteAccountModal
+            open={deleteModalOpen}
+            onOpenChange={setDeleteModalOpen}
+            onConfirm={() => {
+              deleteMember({ uid });
+              setDeleteModalOpen(false);
+            }}
+            isPending={isPendingDeleteMember}
           />
         </CardContent>
       </Card>

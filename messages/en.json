@@ -282,7 +282,10 @@
     "signingOut": "Signing out...",
     "signOut": "Sign out",
     "deleteAccount": "Delete account",
-    "deleting": "Deleting..."
+    "deleting": "Deleting...",
+    "deleteAccountTitle": "Delete Account",
+    "deleteAccountDescription": "Are you sure you want to delete your account? This action cannot be undone and will permanently remove all your data.",
+    "cancel": "Cancel"
   },
   "InterestsModal": {
     "title": "Interests",
@@ -369,5 +372,12 @@
   "NotFound": {
     "message": "Page not found.",
     "backHome": "Back to home"
+  },
+  "DeleteAccountModal": {
+    "title": "Delete Account",
+    "description": "Are you sure you want to delete your account? This action cannot be undone and will permanently remove all your data.",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "deleting": "Deleting..."
   }
 }

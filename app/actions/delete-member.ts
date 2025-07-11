@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@supabase/supabase-js";
+import { cookies } from "next/headers";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -25,6 +26,16 @@ export async function deleteMemberServerAction(
   // Delete user from auth
   const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(uid);
   if (authError) throw new Error(authError.message);
+
+  // Delete image from storage
+  const { error: storageError } = await supabaseAdmin.storage
+    .from("images")
+    .remove([uid]);
+  if (storageError) throw new Error(storageError.message);
+
+  const cookieStore = await cookies();
+  cookieStore.delete("sb-access-token");
+  cookieStore.delete("sb-refresh-token");
 
   return { success: true };
 }
