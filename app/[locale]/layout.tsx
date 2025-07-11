@@ -2,12 +2,53 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import "./../globals.css";
+import "leaflet/dist/leaflet.css";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import localFont from "next/font/local";
+import { Toaster } from "sonner";
+import { ClientProviders } from "@/providers/client-providers";
+import { Geist } from "next/font/google";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
+
+const vazirFont = localFont({
+  src: [
+    {
+      path: "../../public/fonts/vazir/Vazir-Thin.ttf",
+      weight: "100",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/vazir/Vazir-Light.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/vazir/Vazir.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/vazir/Vazir-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/vazir/Vazir-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-vazir",
+  display: "swap",
+});
+
+const geist = Geist({
+  subsets: ["latin"],
+});
 
 export async function generateMetadata({
   params,
@@ -71,5 +112,23 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  return <NextIntlClientProvider>{children}</NextIntlClientProvider>;
+  const dir = locale === "fa" ? "rtl" : "ltr";
+
+  return (
+    <html
+      lang={locale}
+      dir={dir}
+      suppressHydrationWarning
+      className={`${
+        locale === "fa" ? vazirFont.variable : geist.className + " font-sans"
+      } font-vazir antialiased`}
+    >
+      <body>
+        <ClientProviders>
+          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        </ClientProviders>
+        <Toaster className="!font-vazir" richColors />
+      </body>
+    </html>
+  );
 }
