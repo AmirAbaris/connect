@@ -206,26 +206,6 @@ export default function TermsPage() {
             استفاده از این سرویس، شما با این شرایط موافقت می‌کنید.
           </p>
         </div>
-
-        {/* Contact */}
-        <div className="text-center bg-card/50 rounded-lg p-8 border border-border/50">
-          <h2 className="text-2xl font-bold mb-6 flex items-center justify-center gap-2">
-            <Mail className="w-6 h-6 text-primary" />
-            تماس با ما
-          </h2>
-          <p className="text-muted-foreground mb-6">
-            برای سوالات یا درخواست‌ها، با ما تماس بگیرید
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild variant="outline">
-              <Link href="/contact">تماس</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/auth/signup">شروع کنید</Link>
-            </Button>
-          </div>
-        </div>
       </div>
     </div>
   );

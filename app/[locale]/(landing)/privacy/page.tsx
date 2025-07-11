@@ -38,7 +38,6 @@ export default function PrivacyPage() {
             چگونه اطلاعات شما را جمع‌آوری، استفاده و محافظت می‌کنیم.
           </p>
         </div>
-
         {/* Data Collection */}
         <div className="mb-16">
           <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
@@ -113,9 +112,7 @@ export default function PrivacyPage() {
             </Card>
           </div>
         </div>
-
         <Separator className="my-8" />
-
         {/* How We Use Data */}
         <div className="mb-16">
           <h2 className="text-2xl font-bold mb-6">
@@ -184,9 +181,7 @@ export default function PrivacyPage() {
             </Card>
           </div>
         </div>
-
         <Separator className="my-8" />
-
         {/* Data Sharing */}
         <div className="mb-16">
           <h2 className="text-2xl font-bold mb-6">اشتراک‌گذاری اطلاعات</h2>
@@ -233,9 +228,7 @@ export default function PrivacyPage() {
             </div>
           </div>
         </div>
-
         <Separator className="my-8" />
-
         {/* User Rights */}
         <div className="mb-16">
           <h2 className="text-2xl font-bold mb-6">حقوق شما</h2>
@@ -273,9 +266,7 @@ export default function PrivacyPage() {
             </Card>
           </div>
         </div>
-
         <Separator className="my-8" />
-
         {/* Security & Retention */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           <div>
@@ -307,27 +298,6 @@ export default function PrivacyPage() {
               </p>
             </div>
           </div>
-        </div>
-
-        <Separator className="my-8" />
-
-        {/* Contact & Updates */}
-        <div className="text-center">
-          <h2 className="text-2xl font-bold mb-6">تماس با ما</h2>
-          <p className="text-muted-foreground mb-6">
-            اگر سوالی در مورد حریم خصوصی دارید، با ما تماس بگیرید
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild variant="outline">
-              <Link href="/contact">تماس با ما</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/terms">قوانین استفاده</Link>
-            </Button>
-          </div>
-          <p className="text-xs text-muted-foreground mt-6">
-            آخرین به‌روزرسانی: {new Date().toLocaleDateString("fa-IR")}
-          </p>
         </div>
       </div>
     </div>
