@@ -156,21 +156,6 @@ export default function TermsPage() {
               برای محافظت از اطلاعات شما استفاده می‌کنیم.
             </p>
           </div>
-
-          <div>
-            <h2 className="text-2xl font-bold mb-6">حقوق شما</h2>
-            <div className="space-y-3 text-muted-foreground">
-              <p className="text-sm">شما می‌توانید:</p>
-              <div className="space-y-2">
-                <div className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-sm">
-                    دسترسی، به‌روزرسانی یا حذف اطلاعات خود را درخواست کنید
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <Separator className="my-8" />
