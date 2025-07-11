@@ -363,5 +363,9 @@
     "explore": "Explore",
     "status": "Status",
     "account": "Account"
+  },
+  "NotFound": {
+    "message": "Page not found.",
+    "backHome": "Back to home"
   }
 }
