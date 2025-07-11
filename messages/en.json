@@ -255,7 +255,7 @@
     "showToOthers": "Visible to others:",
     "visible": "Your status is visible to others",
     "hidden": "Hidden from others",
-    "visibilityTimeout": "You will be hidden from the map after 2 hours of inactivity"
+    "visibilityTimeout": "You will be hidden from the map after 1 hour of inactivity"
   },
   "Account": {
     "profileNotFoundTitle": "No profile found",
