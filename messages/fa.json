@@ -231,5 +231,24 @@
     "secure": "امن",
     "fast": "سریع",
     "private": "خصوصی"
+  },
+  "Status": {
+    "profileIncompleteTitle": "پروفایل شما تکمیل نشده است",
+    "profileIncompleteDesc": "برای استفاده از این بخش، ابتدا باید پروفایل خود را تکمیل کنید",
+    "profileIncompleteInfo": "اطلاعات پروفایل شما ناقص است. لطفاً برای ادامه، پروفایل خود را تکمیل کنید.",
+    "completeProfile": "تکمیل پروفایل",
+    "locationUnknown": "نامشخص",
+    "updateLocation": "آپدیت موقعیت روی نقشه",
+    "currentLocation": "موقعیت فعلی شما",
+    "myStatus": "وضعیت من",
+    "readyToChat": "آماده برای چت",
+    "readyToChatDesc": "دوست دارم با افراد جدید آشنا بشم!",
+    "okWithShortChat": "اوکی با گپ کوتاه",
+    "okWithShortChatDesc": "مشغولم ولی خوشحال میشم ببینمت.",
+    "doNotDisturb": "مزاحم نشو",
+    "doNotDisturbDesc": "در حال کار یا استراحت هستم.",
+    "showToOthers": "نمایش به دیگران:",
+    "visible": "وضعیت شما برای دیگران قابل مشاهده است",
+    "hidden": "پنهان از دیگران"
   }
 }
