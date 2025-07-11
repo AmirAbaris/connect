@@ -39,9 +39,8 @@ export default function Navbar() {
   }
 
   const navItems = [
-    { href: "/", label: t("home") },
-    { href: "/about", label: t("about") },
-    { href: "/contact", label: t("contact") },
+    { href: "/terms", label: t("terms") },
+    { href: "/privacy", label: t("privacy") },
   ];
 
   return (
