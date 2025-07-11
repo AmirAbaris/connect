@@ -90,7 +90,12 @@ export default function StatusPage() {
     );
     if (location && location !== t("locationUnknown")) {
       update({
-        fields: { location, lat: loc?.lat, lng: loc?.lng },
+        fields: {
+          location,
+          lat: loc?.lat,
+          lng: loc?.lng,
+          statusUpdatedAt: new Date().toISOString(),
+        },
         uid: currentMember?.uid,
       });
     }
@@ -100,7 +105,13 @@ export default function StatusPage() {
     setSelected(status);
     if (visible && !isLoadingLocation) {
       update({
-        fields: { status, location, lat: loc?.lat, lng: loc?.lng },
+        fields: {
+          status,
+          location,
+          lat: loc?.lat,
+          lng: loc?.lng,
+          statusUpdatedAt: new Date().toISOString(),
+        },
         uid: currentMember?.uid,
       });
     }
@@ -110,7 +121,13 @@ export default function StatusPage() {
     setVisible(isVisible);
     const newStatus = isVisible ? selected : null;
     update({
-      fields: { status: newStatus, location, lat: loc?.lat, lng: loc?.lng },
+      fields: {
+        status: newStatus,
+        location,
+        lat: loc?.lat,
+        lng: loc?.lng,
+        statusUpdatedAt: new Date().toISOString(),
+      },
       uid: currentMember?.uid,
     });
   };

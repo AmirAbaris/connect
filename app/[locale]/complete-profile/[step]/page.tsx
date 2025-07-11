@@ -35,8 +35,6 @@ export default function CompleteProfileStep() {
     if (isLoadingUserSession) return;
     const uid = session?.user.id;
 
-    console.log("memberState from parent", memberState);
-
     // db inset
     const { imageFile, ...memberData } = memberState;
     addToMember({
