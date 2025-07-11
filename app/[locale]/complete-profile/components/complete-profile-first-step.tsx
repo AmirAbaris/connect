@@ -25,6 +25,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FirstStepData } from "@/types/member";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
+import { useTranslations } from "next-intl";
 
 type Props = {
   handleData: (data: FirstStepData) => void;
@@ -33,6 +34,7 @@ type Props = {
 export default function CompleteProfileFirstStep(props: Props) {
   const { handleData } = props;
   const router = useRouter();
+  const t = useTranslations("CompleteProfileFirstStep");
   const {
     register,
     handleSubmit,
@@ -75,10 +77,10 @@ export default function CompleteProfileFirstStep(props: Props) {
       <Card className="w-full max-w-md mx-auto border border-border bg-background text-foreground">
         <CardHeader className="flex flex-col items-center gap-1 pb-2">
           <h1 className="text-3xl font-extrabold text-primary tracking-tight text-center">
-            پروفایل خفن بساز!
+            {t("title")}
           </h1>
           <p className="text-base text-muted-foreground font-medium text-center">
-            هرچی پروفایلت خاص‌تر باشه، بیشتر دیده می‌شی ⚡️
+            {t("subtitle")}
           </p>
         </CardHeader>
         <CardContent className="flex flex-col items-center gap-6 pt-0">
@@ -109,7 +111,7 @@ export default function CompleteProfileFirstStep(props: Props) {
                 onClick={() => setValue("imageFile", null)}
                 tabIndex={-1}
               >
-                <span className="sr-only">حذف عکس</span>
+                <span className="sr-only">{t("removeImage")}</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path
                     d="M18 6L6 18"
@@ -138,7 +140,7 @@ export default function CompleteProfileFirstStep(props: Props) {
               type="button"
               onClick={handleImageButtonClick}
             >
-              انتخاب عکس پروفایل
+              {t("selectImage")}
             </Button>
           </div>
 
@@ -153,13 +155,13 @@ export default function CompleteProfileFirstStep(props: Props) {
                 htmlFor="name"
                 className="text-base font-bold text-primary flex items-center gap-2"
               >
-                اسم
-                <Badge variant="default">اجباری</Badge>
+                {t("nameLabel")}
+                <Badge variant="default">{t("required")}</Badge>
               </Label>
               <Input
                 id="name"
                 {...register("name")}
-                placeholder="مثلاً آرش"
+                placeholder={t("namePlaceholder")}
                 required
                 className="text-base"
                 type="text"
@@ -172,8 +174,8 @@ export default function CompleteProfileFirstStep(props: Props) {
                 htmlFor="age"
                 className="text-base font-bold text-primary flex items-center gap-2"
               >
-                سن
-                <Badge variant="default">اجباری</Badge>
+                {t("ageLabel")}
+                <Badge variant="default">{t("required")}</Badge>
               </Label>
               <Controller
                 control={control}
@@ -184,7 +186,7 @@ export default function CompleteProfileFirstStep(props: Props) {
                     onValueChange={(v) => field.onChange(Number(v))}
                   >
                     <SelectTrigger className="bg-background border border-input rounded-md px-4 py-2 text-base w-full">
-                      <SelectValue placeholder="سن" />
+                      <SelectValue placeholder={t("agePlaceholder")} />
                     </SelectTrigger>
                     <SelectContent className="border border-input rounded-md max-h-48">
                       {Array.from({ length: 84 }, (_, i) => 18 + i).map((n) => (
@@ -197,7 +199,7 @@ export default function CompleteProfileFirstStep(props: Props) {
                 )}
               />
               <p className="text-sm text-muted-foreground mb-1">
-                حداقل سن: ۱۸ سال
+                {t("ageHint")}
               </p>
             </div>
           </form>
@@ -209,7 +211,7 @@ export default function CompleteProfileFirstStep(props: Props) {
             disabled={formState.isSubmitting || !formState.isValid}
             className="w-full"
           >
-            ادامه
+            {t("continue")}
           </Button>
         </CardFooter>
       </Card>

@@ -309,5 +309,27 @@
     "unknownLocation": "نامشخص",
     "ageSuffix": "ساله",
     "close": "بستن"
+  },
+  "CompleteProfileFirstStep": {
+    "title": "پروفایل خفن بساز!",
+    "subtitle": "هرچی پروفایلت خاص‌تر باشه، بیشتر دیده می‌شی ⚡️",
+    "removeImage": "حذف عکس",
+    "selectImage": "انتخاب عکس پروفایل",
+    "nameLabel": "اسم",
+    "required": "اجباری",
+    "namePlaceholder": "مثلاً آرش",
+    "ageLabel": "سن",
+    "agePlaceholder": "سن",
+    "ageHint": "حداقل سن: ۱۸ سال",
+    "continue": "ادامه"
+  },
+  "CompleteProfileSecondStep": {
+    "title": "تکمیل پروفایل",
+    "bioLabel": "بیو (اختیاری)",
+    "bioPlaceholder": "یه جمله درباره خودت...",
+    "interestsLabel": "علاقه‌مندی‌ها (اختیاری)",
+    "noInterests": "هیچ علاقه‌ای انتخاب نشده",
+    "selectInterests": "انتخاب علاقه‌مندی‌ها",
+    "done": "انجام شد"
   }
 }
