@@ -94,9 +94,6 @@ export async function generateMetadata({
         "max-snippet": -1,
       },
     },
-    verification: {
-      google: "your-google-verification-code",
-    },
   };
 }
 
@@ -113,7 +110,6 @@ export default async function LocaleLayout({
   }
 
   const dir = locale === "fa" ? "rtl" : "ltr";
-  console.log(dir);
 
   return (
     <html
