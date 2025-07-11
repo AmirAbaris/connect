@@ -227,7 +227,7 @@ export default function AccountPage() {
             <Avatar className="w-28 h-28 border-4 border-border shadow bg-background">
               {watchedImage || currentMember?.image ? (
                 <AvatarImage
-                  src={watchedImage || currentMember?.image}
+                  src={(watchedImage || currentMember?.image) ?? undefined}
                   alt={currentMember?.name || "profile"}
                 />
               ) : (

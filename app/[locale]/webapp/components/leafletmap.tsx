@@ -24,9 +24,11 @@ const customIcon = L.icon({
   shadowUrl: undefined,
 });
 
-const center = [35.8327, 50.9916];
-
-export default function LeafletMap({ zoom = 13, members }: LeafletMapProps) {
+export default function LeafletMap({
+  zoom = 13,
+  members,
+  center,
+}: LeafletMapProps) {
   const [drawerOpenId, setDrawerOpenId] = useState<string | null>(null);
   const offsettedMembers = offsetMembers(members);
   return (

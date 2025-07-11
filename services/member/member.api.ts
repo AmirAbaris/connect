@@ -12,7 +12,7 @@ export async function fetchMembers(): Promise<Member[] | null> {
   return data as Member[] | null;
 }
 
-export async function fetchCurrentMember(uid: string) {
+export async function fetchCurrentMember(uid: string): Promise<Member | null> {
   const { data, error } = await supabaseBrowserClient
     .from("member")
     .select("*")
