@@ -120,14 +120,14 @@ export default async function LocaleLayout({
       dir={dir}
       suppressHydrationWarning
       className={`${
-        locale === "fa" ? vazirFont.variable : geist.className + " font-sans"
-      } font-vazir antialiased`}
+        locale === "fa" ? vazirFont.variable + " font-vazir" : geist.className
+      } antialiased`}
     >
       <body>
         <ClientProviders>
           <NextIntlClientProvider>{children}</NextIntlClientProvider>
         </ClientProviders>
-        <Toaster className="!font-vazir" richColors />
+        <Toaster className={locale === "fa" ? "!font-vazir" : ""} richColors />
       </body>
     </html>
   );
