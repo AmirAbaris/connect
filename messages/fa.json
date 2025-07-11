@@ -301,5 +301,13 @@
       "کریپتو",
       "برنامه‌نویسی"
     ]
+  },
+  "PinDetailsDrawer": {
+    "statusOpen": "آماده برای چت",
+    "statusNeutral": "اوکی با گپ کوتاه",
+    "statusClose": "مزاحم نشو",
+    "unknownLocation": "نامشخص",
+    "ageSuffix": "ساله",
+    "close": "بستن"
   }
 }
