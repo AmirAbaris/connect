@@ -10,11 +10,13 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import useAuth from "./use-auth";
+import { useTranslations } from "next-intl";
 
 export default function useMember() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const { session } = useAuth();
+  const t = useTranslations("MemberToasts");
   const uid = session?.user?.id;
   const isReady = !!uid;
 
@@ -42,11 +44,11 @@ export default function useMember() {
     }) => createMember(newMember, uid, image),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["member"] });
-      toast.success("عضو با موفقیت اضافه شد");
+      toast.success(t("addSuccess"));
       router.push("/webapp/status");
     },
     onError: () => {
-      toast.error("افزودن عضو با خطا مواجه شد");
+      toast.error(t("addError"));
     },
   });
 
@@ -62,11 +64,11 @@ export default function useMember() {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["member"] });
-      toast.success("عضو با موفقیت بروزرسانی شد");
+      toast.success(t("updateSuccess"));
     },
 
     onError: () => {
-      toast.error("بروزرسانی عضو با خطا مواجه شد");
+      toast.error(t("updateError"));
     },
   });
 
