@@ -195,5 +195,21 @@
     "retentionList1": "اطلاعات تا زمان فعال بودن حساب کاربری نگهداری می‌شود",
     "retentionList2": "پس از حذف حساب، اطلاعات طی ۳۰ روز حذف می‌شود",
     "retentionList3": "موقعیت مکانی قدیمی به طور خودکار پاک می‌شود"
+  },
+  "Login": {
+    "logo": "کانکت",
+    "header": "به حساب کاربری خود وارد شوید",
+    "subheader": "خوش آمدید! برای ادامه وارد حساب کاربری خود شوید",
+    "emailLabel": "ایمیل",
+    "emailPlaceholder": "example@email.com",
+    "passwordLabel": "رمز عبور",
+    "passwordPlaceholder": "رمز عبور خود را وارد کنید",
+    "forgotPassword": "فراموش کردید؟",
+    "submit": "ورود",
+    "signupPrompt": "حساب کاربری ندارید؟",
+    "signupLink": "ثبت‌نام کنید",
+    "secure": "امن",
+    "fast": "سریع",
+    "private": "خصوصی"
   }
 }
