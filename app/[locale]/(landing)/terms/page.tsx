@@ -136,26 +136,9 @@ export default function TermsPage() {
           <h2 className="text-2xl font-bold mb-6">اشتراک‌گذاری اطلاعات</h2>
 
           <div className="bg-card/50 rounded-lg p-6 border border-border/50">
-            <p className="text-muted-foreground mb-4">
-              ما اطلاعات شما را نمی‌فروشیم. ممکن است اطلاعات را با موارد زیر به
-              اشتراک بگذاریم:
+            <p className="text-muted-foreground">
+              ما اطلاعات شما را نمی‌فروشیم!
             </p>
-
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                <p className="text-muted-foreground text-sm">
-                  ارائه‌دهندگان خدمات (مثل Supabase) برای میزبانی، احراز هویت و
-                  ذخیره‌سازی
-                </p>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                <p className="text-muted-foreground text-sm">
-                  مقامات قانونی در صورت الزام قانونی
-                </p>
-              </div>
-            </div>
           </div>
         </div>
 
