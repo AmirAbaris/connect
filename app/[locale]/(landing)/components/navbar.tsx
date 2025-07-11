@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -10,15 +11,22 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { Menu, Globe } from "lucide-react";
+import { useTranslations, useLocale } from "next-intl";
 import useAuth from "@/hooks/use-auth";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations("Navbar");
+  const locale = useLocale();
+  const router = useRouter();
   const { session, isLoadingUserSession } = useAuth();
   const isLoggedIn = !!session?.user;
+
+  const toggleLanguage = () => {
+    const newLocale = locale === "fa" ? "en" : "fa";
+    router.push(`/${newLocale}`);
+  };
 
   if (isLoadingUserSession) {
     return (
@@ -71,6 +79,20 @@ export default function Navbar() {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center gap-4">
+            {/* Language Switcher */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleLanguage}
+              className="relative"
+              title={locale === "fa" ? "Switch to English" : "تغییر به فارسی"}
+            >
+              <Globe className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 text-xs font-bold bg-primary text-primary-foreground rounded-full w-5 h-5 flex items-center justify-center">
+                {locale === "fa" ? "EN" : "فا"}
+              </span>
+            </Button>
+
             {isLoggedIn ? (
               <>
                 <Button variant="ghost" asChild>
@@ -122,6 +144,20 @@ export default function Navbar() {
                       {item.label}
                     </Link>
                   ))}
+
+                  {/* Mobile Language Switcher */}
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      toggleLanguage();
+                      setIsOpen(false);
+                    }}
+                    className="justify-start text-lg font-medium"
+                  >
+                    <Globe className="h-5 w-5 mr-2" />
+                    {locale === "fa" ? "English" : "فارسی"}
+                  </Button>
+
                   <div className="flex flex-col gap-4 pt-6 border-t border-border">
                     {isLoggedIn ? (
                       <>

@@ -4,6 +4,8 @@ import "leaflet/dist/leaflet.css";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
 import { ClientProviders } from "@/providers/client-providers";
+import { Geist } from "next/font/google";
+import { useLocale } from "next-intl";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -86,17 +88,28 @@ const vazirFont = localFont({
   display: "swap",
 });
 
+const geist = Geist({
+  subsets: ["latin"],
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = useLocale();
+  const dir = locale === "fa" ? "rtl" : "ltr";
   return (
-    <html lang="fa" dir="rtl" suppressHydrationWarning>
-      <body className={`${vazirFont.variable} font-vazir antialiased`}>
-        <ClientProviders>{children}</ClientProviders>
-        <Toaster className="!font-vazir" richColors />
-      </body>
+    <html
+      lang={locale}
+      dir={dir}
+      suppressHydrationWarning
+      className={`${
+        locale === "fa" ? vazirFont.variable : geist.className + " font-sans"
+      }  font-vazir antialiased`}
+    >
+      <ClientProviders>{children}</ClientProviders>
+      <Toaster className="!font-vazir" richColors />
     </html>
   );
 }

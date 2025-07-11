@@ -71,12 +71,5 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  const isFa = locale === "fa";
-  return (
-    <html lang={locale} dir={isFa ? "rtl" : "ltr"} suppressHydrationWarning>
-      <body>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
-      </body>
-    </html>
-  );
+  return <NextIntlClientProvider>{children}</NextIntlClientProvider>;
 }
