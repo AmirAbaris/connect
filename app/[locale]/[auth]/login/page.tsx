@@ -3,7 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Mail, Lock, ArrowLeft, Loader2 } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  ArrowLeft,
+  Loader2,
+  ArrowRight,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
@@ -11,10 +19,11 @@ import { AuthUserType } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "@/schemas/user-schema";
 import useAuth from "@/hooks/use-auth";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function LoginPage() {
   const t = useTranslations();
+  const locale = useLocale();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -126,8 +135,10 @@ export default function LoginPage() {
               {t("Login.submit")}
               {isPendingSignInWithPassword ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
+              ) : locale === "fa" ? (
                 <ArrowLeft className="w-4 h-4 mr-2" />
+              ) : (
+                <ArrowRight className="w-4 h-4 mr-2" />
               )}
             </Button>
           </form>

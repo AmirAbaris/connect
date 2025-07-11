@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Mail, ArrowLeft } from "lucide-react";
+import { Mail, ArrowLeft, ArrowRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useAuth from "@/hooks/use-auth";
@@ -10,7 +10,7 @@ import { AuthForgotPasswordType } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { forgetPasswordUserSchema } from "@/schemas/user-schema";
 import { useForm } from "react-hook-form";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function ForgotPasswordPage() {
   const {
@@ -22,6 +22,7 @@ export default function ForgotPasswordPage() {
   });
   const { forgetPassword, isPendingForgetPassword } = useAuth();
   const t = useTranslations("ForgotPassword");
+  const locale = useLocale();
 
   const onSubmit = (data: AuthForgotPasswordType) => {
     forgetPassword(data);
@@ -89,7 +90,11 @@ export default function ForgotPasswordPage() {
               ) : (
                 <>
                   {t("submit")}
-                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  {locale === "fa" ? (
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                  ) : (
+                    <ArrowRight className="w-4 h-4 mr-2" />
+                  )}
                 </>
               )}
             </Button>
