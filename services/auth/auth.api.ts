@@ -1,5 +1,6 @@
 import { supabaseBrowserClient } from "@/lib/supabase/browser";
 import { Session } from "@supabase/supabase-js";
+import { useLocale } from "next-intl";
 
 export const signUp = async (
   email: string,
@@ -32,12 +33,13 @@ export const signIn = async (
 };
 
 export const forgotPassword = async (email: string): Promise<void> => {
+  const locale = useLocale();
   // TODO: fix later
   const defaultUrl = "https://connect-black.vercel.app";
   const { error } = await supabaseBrowserClient.auth.resetPasswordForEmail(
     email,
     {
-      redirectTo: `${defaultUrl}/fa/auth/reset-password`,
+      redirectTo: `${defaultUrl}/${locale}/auth/reset-password`,
     }
   );
 

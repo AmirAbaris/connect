@@ -245,8 +245,8 @@
     "locationUnknown": "Unknown",
     "updateLocation": "Update location on map",
     "currentLocation": "Your current location",
-    "myStatus": "My Status",
-    "readyToChat": "Ready to chat",
+    "myStatus": "My Status (Select one)",
+    "readyToChat": "Ready to meet",
     "readyToChatDesc": "I’d love to meet new people!",
     "okWithShortChat": "Okay with a short chat",
     "okWithShortChatDesc": "I’m busy but happy to see you.",
@@ -254,7 +254,8 @@
     "doNotDisturbDesc": "I’m working or resting.",
     "showToOthers": "Visible to others:",
     "visible": "Your status is visible to others",
-    "hidden": "Hidden from others"
+    "hidden": "Hidden from others",
+    "visibilityTimeout": "You will be hidden from the map after 2 hours of inactivity"
   },
   "Account": {
     "profileNotFoundTitle": "No profile found",
@@ -313,7 +314,7 @@
     ]
   },
   "PinDetailsDrawer": {
-    "statusOpen": "Ready to chat",
+    "statusOpen": "Ready to meet",
     "statusNeutral": "Okay with a short chat",
     "statusClose": "Do not disturb",
     "unknownLocation": "Unknown",

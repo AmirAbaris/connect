@@ -110,7 +110,7 @@ export default function StatusPage() {
     setVisible(isVisible);
     const newStatus = isVisible ? selected : null;
     update({
-      fields: { status: newStatus },
+      fields: { status: newStatus, location, lat: loc?.lat, lng: loc?.lng },
       uid: currentMember?.uid,
     });
   };
@@ -256,7 +256,7 @@ export default function StatusPage() {
                   </span>
                 </span>
                 {isPendingUpdate && selected === opt.key && (
-                  <Loader2 className="mr-auto h-4 w-4 animate-spin" />
+                  <Loader2 className="mx-3 h-4 w-4 animate-spin" />
                 )}
               </Button>
             ))}
@@ -279,6 +279,11 @@ export default function StatusPage() {
             <span className="text-xs sm:text-base text-muted-foreground text-center sm:text-right">
               {visible ? t("visible") : t("hidden")}
             </span>
+            {visible && (
+              <span className="text-xs text-muted-foreground/70 text-center">
+                {t("visibilityTimeout")}
+              </span>
+            )}
           </div>
         </CardContent>
       </Card>
