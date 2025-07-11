@@ -59,3 +59,9 @@ export const getSession = async (): Promise<Session | null> => {
 
   return data.session;
 };
+
+export const deleteUser = async (uid: string): Promise<void> => {
+  const { error } = await supabaseBrowserClient.auth.admin.deleteUser(uid);
+
+  if (error) throw error;
+};

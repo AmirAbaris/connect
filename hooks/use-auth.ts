@@ -1,4 +1,5 @@
 import {
+  deleteUser,
   forgotPassword,
   getSession,
   resetPassword,
@@ -78,6 +79,16 @@ export default function useAuth() {
     queryFn: getSession,
   });
 
+  const deleteUserMutation = useMutation({
+    mutationKey: ["auth", "deleteUser"],
+    mutationFn: deleteUser,
+    onError: () => toast.error(t("deleteError")),
+    onSuccess: () => {
+      toast.success(t("deleteSuccess"));
+      router.push("/");
+    },
+  });
+
   return {
     signUpWithPassword: signUpWithPassword.mutate,
     isPendingSignUpWithPassword: signUpWithPassword.isPending,
@@ -96,5 +107,8 @@ export default function useAuth() {
 
     session: session.data,
     isLoadingUserSession: session.isLoading,
+
+    deleteUser: deleteUserMutation.mutate,
+    isPendingDeleteUser: deleteUserMutation.isPending,
   };
 }

@@ -2,7 +2,6 @@ import {
   createMember,
   fetchCurrentMember,
   fetchMembers,
-  deleteMember,
   updateMember,
   uploadMemberImage,
 } from "@/services/member/member.api";
@@ -12,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import useAuth from "./use-auth";
 import { useTranslations } from "next-intl";
+import { deleteMemberServerAction } from "@/app/actions/delete-member";
 
 export default function useMember() {
   const queryClient = useQueryClient();
@@ -80,10 +80,12 @@ export default function useMember() {
 
   const deleteMemberMutation = useMutation({
     mutationKey: ["member"],
-    mutationFn: ({ uid }: { uid: string | undefined }) => deleteMember(uid),
+    mutationFn: ({ uid }: { uid: string | undefined }) =>
+      deleteMemberServerAction(uid as string),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["member"] });
       toast.success(t("deleteSuccess"));
+      router.push("/");
     },
     onError: () => {
       toast.error(t("deleteError"));

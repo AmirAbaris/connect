@@ -4,11 +4,14 @@ import * as React from "react";
 import * as SwitchPrimitive from "@radix-ui/react-switch";
 
 import { cn } from "@/lib/utils";
+import { useLocale } from "next-intl";
 
 function Switch({
   className,
   ...props
 }: React.ComponentProps<typeof SwitchPrimitive.Root>) {
+  const locale = useLocale();
+  const isRTL = locale === "fa";
   return (
     <SwitchPrimitive.Root
       data-slot="switch"
@@ -21,7 +24,10 @@ function Switch({
       <SwitchPrimitive.Thumb
         data-slot="switch-thumb"
         className={cn(
-          "bg-background dark:data-[state=unchecked]:bg-foreground dark:data-[state=checked]:bg-primary-foreground pointer-events-none block size-4 sm:size-5 rounded-full ring-0 transition-transform duration-200 data-[state=checked]:translate-x-[-1.25rem] data-[state=unchecked]:translate-x-0 shadow-md border border-border"
+          "bg-background dark:data-[state=unchecked]:bg-foreground dark:data-[state=checked]:bg-primary-foreground pointer-events-none block size-4 sm:size-5 rounded-full ring-0 transition-transform duration-200 data-[state=checked]:translate-x-[-1.25rem] data-[state=unchecked]:translate-x-0 shadow-md border border-border",
+          {
+            "data-[state=checked]:translate-x-[1.25rem]": !isRTL,
+          }
         )}
       />
     </SwitchPrimitive.Root>

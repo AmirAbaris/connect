@@ -357,7 +357,9 @@
     "forgotError": "Failed to send recovery email. Please try again.",
     "forgotSuccess": "Recovery email sent. Please check your inbox.",
     "resetError": "Password change failed. Please try again.",
-    "resetSuccess": "Password changed successfully."
+    "resetSuccess": "Password changed successfully.",
+    "deleteSuccess": "Account deleted successfully.",
+    "deleteError": "Failed to delete account"
   },
   "WebAppNav": {
     "explore": "Explore",
