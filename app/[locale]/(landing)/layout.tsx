@@ -19,7 +19,7 @@ export default async function LocaleLayout({
   }
 
   return (
-    <div dir="rtl">
+    <div>
       <NextIntlClientProvider>
         <Navbar />
         <main className="min-h-screen">{children}</main>

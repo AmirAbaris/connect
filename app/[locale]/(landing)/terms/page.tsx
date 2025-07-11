@@ -2,12 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Shield, User, MapPin, Database, Lock } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function TermsPage() {
   const t = useTranslations();
+  const locale = useLocale();
   const lastUpdated = t("Terms.lastUpdated", {
-    date: new Date().toLocaleDateString("fa-IR"),
+    date: new Date().toLocaleDateString(locale === "fa" ? "fa-IR" : "en-US"),
   });
   return (
     <div className="min-h-screen bg-background pt-32 pb-20">

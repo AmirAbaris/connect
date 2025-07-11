@@ -113,6 +113,7 @@ export default async function LocaleLayout({
   }
 
   const dir = locale === "fa" ? "rtl" : "ltr";
+  console.log(dir);
 
   return (
     <html
