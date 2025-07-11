@@ -34,8 +34,8 @@ export async function deleteMemberServerAction(
   if (storageError) throw new Error(storageError.message);
 
   const cookieStore = await cookies();
-  cookieStore.delete("sb-access-token");
-  cookieStore.delete("sb-refresh-token");
+  cookieStore.delete("sb-dtnknotqorxmauptuipr-auth-token");
+  cookieStore.delete("sb-dtnknotqorxmauptuipr-auth-token-code-verifier");
 
   return { success: true };
 }
