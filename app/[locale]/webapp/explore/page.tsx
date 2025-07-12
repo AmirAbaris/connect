@@ -15,10 +15,12 @@ export default function ExplorePage() {
     useMember();
 
   const validStatuses = ["open", "neutral", "close"];
+  
+  const isValidStatus = (status: unknown): status is Status => {
+    return typeof status === "string" && validStatuses.includes(status);
+  };
 
-  const visibleMembers = members?.filter((item) =>
-    validStatuses.includes(item.status as Status)
-  );
+  const visibleMembers = members?.filter((item) => isValidStatus(item.status));
 
   const centerLocation =
     currentMember?.lat != null && currentMember?.lng != null
