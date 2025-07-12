@@ -16,25 +16,32 @@ import useMember from "@/hooks/use-member";
 import { Status } from "@/types/member";
 import { Skeleton } from "@/components/ui/skeleton";
 import useMap from "@/hooks/use-map";
-import { Loader2, RefreshCw } from "lucide-react";
+import {
+  Headphones,
+  Loader2,
+  MessageSquareOff,
+  PartyPopper,
+  RefreshCw,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
+import clsx from "clsx";
 
 const STATUS_KEYS = [
   {
     key: "open" as Status,
-    icon: "☕",
+    icon: PartyPopper,
     labelKey: "readyToChat",
     descKey: "readyToChatDesc",
   },
   {
     key: "neutral" as Status,
-    icon: "📖",
+    icon: Headphones,
     labelKey: "okWithShortChat",
     descKey: "okWithShortChatDesc",
   },
   {
     key: "close" as Status,
-    icon: "🚫",
+    icon: MessageSquareOff,
     labelKey: "doNotDisturb",
     descKey: "doNotDisturbDesc",
   },
@@ -250,7 +257,12 @@ export default function StatusPage() {
               <Button
                 key={opt.key}
                 variant={selected === opt.key ? "default" : "outline"}
-                className="flex items-center gap-2 sm:gap-3 justify-start w-full text-base sm:text-lg font-bold rounded-xl min-h-14 sm:min-h-[56px]"
+                className={clsx(
+                  "flex items-center gap-2 sm:gap-3 justify-start w-full text-base sm:text-lg font-bold rounded-xl min-h-14 sm:min-h-[56px]",
+                  opt.key === "open" && "bg-green-500",
+                  opt.key === "neutral" && "bg-amber-500",
+                  opt.key === "close" && "bg-red-500"
+                )}
                 onClick={() => handleStatusChange(opt.key)}
                 disabled={
                   !visible ||
@@ -259,7 +271,9 @@ export default function StatusPage() {
                   location === t("locationUnknown")
                 }
               >
-                <span className="text-xl sm:text-3xl">{opt.icon}</span>
+                <span className="text-xl sm:text-3xl">
+                  <opt.icon />
+                </span>
                 <span className="flex flex-col items-start">
                   <span>{t(opt.labelKey)}</span>
                   <span
