@@ -61,7 +61,7 @@ export async function generateMetadata({
   }
   const t = await getTranslations({ locale });
   // Use t for all metadata fields
-  const title = `Connect - ${t("Hero.title")}`;
+  const title = `Connecty - ${t("Hero.title")}`;
   const description = t("Footer.description");
   const keywords = t("Footer.descriptionShort").split(" ");
   const isFa = locale === "fa";

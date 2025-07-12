@@ -1,8 +1,8 @@
 {
   "Hero": {
     "badge": "No more guessing who’s in the mood 😎",
-    "title": "Connect",
-    "subtitle": "At a cafe or in a group, not sure who’s up for a chat? With Connect, everyone sets their own vibe. See who’s social, who’s solo, and who’s just not in the mood. Everything’s real, no awkwardness.",
+    "title": "Connecty",
+    "subtitle": "At a cafe or in a group, not sure who’s up for a chat? With Connecty, everyone sets their own vibe. See who’s social, who’s solo, and who’s just not in the mood. Everything’s real, no awkwardness.",
     "vibeSystem": "Vibe system:",
     "greenSignalTitle": "☕ Green — Social, ready to chat and meet",
     "greenSignalDesc": "Good mood, positive vibes, let’s talk! :)",
@@ -10,14 +10,14 @@
     "yellowSignalDesc": "I’m working or chilling, but if your vibe’s good, come over.",
     "redSignalTitle": "🚫 Red — Not in the mood",
     "redSignalDesc": "Not in a social mood right now, come back later.",
-    "goalTitle": "Connect’s Goal",
+    "goalTitle": "Connecty’s Goal",
     "goalDesc": "Everyone sets their vibe, so connections are more real and stress-free. No one feels awkward in a group anymore.",
     "cta": "Get Started 🚀"
   },
   "UserVisibility": {
     "badge": "Vibe Visibility",
     "header": "See who’s chill, who’s in their own zone 👀",
-    "subheader": "No more guessing who’s up for a chat. With Connect, everyone can set their vibe, and you can easily decide whether to start a conversation. Everything’s real, no awkwardness.",
+    "subheader": "No more guessing who’s up for a chat. With Connecty, everyone can set their vibe, and you can easily decide whether to start a conversation. Everything’s real, no awkwardness.",
     "cafeName": "Central Cafe",
     "online": "Online",
     "user1Name": "Sara",
@@ -29,9 +29,9 @@
     "user3Name": "Maryam",
     "user3Status": "🚫 Busy",
     "user3Vibe": "vibe: do not disturb • grinding",
-    "featuresHeader": "Why Connect? 🤔",
+    "featuresHeader": "Why Connecty? 🤔",
     "feature1Title": "Only real ones see you",
-    "feature1Desc": "Only Connect users can see your vibe. Full privacy, no one outside the vibe zone can see you.",
+    "feature1Desc": "Only Connecty users can see your vibe. Full privacy, no one outside the vibe zone can see you.",
     "feature2Title": "Real security",
     "feature2Desc": "Your info stays with you. Only your name and vibe are shown, nothing extra is shared.",
     "feature3Title": "Your vibe updates instantly",
@@ -40,15 +40,15 @@
   "CTA": {
     "badge": "Get Started",
     "heading": "Time to make your social life more real 👾",
-    "subheading": "Tired of guessing who’s up for a chat? Connect solves that. Just set your mood, and others will know your vibe. No stress, no awkwardness. Everything’s chill and real.",
+    "subheading": "Tired of guessing who’s up for a chat? Connecty solves that. Just set your mood, and others will know your vibe. No stress, no awkwardness. Everything’s chill and real.",
     "button": "Let’s Go 🎯",
     "privacy": "Full privacy",
     "free": "Always free",
     "noInstall": "No install needed",
-    "testimonial": "Connect helped me lose the stress of starting a conversation. Everything’s my own vibe!"
+    "testimonial": "Connecty helped me lose the stress of starting a conversation. Everything’s my own vibe!"
   },
   "Navbar": {
-    "logo": "Connect",
+    "logo": "Connecty",
     "home": "Home",
     "terms": "Terms",
     "privacy": "Privacy",
@@ -59,8 +59,8 @@
     "toggleMenu": "Toggle menu"
   },
   "Footer": {
-    "logo": "Connect",
-    "description": "Connect helps you find people ready to meet in cafes and social spaces, making your social experience better.",
+    "logo": "Connecty",
+    "description": "Connecty helps you find people ready to meet in cafes and social spaces, making your social experience better.",
     "newsletterDesc": "Get the latest news and updates",
     "emailPlaceholder": "Your email",
     "subscribe": "Subscribe",
@@ -89,7 +89,7 @@
     "madeWithLove": "Made with 🤎"
   },
   "Signup": {
-    "logo": "Connect",
+    "logo": "Connecty",
     "header": "Create an Account",
     "subheader": "Sign up to start a better social experience",
     "emailLabel": "Email",
@@ -142,7 +142,7 @@
     "changesTitle": "Changes",
     "changesDesc": "We may update these terms. If there are major changes, we’ll let you know.",
     "disclaimerTitle": "Disclaimer",
-    "disclaimerDesc": "This platform is only for initial user connections. You are 100% responsible for any in-person meetings or interactions outside the app. The Connect team is not responsible for any consequences. By using this service, you agree to these terms."
+    "disclaimerDesc": "This platform is only for initial user connections. You are 100% responsible for any in-person meetings or interactions outside the app. The Connecty team is not responsible for any consequences. By using this service, you agree to these terms."
   },
   "Privacy": {
     "badge": "Privacy",
@@ -202,7 +202,7 @@
     "retentionList3": "Old location data is automatically deleted"
   },
   "Login": {
-    "logo": "Connect",
+    "logo": "Connecty",
     "header": "Log in to your account",
     "subheader": "Welcome! Log in to continue",
     "emailLabel": "Email",
@@ -218,7 +218,7 @@
     "private": "Private"
   },
   "ForgotPassword": {
-    "logo": "Connect",
+    "logo": "Connecty",
     "header": "Forgot your password?",
     "subheader": "No worries! Enter your email and we’ll send you a reset link.",
     "emailLabel": "Email",
