@@ -47,11 +47,11 @@ export function InterestsModal({
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-sm w-full rounded-2xl p-6">
         <DialogHeader>
-          <DialogTitle className="text-lg font-bold text-primary">
+          <DialogTitle className="text-lg font-bold text-primary text-center">
             {t("title")}
           </DialogTitle>
         </DialogHeader>
-        <Label className="block text-base font-bold text-primary mb-2 text-center">
+        <Label className="block text-sm font-bold text-secondary-foreground mb-2 text-center">
           {t("label")}
         </Label>
         <div className="flex flex-wrap gap-2 justify-center my-4">

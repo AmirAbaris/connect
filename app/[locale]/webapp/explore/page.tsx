@@ -4,6 +4,7 @@ import useMember from "@/hooks/use-member";
 import dynamic from "next/dynamic";
 import { Loader } from "lucide-react";
 import { LatLngExpression } from "leaflet";
+import { Status } from "@/types/member";
 
 const LeafletMap = dynamic(() => import("../components/leafletmap"), {
   ssr: false,
@@ -13,7 +14,12 @@ export default function ExplorePage() {
   const { members, isLoadingMembers, currentMember, isLoadingCurrentMember } =
     useMember();
 
-  const visibleMembers = members?.filter((item) => item.status);
+  const validStatuses = ["open", "neutral", "close"];
+
+  const visibleMembers = members?.filter((item) =>
+    validStatuses.includes(item.status as Status)
+  );
+
   const centerLocation =
     currentMember?.lat != null && currentMember?.lng != null
       ? [currentMember.lat, currentMember.lng]
