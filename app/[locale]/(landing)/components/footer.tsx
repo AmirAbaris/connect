@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 export default function Footer() {
   const t = useTranslations("Footer");
@@ -15,11 +16,16 @@ export default function Footer() {
       <div className="container mx-auto px-6 py-12">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Brand Section */}
-          <div className="flex flex-col items-center md:items-start">
+          <div className="flex flex-col items-center gap-2 md:items-start">
             <h3 className="text-2xl font-black mb-2">
-              <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                {t("logo")}
-              </span>
+              <Link href="/" className="flex items-center gap-2">
+                <Image
+                  src={"/logo.svg"}
+                  width={82}
+                  height={82}
+                  alt={t("logo")}
+                />
+              </Link>
             </h3>
             <p className="text-sm text-muted-foreground text-center md:text-right">
               {t("descriptionShort")}
