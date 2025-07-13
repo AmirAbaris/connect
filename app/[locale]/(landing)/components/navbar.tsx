@@ -36,11 +36,14 @@ export default function Navbar() {
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-black">
-                <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                  {t("logo")}
-                </span>
-              </h1>
+              <Link href="/" className="flex items-center gap-2">
+                <Image
+                  src={"/logo.svg"}
+                  width={62}
+                  height={62}
+                  alt={t("logo")}
+                />
+              </Link>
             </div>
           </div>
         </div>
