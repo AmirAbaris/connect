@@ -36,7 +36,7 @@ export default function Navbar() {
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <Link href="/" className="flex items-center gap-2">
+              <Link href="/">
                 <Image
                   src={"/logo.svg"}
                   width={62}
@@ -61,7 +61,7 @@ export default function Navbar() {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/">
             <Image src={"/logo.svg"} width={62} height={62} alt={t("logo")} />
           </Link>
 
@@ -131,7 +131,6 @@ export default function Navbar() {
                       <Link
                         href="/"
                         className={clsx(
-                          "flex items-center gap-2",
                           locale === "fa" ? "justify-end" : "justify-start"
                         )}
                       >

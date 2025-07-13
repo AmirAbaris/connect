@@ -12,6 +12,7 @@ import { AuthUserType } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "@/schemas/user-schema";
 import useAuth from "@/hooks/use-auth";
+import Image from "next/image";
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -42,12 +43,8 @@ export default function SignupPage() {
       <div className="relative w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <Link href="/" className="inline-block mb-6">
-            <h1 className="text-3xl font-black">
-              <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                {t("logo")}
-              </span>
-            </h1>
+          <Link href="/" className="mb-6 flex items-center justify-center">
+            <Image src={"/logo.svg"} width={82} height={82} alt={"logo"} />
           </Link>
           <h2 className="text-2xl font-bold text-foreground mb-2">
             {t("header")}
