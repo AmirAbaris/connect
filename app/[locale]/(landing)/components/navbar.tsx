@@ -14,6 +14,8 @@ import {
 import { Menu, Globe } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import useAuth from "@/hooks/use-auth";
+import Image from "next/image";
+import clsx from "clsx";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,11 +59,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <h1 className="text-2xl font-black">
-              <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                {t("logo")}
-              </span>
-            </h1>
+            <Image src={"/logo.svg"} width={62} height={62} alt={t("logo")} />
           </Link>
 
           {/* Desktop Navigation */}
@@ -123,13 +121,24 @@ export default function Navbar() {
                   <span className="sr-only">{t("toggleMenu")}</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left">
+              <SheetContent side={locale === "fa" ? "left" : "right"}>
                 <SheetHeader>
-                  <SheetTitle className="text-left">
+                  <SheetTitle>
                     <span className="text-2xl font-black">
-                      <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                        {t("logo")}
-                      </span>
+                      <Link
+                        href="/"
+                        className={clsx(
+                          "flex items-center gap-2",
+                          locale === "fa" ? "justify-end" : "justify-start"
+                        )}
+                      >
+                        <Image
+                          src={"/logo.svg"}
+                          width={62}
+                          height={62}
+                          alt={t("logo")}
+                        />
+                      </Link>
                     </span>
                   </SheetTitle>
                 </SheetHeader>

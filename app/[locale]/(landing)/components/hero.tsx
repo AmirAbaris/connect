@@ -20,7 +20,7 @@ export default function Hero() {
               {t("Hero.badge")}
             </div>
 
-            <h1 className="text-7xl md:text-8xl lg:text-9xl font-black leading-tight">
+            <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black leading-tight">
               <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
                 {t("Hero.title")}
               </span>
