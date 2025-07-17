@@ -52,8 +52,8 @@ export default function Navbar() {
   }
 
   const navItems = [
-    { href: "/terms", label: t("terms") },
-    { href: "/privacy", label: t("privacy") },
+    { href: `/${locale}/terms`, label: t("terms") },
+    { href: `/${locale}/privacy`, label: t("privacy") },
   ];
 
   return (
@@ -106,10 +106,10 @@ export default function Navbar() {
             ) : (
               <>
                 <Button variant="ghost" asChild>
-                  <Link href="/auth/login">{t("login")}</Link>
+                  <Link href={`/${locale}/auth/login`}>{t("login")}</Link>
                 </Button>
                 <Button asChild>
-                  <Link href="/auth/signup">{t("signup")}</Link>
+                  <Link href={`/${locale}/auth/signup`}>{t("signup")}</Link>
                 </Button>
               </>
             )}
@@ -205,7 +205,7 @@ export default function Navbar() {
                           className="justify-start"
                         >
                           <Link
-                            href="/auth/login"
+                            href={`/${locale}/auth/login`}
                             onClick={() => setIsOpen(false)}
                           >
                             {t("login")}
@@ -213,7 +213,7 @@ export default function Navbar() {
                         </Button>
                         <Button asChild className="justify-start">
                           <Link
-                            href="/auth/signup"
+                            href={`/${locale}/auth/signup`}
                             onClick={() => setIsOpen(false)}
                           >
                             {t("signup")}

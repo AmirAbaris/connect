@@ -1,14 +1,15 @@
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 
 export default function Footer() {
   const t = useTranslations("Footer");
   const currentYear = new Date().getFullYear();
+  const locale = useLocale();
 
   const footerLinks = [
-    { href: "/terms", label: t("terms") },
-    { href: "/privacy", label: t("privacy") },
+    { href: `/${locale}/terms`, label: t("terms") },
+    { href: `/${locale}/privacy`, label: t("privacy") },
   ];
 
   return (
