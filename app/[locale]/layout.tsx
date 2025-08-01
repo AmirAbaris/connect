@@ -12,7 +12,7 @@ import { Geist } from "next/font/google";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+  : "https://connect-black.vercel.app";
 
 const vazirFont = localFont({
   src: [
