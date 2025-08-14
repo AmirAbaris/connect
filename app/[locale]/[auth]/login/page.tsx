@@ -17,7 +17,7 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { AuthUserType } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { userSchema } from "@/schemas/user-schema";
+import { authUserSchema } from "@/schemas/user-schema";
 import useAuth from "@/hooks/use-auth";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
@@ -31,7 +31,7 @@ export default function LoginPage() {
     handleSubmit,
     formState: { isValid },
   } = useForm<AuthUserType>({
-    resolver: zodResolver(userSchema),
+    resolver: zodResolver(authUserSchema),
   });
   const { signInWithPassword, isPendingSignInWithPassword } = useAuth();
 
