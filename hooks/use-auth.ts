@@ -1,7 +1,6 @@
 import {
   deleteUser,
   getSession,
-  resetPassword,
   signIn,
   signOut,
   signUp,
@@ -61,17 +60,17 @@ export default function useAuth() {
   //   onSuccess: () => toast.success(t("forgotSuccess")),
   // });
 
-  const resetUserPassword = useMutation({
-    mutationKey: ["auth", "resetPassword"],
-    mutationFn: ({ newPassword }: ResetPasswordInput) =>
-      resetPassword(newPassword),
-    onError: () => toast.error(t("resetError")),
-    onSuccess: async () => {
-      toast.success(t("resetSuccess"));
-      await queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
-      router.push("/auth/login");
-    },
-  });
+  // const resetUserPassword = useMutation({
+  //   mutationKey: ["auth", "resetPassword"],
+  //   mutationFn: ({ newPassword }: ResetPasswordInput) =>
+  //     resetPassword(newPassword),
+  //   onError: () => toast.error(t("resetError")),
+  //   onSuccess: async () => {
+  //     toast.success(t("resetSuccess"));
+  //     await queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
+  //     router.push("/auth/login");
+  //   },
+  // });
 
   const session = useQuery({
     queryKey: ["auth", "getSession"],
@@ -101,8 +100,8 @@ export default function useAuth() {
     // forgetPassword: forgetPassword.mutate,
     // isPendingForgetPassword: forgetPassword.isPending,
 
-    resetPassword: resetUserPassword.mutate,
-    isPendingResetPassword: resetUserPassword.isPending,
+    // resetPassword: resetUserPassword.mutate,
+    // isPendingResetPassword: resetUserPassword.isPending,
 
     session: session.data,
     isLoadingUserSession: session.isLoading,

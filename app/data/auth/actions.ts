@@ -3,7 +3,7 @@
 import { ApiResponse } from "@/types/api-res";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { Session } from "@supabase/supabase-js";
-import { authUserSchema, forgetPasswordUserSchema } from "@/schemas/user-schema";
+import { authUserSchema, forgetPasswordUserSchema, resetPasswordUserSchema } from "@/schemas/user-schema";
 
 export async function signUp(
   email: string,
@@ -107,6 +107,38 @@ export async function forgetPassword(
 
   return {
     data: "Password reset email sent",
+    error: null,
+    success: true,
+  };
+}
+
+export async function resetPassword(newPassword: string): Promise<ApiResponse<string | null>> {
+  const response = resetPasswordUserSchema.safeParse({newPassword})
+
+  if (!response.success) {
+    return {
+      data: null,
+      error: response.error.message,
+      success: false
+    }
+  }
+
+  const supabase = await createSupabaseServerClient();
+
+  const { error } = await supabase.auth.updateUser({
+    password: newPassword,
+  });
+
+  if (error) {
+    return {
+      data: null,
+      error: error.message,
+      success: false
+    }
+  }
+
+  return {
+    data: "Password reset succesfully",
     error: null,
     success: true,
   };

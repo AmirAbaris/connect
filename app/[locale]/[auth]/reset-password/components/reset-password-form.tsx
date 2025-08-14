@@ -5,10 +5,13 @@ import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPasswordUserSchema } from "@/schemas/user-schema";
 import { AuthResetPasswordType } from "@/types/user";
-import useAuth from "@/hooks/use-auth";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
+import { useTransition } from "react";
+import { resetPassword } from "@/app/data/auth/actions";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function ResetPasswordForm() {
   const t = useTranslations("ResetPassword");
@@ -19,10 +22,19 @@ export default function ResetPasswordForm() {
   } = useForm<AuthResetPasswordType>({
     resolver: zodResolver(resetPasswordUserSchema),
   });
-  const { resetPassword, isPendingResetPassword } = useAuth();
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
-  const onSubmit = (data: AuthResetPasswordType) => {
-    resetPassword(data);
+  const onSubmit = async (data: AuthResetPasswordType) => {
+    startTransition(async () => {
+      const res = await resetPassword(data.newPassword);
+      if (res.success) {
+        router.push("/auth/login");
+        toast.success(t("resetSuccess"));
+      } else {
+        toast.error(res.error);
+      }
+    });
   };
 
   return (
@@ -40,14 +52,14 @@ export default function ResetPasswordForm() {
           {...register("newPassword")}
           required
           minLength={8}
-          className="py-3 text-right"
+          className="py-3"
         />
         <Button
           type="submit"
           className="w-full"
-          disabled={isPendingResetPassword || !isValid}
+          disabled={isPending || !isValid}
         >
-          {isPendingResetPassword ? (
+          {isPending ? (
             <Loader2 className="animate-spin h-4 w-4" />
           ) : (
             <span>{t("changePassword")}</span>

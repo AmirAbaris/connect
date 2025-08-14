@@ -46,13 +46,13 @@ export const signIn = async (
 //   if (error) throw error;
 // };
 
-export const resetPassword = async (newPassword: string): Promise<void> => {
-  const { error } = await supabaseBrowserClient.auth.updateUser({
-    password: newPassword,
-  });
+// export const resetPassword = async (newPassword: string): Promise<void> => {
+//   const { error } = await supabaseBrowserClient.auth.updateUser({
+//     password: newPassword,
+//   });
 
-  if (error) throw error;
-};
+//   if (error) throw error;
+// };
 
 export const getSession = async (): Promise<Session | null> => {
   const { data, error } = await supabaseBrowserClient.auth.getSession();
