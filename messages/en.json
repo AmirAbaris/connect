@@ -240,6 +240,10 @@
     "successMessage": "Password reset email sent",
     "errorMessage": "Failed to send password reset email"
   },
+  "ResetPassword": {
+    "changePassword": "Change the Password",
+    "newPassword": "New Password"
+  },
   "Status": {
     "profileIncompleteTitle": "Your profile is incomplete",
     "profileIncompleteDesc": "You need to complete your profile to use this section",
