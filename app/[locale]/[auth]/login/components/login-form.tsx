@@ -1,26 +1,28 @@
 "use client";
 
+import {
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  ArrowLeft,
+  Loader2,
+  ArrowRight,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import useAuth from "@/hooks/use-auth";
-import { authUserSchema } from "@/schemas/user-schema";
+import { useForm } from "react-hook-form";
 import { AuthUserType } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react";
+import { authUserSchema } from "@/schemas/user-schema";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { signUp } from "@/app/data/auth/actions";
-import { useRouter } from "next/navigation";
-import { useFormStatus } from "react-dom";
+import useAuth from "@/hooks/use-auth";
+import { useLocale, useTranslations } from "next-intl";
+import { useState } from "react";
 
-export default function SignUpForm() {
-  const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const { pending } = useFormStatus();
+export default function LoginForm() {
+  const t = useTranslations("Login");
   const {
     register,
     handleSubmit,
@@ -28,15 +30,14 @@ export default function SignUpForm() {
   } = useForm<AuthUserType>({
     resolver: zodResolver(authUserSchema),
   });
+  const locale = useLocale();
+  const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = async (data: AuthUserType) => {
-    const response = await signUp(data.email, data.password);
-    if (response.success) {
-      router.push("/complete-profile/1");
-    }
+  const { signInWithPassword, isPendingSignInWithPassword } = useAuth();
+
+  const onSubmit = (data: AuthUserType) => {
+    signInWithPassword(data);
   };
-
-  const t = useTranslations("Signup");
 
   return (
     <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 shadow-xl">
@@ -61,14 +62,21 @@ export default function SignUpForm() {
           </div>
         </div>
 
-        {/* Password Field */}
         <div className="space-y-2">
-          <Label
-            htmlFor="password"
-            className="text-sm font-medium text-foreground"
-          >
-            {t("passwordLabel")}
-          </Label>
+          <div className="flex items-center justify-between">
+            <Label
+              htmlFor="password"
+              className="text-sm font-medium text-foreground"
+            >
+              {t("passwordLabel")}
+            </Label>
+            <Link
+              href="/auth/forgot-password"
+              className="text-xs text-primary hover:underline"
+            >
+              {t("forgotPassword")}
+            </Link>
+          </div>
           <div className="relative">
             <Lock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
             <Input
@@ -91,42 +99,21 @@ export default function SignUpForm() {
               )}
             </button>
           </div>
-          <p className="text-xs text-muted-foreground">{t("passwordHint")}</p>
         </div>
 
-        {/* Terms and Conditions */}
-        <div className="flex items-start gap-3">
-          <Input
-            type="checkbox"
-            id="terms"
-            required
-            className="mt-1 w-4 h-4 text-primary bg-background border-border rounded focus:ring-primary/20 focus:ring-2"
-            checked={acceptedTerms}
-            onChange={(e) => setAcceptedTerms(e.target.checked)}
-          />
-          <Label
-            htmlFor="terms"
-            className="text-sm text-muted-foreground leading-relaxed"
-          >
-            {t("termsPrefix")}{" "}
-            <Link href="/terms" className="text-primary hover:underline">
-              {t("terms")}
-            </Link>{" "}
-            {t("and")}{" "}
-            <Link href="/privacy" className="text-primary hover:underline">
-              {t("privacy")}
-            </Link>{" "}
-            {t("termsSuffix")}
-          </Label>
-        </div>
-
-        {/* Submit Button */}
         <Button
+          disabled={isPendingSignInWithPassword || !isValid}
           type="submit"
           className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg py-3 text-base font-medium"
-          disabled={!acceptedTerms || !isValid}
         >
-          {pending ? <Loader2 className="w-4 h-4 animate-spin" /> : t("signup")}
+          {t("submit")}
+          {isPendingSignInWithPassword ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : locale === "fa" ? (
+            <ArrowLeft className="w-4 h-4 mr-2" />
+          ) : (
+            <ArrowRight className="w-4 h-4 mr-2" />
+          )}
         </Button>
       </form>
     </div>

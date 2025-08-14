@@ -8,14 +8,12 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 flex items-center justify-center p-6 pt-22">
-      {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/10 rounded-full blur-3xl" />
       </div>
 
       <div className="relative w-full max-w-md">
-        {/* Header */}
         <div className="text-center mb-8">
           <Link href="/" className="mb-6 flex items-center justify-center">
             <Image src={"/logo.svg"} width={82} height={82} alt={"logo"} />
@@ -28,7 +26,6 @@ export default function SignupPage() {
 
         <SignUpForm />
 
-        {/* Login Link */}
         <div className="text-center mt-6">
           <p className="text-muted-foreground">
             {t("alreadyHaveAccount")}{" "}
@@ -41,7 +38,6 @@ export default function SignupPage() {
           </p>
         </div>
 
-        {/* Trust Indicators */}
         <div className="mt-8 text-center">
           <div className="flex items-center justify-center gap-6 text-xs text-muted-foreground">
             <div className="flex items-center gap-1">
