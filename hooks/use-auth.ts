@@ -1,20 +1,14 @@
-import {
-  deleteUser,
-  getSession,
-  signIn,
-  signOut,
-  signUp,
-} from "@/services/auth/auth.api";
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { signUp, signIn } from "@/app/data/auth/actions";
+import { deleteUser } from "@/app/data/auth/delete-user";
+import { getSession } from "@/app/data/auth/get-session";
+import { signOut } from "@/app/data/auth/sign-out";
 
 type SignInInput = { email: string; password: string };
-type ForgetPasswordInput = { email: string };
-type ResetPasswordInput = {
-  newPassword: string;
-};
 
 export default function useAuth() {
   const queryClient = useQueryClient();
@@ -53,25 +47,6 @@ export default function useAuth() {
     },
   });
 
-  // const forgetPassword = useMutation({
-  //   mutationKey: ["auth", "forgotPassword"],
-  //   mutationFn: ({ email }: ForgetPasswordInput) => forgotPassword(email),
-  //   onError: () => toast.error(t("forgotError")),
-  //   onSuccess: () => toast.success(t("forgotSuccess")),
-  // });
-
-  // const resetUserPassword = useMutation({
-  //   mutationKey: ["auth", "resetPassword"],
-  //   mutationFn: ({ newPassword }: ResetPasswordInput) =>
-  //     resetPassword(newPassword),
-  //   onError: () => toast.error(t("resetError")),
-  //   onSuccess: async () => {
-  //     toast.success(t("resetSuccess"));
-  //     await queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
-  //     router.push("/auth/login");
-  //   },
-  // });
-
   const session = useQuery({
     queryKey: ["auth", "getSession"],
     queryFn: getSession,
@@ -96,12 +71,6 @@ export default function useAuth() {
 
     signOut: signOutUser.mutate,
     isPendingSignOut: signOutUser.isPending,
-
-    // forgetPassword: forgetPassword.mutate,
-    // isPendingForgetPassword: forgetPassword.isPending,
-
-    // resetPassword: resetUserPassword.mutate,
-    // isPendingResetPassword: resetUserPassword.isPending,
 
     session: session.data,
     isLoadingUserSession: session.isLoading,
