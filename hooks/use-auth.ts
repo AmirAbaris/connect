@@ -1,6 +1,5 @@
 import {
   deleteUser,
-  forgotPassword,
   getSession,
   resetPassword,
   signIn,
@@ -55,12 +54,12 @@ export default function useAuth() {
     },
   });
 
-  const forgetPassword = useMutation({
-    mutationKey: ["auth", "forgotPassword"],
-    mutationFn: ({ email }: ForgetPasswordInput) => forgotPassword(email),
-    onError: () => toast.error(t("forgotError")),
-    onSuccess: () => toast.success(t("forgotSuccess")),
-  });
+  // const forgetPassword = useMutation({
+  //   mutationKey: ["auth", "forgotPassword"],
+  //   mutationFn: ({ email }: ForgetPasswordInput) => forgotPassword(email),
+  //   onError: () => toast.error(t("forgotError")),
+  //   onSuccess: () => toast.success(t("forgotSuccess")),
+  // });
 
   const resetUserPassword = useMutation({
     mutationKey: ["auth", "resetPassword"],
@@ -99,8 +98,8 @@ export default function useAuth() {
     signOut: signOutUser.mutate,
     isPendingSignOut: signOutUser.isPending,
 
-    forgetPassword: forgetPassword.mutate,
-    isPendingForgetPassword: forgetPassword.isPending,
+    // forgetPassword: forgetPassword.mutate,
+    // isPendingForgetPassword: forgetPassword.isPending,
 
     resetPassword: resetUserPassword.mutate,
     isPendingResetPassword: resetUserPassword.isPending,

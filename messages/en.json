@@ -236,7 +236,9 @@
     "signup": "Sign up",
     "secure": "Secure",
     "fast": "Fast",
-    "private": "Private"
+    "private": "Private",
+    "successMessage": "Password reset email sent",
+    "errorMessage": "Failed to send password reset email"
   },
   "Status": {
     "profileIncompleteTitle": "Your profile is incomplete",

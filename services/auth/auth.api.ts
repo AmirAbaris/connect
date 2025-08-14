@@ -32,19 +32,19 @@ export const signIn = async (
   if (error) throw error;
 };
 
-export const forgotPassword = async (email: string): Promise<void> => {
-  const locale = useLocale();
-  // TODO: fix later
-  const defaultUrl = "https://connect-black.vercel.app";
-  const { error } = await supabaseBrowserClient.auth.resetPasswordForEmail(
-    email,
-    {
-      redirectTo: `${defaultUrl}/${locale}/auth/reset-password`,
-    }
-  );
+// export const forgotPassword = async (email: string): Promise<void> => {
+//   const locale = useLocale();
+//   // TODO: fix later
+//   const defaultUrl = "https://connect-black.vercel.app";
+//   const { error } = await supabaseBrowserClient.auth.resetPasswordForEmail(
+//     email,
+//     {
+//       redirectTo: `${defaultUrl}/${locale}/auth/reset-password`,
+//     }
+//   );
 
-  if (error) throw error;
-};
+//   if (error) throw error;
+// };
 
 export const resetPassword = async (newPassword: string): Promise<void> => {
   const { error } = await supabaseBrowserClient.auth.updateUser({
