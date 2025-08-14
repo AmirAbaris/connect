@@ -35,9 +35,9 @@ export default function SignUpForm() {
       if (response.success) {
         router.push("/complete-profile/1");
         toast.success(t("signupSuccess"));
+      } else {
+        toast.error(response.error);
       }
-
-      toast.error(response.error);
     });
   };
 

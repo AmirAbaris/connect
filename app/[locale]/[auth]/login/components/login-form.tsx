@@ -43,9 +43,9 @@ export default function LoginForm() {
       if (response.success) {
         router.push("/webapp/status");
         toast.success(t("loginSuccess"));
+      } else {
+        toast.error(response.error);
       }
-
-      toast.error(response.error);
     });
   };
 

@@ -215,7 +215,8 @@
     "signupLink": "Sign up",
     "secure": "Secure",
     "fast": "Fast",
-    "private": "Private"
+    "private": "Private",
+    "loginSuccess": "Login successful"
   },
   "ForgotPassword": {
     "logo": "Connecty",
