@@ -2,25 +2,25 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import useAuth from "@/hooks/use-auth";
 import { authUserSchema } from "@/schemas/user-schema";
 import { AuthUserType } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { signUp } from "@/app/data/auth/actions";
 import { useRouter } from "next/navigation";
-import { useFormStatus } from "react-dom";
+import { toast } from "sonner";
 
 export default function SignUpForm() {
+  const t = useTranslations("Signup");
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const { pending } = useFormStatus();
+  const [isPending, startTransition] = useTransition();
   const {
     register,
     handleSubmit,
@@ -30,13 +30,16 @@ export default function SignUpForm() {
   });
 
   const onSubmit = async (data: AuthUserType) => {
-    const response = await signUp(data.email, data.password);
-    if (response.success) {
-      router.push("/complete-profile/1");
-    }
-  };
+    startTransition(async () => {
+      const response = await signUp(data.email, data.password);
+      if (response.success) {
+        router.push("/complete-profile/1");
+        toast.success(t("signupSuccess"));
+      }
 
-  const t = useTranslations("Signup");
+      toast.error(response.error);
+    });
+  };
 
   return (
     <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 shadow-xl">
@@ -124,9 +127,13 @@ export default function SignUpForm() {
         <Button
           type="submit"
           className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg py-3 text-base font-medium"
-          disabled={!acceptedTerms || !isValid || pending}
+          disabled={!acceptedTerms || !isValid || isPending}
         >
-          {pending ? <Loader2 className="w-4 h-4 animate-spin" /> : t("signup")}
+          {isPending ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            t("signup")
+          )}
         </Button>
       </form>
     </div>

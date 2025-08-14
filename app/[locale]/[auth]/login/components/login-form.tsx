@@ -17,12 +17,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { authUserSchema } from "@/schemas/user-schema";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import useAuth from "@/hooks/use-auth";
 import { useLocale, useTranslations } from "next-intl";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { signIn } from "@/app/data/auth/actions";
 import { useRouter } from "next/navigation";
-import { useFormStatus } from "react-dom";
+import { toast } from "sonner";
 
 export default function LoginForm() {
   const t = useTranslations("Login");
@@ -35,14 +34,19 @@ export default function LoginForm() {
   });
   const locale = useLocale();
   const [showPassword, setShowPassword] = useState(false);
-  const { pending } = useFormStatus();
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
   const onSubmit = async (data: AuthUserType) => {
-    const response = await signIn(data.email, data.password);
-    if (response.success) {
-      router.push("/webapp/status");
-    }
+    startTransition(async () => {
+      const response = await signIn(data.email, data.password);
+      if (response.success) {
+        router.push("/webapp/status");
+        toast.success(t("loginSuccess"));
+      }
+
+      toast.error(response.error);
+    });
   };
 
   return (
@@ -108,12 +112,12 @@ export default function LoginForm() {
         </div>
 
         <Button
-          disabled={pending || !isValid}
+          disabled={isPending || !isValid}
           type="submit"
           className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg py-3 text-base font-medium"
         >
           {t("submit")}
-          {pending ? (
+          {isPending ? (
             <Loader2 className="w-4 h-4 animate-spin" />
           ) : locale === "fa" ? (
             <ArrowLeft className="w-4 h-4 mr-2" />
