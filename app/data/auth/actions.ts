@@ -41,3 +41,40 @@ export async function signUp(
     success: true,
   };
 }
+
+export async function signIn(
+  email: string,
+  password: string
+): Promise<ApiResponse<Session | null>> {
+  const credentials = authUserSchema.safeParse({
+    email,
+    password,
+  });
+
+  if (!credentials.success) {
+    return {
+      data: null,
+      error: credentials.error.message,
+      success: false,
+    };
+  }
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    return {
+      data: null,
+      error: error.message,
+      success: false,
+    };
+  }
+
+  return {
+    data: data.session,
+    error: null,
+    success: true,
+  };
+}

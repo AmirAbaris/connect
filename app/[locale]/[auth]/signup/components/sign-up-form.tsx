@@ -124,7 +124,7 @@ export default function SignUpForm() {
         <Button
           type="submit"
           className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg py-3 text-base font-medium"
-          disabled={!acceptedTerms || !isValid}
+          disabled={!acceptedTerms || !isValid || pending}
         >
           {pending ? <Loader2 className="w-4 h-4 animate-spin" /> : t("signup")}
         </Button>

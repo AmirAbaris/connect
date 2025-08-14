@@ -20,6 +20,9 @@ import { Button } from "@/components/ui/button";
 import useAuth from "@/hooks/use-auth";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
+import { signIn } from "@/app/data/auth/actions";
+import { useRouter } from "next/navigation";
+import { useFormStatus } from "react-dom";
 
 export default function LoginForm() {
   const t = useTranslations("Login");
@@ -32,11 +35,14 @@ export default function LoginForm() {
   });
   const locale = useLocale();
   const [showPassword, setShowPassword] = useState(false);
+  const { pending } = useFormStatus();
+  const router = useRouter();
 
-  const { signInWithPassword, isPendingSignInWithPassword } = useAuth();
-
-  const onSubmit = (data: AuthUserType) => {
-    signInWithPassword(data);
+  const onSubmit = async (data: AuthUserType) => {
+    const response = await signIn(data.email, data.password);
+    if (response.success) {
+      router.push("/webapp/status");
+    }
   };
 
   return (
@@ -102,12 +108,12 @@ export default function LoginForm() {
         </div>
 
         <Button
-          disabled={isPendingSignInWithPassword || !isValid}
+          disabled={pending || !isValid}
           type="submit"
           className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg py-3 text-base font-medium"
         >
           {t("submit")}
-          {isPendingSignInWithPassword ? (
+          {pending ? (
             <Loader2 className="w-4 h-4 animate-spin" />
           ) : locale === "fa" ? (
             <ArrowLeft className="w-4 h-4 mr-2" />
