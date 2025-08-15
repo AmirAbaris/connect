@@ -3,38 +3,14 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { signUp, signIn } from "@/app/data/auth/actions";
-import { deleteUser } from "@/app/data/auth/delete-user";
 import { getSession } from "@/app/data/auth/get-session";
 import { signOut } from "@/app/data/auth/sign-out";
-
-type SignInInput = { email: string; password: string };
+import { ApiResponse } from "@/types/api-res";
 
 export default function useAuth() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const t = useTranslations("AuthToasts");
-  const signUpWithPassword = useMutation({
-    mutationKey: ["auth", "signUp"],
-    mutationFn: ({ email, password }: SignInInput) => signUp(email, password),
-    onError: () => toast.error(t("signupError")),
-    onSuccess: () => {
-      toast.success(t("signupSuccess"));
-      router.push("/complete-profile/1");
-    },
-  });
-
-  const signInWithPassword = useMutation({
-    mutationKey: ["auth", "signIn"],
-    mutationFn: ({ email, password }: SignInInput) => signIn(email, password),
-    onError: () => {
-      toast.error(t("loginError"));
-    },
-    onSuccess: () => {
-      toast.success(t("loginSuccess"));
-      router.push("/webapp/status");
-    },
-  });
 
   const signOutUser = useMutation({
     mutationKey: ["auth", "signOut"],
@@ -52,27 +28,35 @@ export default function useAuth() {
     queryFn: getSession,
   });
 
-  const deleteUserMutation = useMutation({
-    mutationKey: ["auth", "deleteUser"],
-    mutationFn: deleteUser,
-    onError: () => toast.error(t("deleteError")),
-    onSuccess: () => {
-      toast.success(t("deleteSuccess"));
-      router.push("/");
-    },
-  });
+const deleteUserMutation = useMutation({
+  mutationKey: ["auth", "deleteUser"],
+  mutationFn: async (uid: string) => {
+    const res = await fetch("/api/delete-user", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ uid }),
+    });
+
+    const data: ApiResponse<null> = await res.json();
+
+    if (!data.success) {
+      throw new Error(data.error || "Failed to delete user");
+    }
+
+    return data;
+  },
+  onError: () => toast.error(t("deleteError")),
+  onSuccess: () => {
+    toast.success(t("deleteSuccess"));
+    router.push("/");
+  },
+});
 
   return {
-    signUpWithPassword: signUpWithPassword.mutate,
-    isPendingSignUpWithPassword: signUpWithPassword.isPending,
-
-    signInWithPassword: signInWithPassword.mutate,
-    isPendingSignInWithPassword: signInWithPassword.isPending,
-
     signOut: signOutUser.mutate,
     isPendingSignOut: signOutUser.isPending,
 
-    session: session.data,
+    session: session.data?.data,
     isLoadingUserSession: session.isLoading,
 
     deleteUser: deleteUserMutation.mutate,

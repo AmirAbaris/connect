@@ -32,17 +32,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef } from "react";
 import { useTranslations } from "next-intl";
-
-const profileSchema = z.object({
-  name: z.string().min(2, "نام باید حداقل ۲ حرف باشد"),
-  age: z.number().min(18, "سن باید حداقل ۱۸ باشد").max(99, "سن معتبر نیست"),
-  bio: z.string().max(200, "بیو نباید بیشتر از ۲۰۰ کاراکتر باشد").optional(),
-  interests: z.array(z.string()).optional(),
-  image: z.string().url().nullable().optional(),
-});
+import { profileSchema } from "@/schemas/profile-schema";
 
 export default function AccountPage() {
-  const { signOut, isPendingSignOut } = useAuth();
+  const { signOut, isPendingSignOut, session } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const t = useTranslations("Account");
@@ -59,7 +52,6 @@ export default function AccountPage() {
     deleteMember,
     isPendingDeleteMember,
   } = useMember();
-  const { session } = useAuth();
   const uid = session?.user?.id;
   const fileInputRef = useRef<HTMLInputElement>(null);
 

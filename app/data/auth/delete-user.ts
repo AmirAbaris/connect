@@ -1,8 +1,25 @@
-import { supabaseBrowserClient } from "@/lib/supabase/browser";
+import "server-only"
+import { requireSession } from "./require-session";
+import { ApiResponse } from "@/types/api-res";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-export const deleteUser = async (uid: string): Promise<void> => {
-    const { error } = await supabaseBrowserClient.auth.admin.deleteUser(uid);
+export const deleteUser = async (uid: string): Promise<ApiResponse<null>> => {
+    await requireSession()
+    const supabase = await createSupabaseServerClient()
+    const { error } = await supabase.auth.admin.deleteUser(uid);
   
-    if (error) throw error;
+    if (error) {
+      return {
+        data: null,
+        error: error.message,
+        success: false
+      }
+    }
+
+    return {
+      data: null,
+      error: null,
+      success: true
+    }
   };
   
