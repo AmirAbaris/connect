@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function SignUpForm() {
-  const t = useTranslations("Signup");
+  const t = useTranslations();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
@@ -34,7 +34,7 @@ export default function SignUpForm() {
       const response = await signUp(data.email, data.password);
       if (response.success) {
         router.push("/complete-profile/1");
-        toast.success(t("signupSuccess"));
+        toast.success(t("AuthToasts.signupSuccess"));
       } else {
         toast.error(response.error);
       }
@@ -49,7 +49,7 @@ export default function SignUpForm() {
             htmlFor="email"
             className="text-sm font-medium text-foreground"
           >
-            {t("emailLabel")}
+            {t("Signup.emailLabel")}
           </Label>
           <div className="relative">
             <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -59,7 +59,7 @@ export default function SignUpForm() {
               required
               {...register("email")}
               className="w-full pr-10 pl-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-              placeholder={t("emailPlaceholder")}
+              placeholder={t("Signup.emailPlaceholder")}
             />
           </div>
         </div>
@@ -70,7 +70,7 @@ export default function SignUpForm() {
             htmlFor="password"
             className="text-sm font-medium text-foreground"
           >
-            {t("passwordLabel")}
+            {t("Signup.passwordLabel")}
           </Label>
           <div className="relative">
             <Lock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -80,7 +80,7 @@ export default function SignUpForm() {
               required
               {...register("password")}
               className="w-full pr-10 pl-12 py-3 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-              placeholder={t("passwordPlaceholder")}
+              placeholder={t("Signup.passwordPlaceholder")}
             />
             <button
               type="button"
@@ -94,7 +94,9 @@ export default function SignUpForm() {
               )}
             </button>
           </div>
-          <p className="text-xs text-muted-foreground">{t("passwordHint")}</p>
+          <p className="text-xs text-muted-foreground">
+            {t("Signup.passwordHint")}
+          </p>
         </div>
 
         {/* Terms and Conditions */}
@@ -111,15 +113,15 @@ export default function SignUpForm() {
             htmlFor="terms"
             className="text-sm text-muted-foreground leading-relaxed"
           >
-            {t("termsPrefix")}{" "}
+            {t("Signup.termsPrefix")}{" "}
             <Link href="/terms" className="text-primary hover:underline">
-              {t("terms")}
+              {t("Signup.terms")}
             </Link>{" "}
-            {t("and")}{" "}
+            {t("Signup.and")}{" "}
             <Link href="/privacy" className="text-primary hover:underline">
-              {t("privacy")}
+              {t("Signup.privacy")}
             </Link>{" "}
-            {t("termsSuffix")}
+            {t("Signup.termsSuffix")}
           </Label>
         </div>
 
@@ -132,7 +134,7 @@ export default function SignUpForm() {
           {isPending ? (
             <Loader2 className="w-4 h-4 animate-spin" />
           ) : (
-            t("signup")
+            t("Signup.signup")
           )}
         </Button>
       </form>

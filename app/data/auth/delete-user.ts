@@ -4,7 +4,16 @@ import { ApiResponse } from "@/types/api-res";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export const deleteUser = async (uid: string): Promise<ApiResponse<null>> => {
-    await requireSession()
+    const session = await requireSession()
+
+    if (!session.success) {
+      return {
+        data: null,
+        error: session.error,
+        success: false
+      }
+    }
+    
     const supabase = await createSupabaseServerClient()
     const { error } = await supabase.auth.admin.deleteUser(uid);
   

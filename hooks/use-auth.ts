@@ -4,8 +4,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { getSession } from "@/app/data/auth/get-session";
-import { signOut } from "@/app/data/auth/sign-out";
 import { ApiResponse } from "@/types/api-res";
+import { signOut } from "@/app/data/auth/sign-out";
 
 export default function useAuth() {
   const queryClient = useQueryClient();
@@ -15,13 +15,17 @@ export default function useAuth() {
   const signOutUser = useMutation({
     mutationKey: ["auth", "signOut"],
     mutationFn: signOut,
-    onError: () => toast.error(t("logoutError")),
-    onSuccess: async () => {
+    onSuccess: async (res) => {
+      if (!res.success) {
+        toast.error(res.error || "Something went wrong");
+        return;
+      }
+      
       await queryClient.invalidateQueries();
       toast.success(t("logoutSuccess"));
       router.push("/");
     },
-  });
+  });  
 
   const session = useQuery({
     queryKey: ["auth", "getSession"],
@@ -35,18 +39,15 @@ const deleteUserMutation = useMutation({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ uid }),
-    });
+    })
 
     const data: ApiResponse<null> = await res.json();
-
-    if (!data.success) {
-      throw new Error(data.error || "Failed to delete user");
-    }
-
     return data;
   },
-  onError: () => toast.error(t("deleteError")),
-  onSuccess: () => {
+  onSuccess: async (res) => {
+    if (!res.success) {
+      toast.error(t("deleteError"))
+    }
     toast.success(t("deleteSuccess"));
     router.push("/");
   },

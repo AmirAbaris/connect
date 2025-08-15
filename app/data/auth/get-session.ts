@@ -1,10 +1,9 @@
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { supabaseBrowserClient } from "@/lib/supabase/browser";
 import { ApiResponse } from "@/types/api-res";
 import { Session } from "@supabase/supabase-js";
 
 export const getSession = async (): Promise<ApiResponse<Session | null>> => {
-  const supabase = await createSupabaseServerClient()
-    const { data, error } = await supabase.auth.getSession();
+    const { data, error } = await supabaseBrowserClient.auth.getSession();
   
     if (error) {
       return {
