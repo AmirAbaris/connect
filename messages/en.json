@@ -237,6 +237,10 @@
     "fast": "Fast",
     "private": "Private"
   },
+  "ResetPassword": {
+    "changePassword": "Change Password",
+    "newPassword": "New Password"
+  },
   "Status": {
     "profileIncompleteTitle": "Your profile is incomplete",
     "profileIncompleteDesc": "You need to complete your profile to use this section",
