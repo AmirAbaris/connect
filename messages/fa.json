@@ -237,6 +237,10 @@
     "fast": "سریع",
     "private": "خصوصی"
   },
+  "ResetPassword": {
+    "changePassword": "تغییر رمز عبور",
+    "newPassword": "رمز عبور جدید"
+  },
   "Status": {
     "profileIncompleteTitle": "پروفایل شما تکمیل نشده است",
     "profileIncompleteDesc": "برای استفاده از این بخش، ابتدا باید پروفایل خود را تکمیل کنید",
